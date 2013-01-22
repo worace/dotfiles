@@ -29,8 +29,8 @@ plugins=(git zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+
+
 eval "defaults write NSGlobalDomain KeyRepeat -int 0"
 
 # Git
@@ -43,3 +43,22 @@ alias go='git checkout '
 alias gk='gitk --all&'
 alias gx='gitx --all'
 alias gr='git remote -v'
+alias gbr="git branch"
+alias gco="git checkout"
+alias gst="git status"
+
+
+#servers n stuff
+alias pg='postgres -D ~/postgres/ &'
+alias start_redis='redis-server /usr/local/etc/redis.conf'
+alias start_memcached='/usr/bin/memcached -d'
+alias faye='bundle exec rackup faye.ru -s thin -E production -p 9999'
+
+#worace at work
+if [ -f ~/.lsrc.sh ]; then
+  source ~/.lsrc.sh
+else
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+fi
+
