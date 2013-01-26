@@ -29,8 +29,6 @@ plugins=(git zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-
-
 eval "defaults write NSGlobalDomain KeyRepeat -int 0"
 
 # Git
@@ -46,6 +44,9 @@ alias gr='git remote -v'
 alias gbr="git branch"
 alias gco="git checkout"
 alias gst="git status"
+alias gpum="git pull upstream master"
+
+alias be="bundle exec"
 
 
 #servers n stuff

@@ -1,0 +1,6 @@
+set clipboard+=unnamed
+set background=dark
+colorscheme solarized
+syntax enable
+" set gfn=DejaVu\ Sans\ Mono:h16
+set gfn=Inconsolata-dzForPowerline:h16
