@@ -31,6 +31,8 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 eval "defaults write NSGlobalDomain KeyRepeat -int 0"
 
+alias c="/usr/bin/open -a '/Applications/Google Chrome.app'"
+
 # Git
 alias gs='git status '
 alias ga='git add '
