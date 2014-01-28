@@ -39,7 +39,6 @@ alias ga='git add '
 alias gb='git branch '
 alias gc='git commit'
 alias gd='git diff'
-alias go='git checkout '
 alias gk='gitk --all&'
 alias gx='gitx --all'
 alias gr='git remote -v'
@@ -47,8 +46,10 @@ alias gbr="git branch"
 alias gco="git checkout"
 alias gst="git status"
 alias gpum="git pull upstream master"
+alias gpom="git pull origin master"
 
 alias be="bundle exec"
+alias bl="bundle --local"
 
 
 #servers n stuff
@@ -64,4 +65,6 @@ else
   export PATH="$HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
 fi
+
+export GOPATH=$HOME/go
 
