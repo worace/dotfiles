@@ -5,3 +5,4 @@ syntax enable
 " set gfn=DejaVu\ Sans\ Mono:h16
 set gfn=Inconsolata-dzForPowerline:h16
 call janus#add_mapping('nerdcommenter', 'map', '<D-/>', '<plug>NERDCommenterToggle<CR>')
+let g:NERDTreeWinSize = 30

@@ -6,6 +6,7 @@ ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 export ZSH_THEME="worace"
+export BUNDLER_EDITOR="mvim"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -54,20 +55,24 @@ alias bl="bundle --local"
 
 #servers n stuff
 alias pg='postgres -D ~/postgres/ &'
-alias start_redis='redis-server /usr/local/etc/redis.conf'
+alias start_redis="redis-server /usr/local/etc/redis.conf"
 alias start_memcached='/usr/bin/memcached -d'
 alias faye='bundle exec rackup faye.ru -s thin -E production -p 9999'
 
 #worace at work
-if [ -f ~/.lsrc.sh ]; then
-  source ~/.lsrc.sh
-else
-  export PATH="$HOME/.rbenv/bin:$PATH"
-  eval "$(rbenv init -)"
-fi
+source ~/.lsrc.sh
 
 export GOPATH=$HOME/go
 
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+#RBENV
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export CC="gcc"
+
+##prevent scala from hanging
+alias scala="scala -nocompdaemon"
+
+alias bubbles='bundle'

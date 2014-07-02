@@ -1,0 +1,50 @@
+[user]
+	name = Horace Williams
+	email = horace.d.williams@gmail.com
+[github]
+  user = worace
+  token = 7e8fd4498c1e8ddf76b46313abaf10f3
+[core]
+  autocrlf = input
+  safecrlf = false
+	editor = /usr/bin/vim
+	excludesfile = /Users/horacewilliams/.gitignore_global
+[alias]
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  type = cat-file -t
+  dump = cat-file -p
+  copr = "!f() { git fetch -fu origin refs/pull/$1/head:pr-$1; git checkout pr-$1; } ; f"
+  prunepr = "!git for-each-ref refs/heads/pr-* --format='%(refname:short)' | while read ref ; do git branch -D $ref ; done"
+
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+  ui = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[apply]
+  whitespace = fix
+[push]
+  default = tracking
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
