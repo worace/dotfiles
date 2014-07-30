@@ -60,7 +60,12 @@ alias start_memcached='/usr/bin/memcached -d'
 alias faye='bundle exec rackup faye.ru -s thin -E production -p 9999'
 
 #worace at work
-source ~/.lsrc.sh
+if [ -f ~/.lsrc.sh ]; then
+  source ~/.lsrc.sh
+else
+  export RBENV_ROOT=/usr/local/var/rbenv
+  if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+fi
 
 export GOPATH=$HOME/go
 
