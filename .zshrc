@@ -81,3 +81,8 @@ export CC="gcc"
 alias scala="scala -nocompdaemon"
 
 alias bubbles='bundle'
+
+if [[ -a ~/.clever.sh ]]; then
+  echo "getting clever"
+  source ~/.clever.sh
+fi
