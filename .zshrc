@@ -32,11 +32,12 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 eval "defaults write NSGlobalDomain KeyRepeat -int 0"
 
+alias em='/usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs'
 alias c="/usr/bin/open -a '/Applications/Google Chrome.app'"
 
 # Git
 alias gs='git status '
-alias ga='git add '
+alias ga='git add .'
 alias gb='git branch '
 alias gc='git commit'
 alias gd='git diff'
@@ -68,6 +69,9 @@ else
 fi
 
 export GOPATH=$HOME/go
+export GOROOT=`go env GOROOT`
+export PATH="$GOPATH/bin:$PATH"
+export PATH="$PATH:/usr/local/opt/go/libexec/bin"
 
 
 ### Added by the Heroku Toolbelt
@@ -77,12 +81,39 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 export CC="gcc"
 
+#pick up some extra homebrew installs
+export PATH="/usr/local/bin:$PATH"
+
 ##prevent scala from hanging
 alias scala="scala -nocompdaemon"
 
 alias bubbles='bundle'
 
 if [[ -a ~/.clever.sh ]]; then
-  echo "getting clever"
   source ~/.clever.sh
 fi
+if [[ -a ~/.untappd.sh ]]; then
+  source ~/.untappd.sh
+fi
+if [[ -a ~/.sello.sh ]]; then
+  source ~/.sello.sh
+fi
+
+alias bounce_dns="sudo killall -HUP mDNSResponder"
+alias turing="cd ~/code/Turing"
+alias code="cd ~/code"
+alias so="cd ~/code/sello"
+alias gp="cd $GOPATH/src/github.com/worace"
+
+source ~/.secrets.sh
+
+export MANDRILL_USERNAME="horace.d.williams@gmail.com"
+export MANDRILL_KEY="NyMQFrKPBDd4o-RARly3rA"
+
+function killgrep {
+  kill $(ps aux | grep $1 | grep -v "grep" | awk '{print $2}')
+}
+
+export MITSCHEME_LIBRARY_PATH="/Applications/MIT\:GNU\ Scheme.app/Contents/Resources"
+export MIT_SCHEME_EXE="/usr/local/scheme"
+export TURING_SLACK_TOKEN="xoxp-2329094327-2746662827-3907823656-437836"
