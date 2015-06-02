@@ -32,7 +32,8 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 eval "defaults write NSGlobalDomain KeyRepeat -int 0"
 
-alias em='/usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs'
+#alias em='/usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs &'
+em () { /usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs $* & }
 alias c="/usr/bin/open -a '/Applications/Google Chrome.app'"
 
 # Git
