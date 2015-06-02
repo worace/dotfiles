@@ -13,6 +13,8 @@
 ;; SPC SPC <char> -- Easy Motion finder
 ;; SPC t n -- toggle line numbers
 ;; SPC T n -- cycle to next color scheme
+;; Cmd-+ / Cmd-- -- Change font size
+;; Cmd-T -- helm projectile project browser
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration."
@@ -76,7 +78,7 @@ before layers configuration."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -162,6 +164,8 @@ layers configuration."
   (global-set-key (kbd "s-t") 'helm-projectile-find-file)
   (global-set-key (kbd "s-=") 'text-scale-increase)
   (global-set-key (kbd "s--") 'text-scale-decrease)
+  (evil-leader/set-key "SPC" 'ace-jump-char-mode)
+  (evil-leader/set-key "n-t" 'neotree)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will

@@ -2,10 +2,10 @@
 
 * Ruby autocompletion
 * Ruby method definition -- typing `def\n` should fill `end` at same indentation level
-* AceJump plugin -- somewhat buggy? SOmetimes missing matches?
-* `em .` -- background this to allow opening from cmd-line without hanging
-  * http://stackoverflow.com/questions/18347968/how-to-open-emacs-gui-ide-from-mac-terminal
-* Cmd-T to open fuzzy find
+* ~AceJump plugin -- somewhat buggy? SOmetimes missing matches?~ -- switched it to char mode vs word mode
+* ~`em .` -- background this to allow opening from cmd-line without hanging~
+* ~Cmd-T to open fuzzy find~
+* ~leader-n to open neotree~
 * Fuzzy find clear cache
-* Cmd-/ to toggle comments
+* Cmd-/ to toggle comments -- sort of working -- only in visual mode
 * Cmd-+ / Cmd-- to increase font size -- http://www.emacswiki.org/emacs/GlobalTextScaleMode
