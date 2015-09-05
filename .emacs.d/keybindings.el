@@ -9,6 +9,7 @@
 
 
 ;; Git commands
-(evil-leader/set-key "gs" 'magit-stage-modified)
-(evil-leader/set-key "gc" 'magit-commit)
-(evil-leader/set-key "gd" 'magit-diff)
+(evil-leader/set-key "gs" 'magit-status)
+;; TODO -- try to start working with built-in magit keys
+;; through the special magit buffer
+;; In future possibly add alias function for "stage and commit current file"
