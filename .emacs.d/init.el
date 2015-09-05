@@ -14,7 +14,12 @@
 ;; Define list of packages to install
 (defvar worace/packages '(evil
                           magit
+                          gist
                           helm
+                          cider
+                          clojure-mode
+                          smartparens
+                          rainbow-delimiters
                           solarized-theme))
 
 ;; Set Color Scheme
@@ -27,10 +32,6 @@
 ;; Additionally, enable helm for file-finding
 ;; And some other standard uses
 (helm-mode 1)
-
-;; Require the common-lisp emacs extension; will use this
-;; To use some CL-style macros in following config functions
-(require 'cl)
 
 ;; Disable Extra Status/Toolbars
 (scroll-bar-mode -1)
@@ -89,19 +90,6 @@
       )
 ;;initial-major-mode 'markdown-mode
 
-
-;; Set up emacs package system and add a few extra
-;; Repositories
-(load "package")
-(package-initialize)
-(add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.milkbox.net/packages/") t)
-
-;; Define list of packages to install
-(defvar worace/packages '(evil) "Default Packages")
-
 ;; Require the common-lisp emacs extension; will use this
 ;; To use some CL-style macros in following config functions
 (require 'cl)
@@ -125,6 +113,12 @@
 ;; Evil (vim) Mode
 (require 'evil)
 (evil-mode 1)
+
+;; Clojure Setup
+(add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+(require 'smartparens-config)
+(smartparens-global-mode t)
+(add-hook 'clojure-mode-hook #'smartparens-strict-mode)
 
 ;; Typography
 (set-face-attribute 'default nil
