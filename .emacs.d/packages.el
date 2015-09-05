@@ -22,6 +22,8 @@
 			  smartparens
 			  rainbow-delimiters
 			  markdown-mode
+			  web-mode
+			  enh-ruby-mode
 			  solarized-theme))
 
 ;; Require the common-lisp emacs extension; will use this
