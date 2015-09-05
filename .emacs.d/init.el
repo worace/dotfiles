@@ -13,6 +13,7 @@
 
 ;; Define list of packages to install
 (defvar worace/packages '(evil
+                          magit
                           solarized-theme))
 
 ;; Set Color Scheme
