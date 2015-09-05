@@ -7,6 +7,14 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
+;; Set Startup Options -- Skip splash screen,
+;; Give empty scratch buffer, and start in markdown mode
+(setq inhibit-splash-screen t
+      initial-scratch-message nil
+      )
+;;initial-major-mode 'markdown-mode
+
+
 ;; Set up emacs package system and add a few extra
 ;; Repositories
 (load "package")
