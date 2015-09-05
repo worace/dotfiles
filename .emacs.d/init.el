@@ -14,10 +14,19 @@
 ;; Define list of packages to install
 (defvar worace/packages '(evil
                           magit
+                          helm
                           solarized-theme))
 
 ;; Set Color Scheme
 (load-theme 'solarized-light t)
+
+;; Enable helm autofilter/complete interface
+(require 'helm-config)
+;; Use helm-M-x as default finder in M-x
+(global-set-key (kbd "M-x") 'helm-M-x)
+;; Additionally, enable helm for file-finding
+;; And some other standard uses
+(helm-mode 1)
 
 ;; Require the common-lisp emacs extension; will use this
 ;; To use some CL-style macros in following config functions
