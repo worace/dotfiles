@@ -35,6 +35,7 @@ eval "defaults write NSGlobalDomain KeyRepeat -int 0"
 #alias em='/usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs &'
 em () { /usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs $* & }
 alias c="/usr/bin/open -a '/Applications/Google Chrome.app'"
+alias racket="/Applications/Racket\ v6.2/bin/racket"
 
 # Git
 alias gs='git status '
@@ -50,16 +51,21 @@ alias gco="git checkout"
 alias gst="git status"
 alias gpum="git pull upstream master"
 alias gpom="git pull origin master"
+alias hb="hub browse"
 
 alias be="bundle exec"
 alias bl="bundle --local"
+
+#figwheel
+alias lf="rlwrap lein figwheel dev test"
+
+alias el="tail -f /usr/local/var/log/elasticsearch/elasticsearch_worace.log"
 
 
 #servers n stuff
 alias pg='postgres -D ~/postgres/ &'
 alias start_redis="redis-server /usr/local/etc/redis.conf"
 alias start_memcached='/usr/bin/memcached -d'
-alias faye='bundle exec rackup faye.ru -s thin -E production -p 9999'
 
 #worace at work
 if [ -f ~/.lsrc.sh ]; then
@@ -105,6 +111,7 @@ alias turing="cd ~/code/Turing"
 alias code="cd ~/code"
 alias so="cd ~/code/sello"
 alias gp="cd $GOPATH/src/github.com/worace"
+alias clj="cd ~/code/clojure"
 
 source ~/.secrets.sh
 
@@ -118,3 +125,8 @@ function killgrep {
 export MITSCHEME_LIBRARY_PATH="/Applications/MIT\:GNU\ Scheme.app/Contents/Resources"
 export MIT_SCHEME_EXE="/usr/local/scheme"
 export TURING_SLACK_TOKEN="xoxp-2329094327-2746662827-3907823656-437836"
+
+# Boot2Docker client config
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=/Users/worace/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=0
