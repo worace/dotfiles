@@ -9,4 +9,6 @@
 
 
 ;; Git commands
+(evil-leader/set-key "gs" 'magit-stage-modified)
 (evil-leader/set-key "gc" 'magit-commit)
+(evil-leader/set-key "gd" 'magit-diff)
