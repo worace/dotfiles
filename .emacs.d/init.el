@@ -20,6 +20,7 @@
                           clojure-mode
                           smartparens
                           rainbow-delimiters
+                          markdown-mode
                           solarized-theme))
 
 ;; Set Color Scheme
@@ -41,28 +42,6 @@
 ;; Use y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Set Startup Options -- Skip splash screen,
-;; Give empty scratch buffer, and start in markdown mode
-(setq inhibit-splash-screen t
-      initial-scratch-message nil
-      )
-;;initial-major-mode 'markdown-mode
-
-;; Check if all our packages are installed; if we find one missing,
-;; return nil
-(defun worace/all-packages-installed ()
-  (loop for pkg in worace/packages
-	when (not (package-installed-p pkg)) do (return nil)
-	finally (return t)))
-
-;; If there are packages missing, install them
-;; This will run every time on boot
-(unless (worace/all-packages-installed)
-  (message "%s" "Refreshing package database...")
-  (package-refresh-contents)
-  (dolist (pkg worace/packages)
-    (when (not (package-installed-p pkg))
-      (package-install pkg))))
 
 ;; Evil (vim) Mode
 (require 'evil)
@@ -87,8 +66,7 @@
 ;; Give empty scratch buffer, and start in markdown mode
 (setq inhibit-splash-screen t
       initial-scratch-message nil
-      )
-;;initial-major-mode 'markdown-mode
+      initial-major-mode 'markdown-mode)
 
 ;; Require the common-lisp emacs extension; will use this
 ;; To use some CL-style macros in following config functions
@@ -119,6 +97,11 @@
 (require 'smartparens-config)
 (smartparens-global-mode t)
 (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
+
+;; Markdown Setup
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; Typography
 (set-face-attribute 'default nil
