@@ -41,9 +41,10 @@
      ruby
      rdio
      git
+     markdown
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(evil-escape)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'
@@ -164,8 +165,14 @@ layers configuration."
   (global-set-key (kbd "s-t") 'helm-projectile-find-file)
   (global-set-key (kbd "s-=") 'text-scale-increase)
   (global-set-key (kbd "s--") 'text-scale-decrease)
-  (evil-leader/set-key "SPC" 'ace-jump-char-mode)
-  (evil-leader/set-key "n-t" 'neotree)
+  (global-set-key (kbd "s--") 'text-scale-decrease)
+  (evil-leader/set-key "g q" 'magit-blame-quit)
+  ;;(evil-leader/set-key "n-t" 'neotree)
+  ;; JS Indentation
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2)
+  (setq js2-basic-offset 2)
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
