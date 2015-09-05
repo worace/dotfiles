@@ -6,6 +6,11 @@
 ;; And some other standard uses
 (helm-mode 1)
 
+;; Set up evil leader
+;; Make sure to enable this before evil-mode
+(global-evil-leader-mode)
+(evil-leader/set-leader "<SPC>")
+
 ;; Evil (vim) Mode
 (require 'evil)
 (evil-mode 1)

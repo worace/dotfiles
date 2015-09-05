@@ -6,6 +6,7 @@
 (load-file "./ui.el")
 (load-file "./theme.el")
 (load-file "./modes.el")
+(load-file "./keybindings.el")
 
 ;; Configure Backup Files - Put them all in home dir
 (setq backup-directory-alist `(("." . "~/.emacs_backups")))

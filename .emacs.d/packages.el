@@ -9,6 +9,7 @@
 
 ;; Define list of packages to install
 (defvar worace/packages '(evil
+			  evil-leader
 			  magit
 			  gist
 			  helm
