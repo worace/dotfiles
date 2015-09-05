@@ -10,6 +10,9 @@
 (require 'evil)
 (evil-mode 1)
 
+;; rainbow delims!
+(rainbow-delimiters-mode)
+
 ;; Clojure Setup
 (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
 (require 'smartparens-config)

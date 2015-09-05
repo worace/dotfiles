@@ -9,15 +9,19 @@
 
 ;; Define list of packages to install
 (defvar worace/packages '(evil
-                          magit
-                          gist
-                          helm
-                          cider
-                          clojure-mode
-                          smartparens
-                          rainbow-delimiters
-                          markdown-mode
-                          solarized-theme))
+			  magit
+			  gist
+			  helm
+			  neotree
+			  cider
+			  clojure-mode
+			  projectile
+			  ace-jump-mode
+			  helm-projectile
+			  smartparens
+			  rainbow-delimiters
+			  markdown-mode
+			  solarized-theme))
 
 ;; Require the common-lisp emacs extension; will use this
 ;; To use some CL-style macros in following config functions
