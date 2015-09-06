@@ -24,6 +24,7 @@
 			  markdown-mode
 			  web-mode
 			  enh-ruby-mode
+			  auto-complete
 			  solarized-theme))
 
 ;; Require the common-lisp emacs extension; will use this
