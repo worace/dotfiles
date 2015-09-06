@@ -2,11 +2,12 @@
 (setq user-full-name "Horace Williams")
 (setq user-mail-address "horace.d.williams@gmail.com")
 
-(load-file "./packages.el")
-(load-file "./ui.el")
-(load-file "./theme.el")
-(load-file "./modes.el")
-(load-file "./keybindings.el")
+(add-to-list 'load-path "~/.emacs.d/customizations/")
+(load "packages.el")
+(load "ui.el")
+(load "theme.el")
+(load "modes.el")
+(load "keybindings.el")
 
 ;; Configure Backup Files - Put them all in home dir
 (setq backup-directory-alist `(("." . "~/.emacs_backups")))
