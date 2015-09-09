@@ -23,6 +23,7 @@
 (require 'smartparens-config)
 (smartparens-global-mode t)
 (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
+(setq cider-show-error-buffer nil)
 
 ;; Markdown Setup
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))

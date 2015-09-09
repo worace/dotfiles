@@ -13,6 +13,7 @@
 			  magit
 			  gist
 			  helm
+			  helm-ag
 			  neotree
 			  cider
 			  clojure-mode
