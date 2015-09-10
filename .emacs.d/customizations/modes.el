@@ -31,3 +31,5 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 (global-auto-complete-mode)
+
+(global-evil-surround-mode 1)
