@@ -16,3 +16,5 @@
       indent-tabs-mode nil)
 
 (global-linum-mode)
+
+(setq-default show-trailing-whitespace t)

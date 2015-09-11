@@ -7,6 +7,9 @@
 (evil-leader/set-key "-" 'text-scale-decrease)
 (evil-leader/set-key "=" 'text-scale-increase)
 
+;;Clojure
+(evil-leader/set-key "b" 'cider-eval-buffer)
+
 
 ;; Git commands
 (evil-leader/set-key "gs" 'magit-status)
