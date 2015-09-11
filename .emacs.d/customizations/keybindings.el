@@ -10,11 +10,11 @@
 ;;Clojure
 (evil-leader/set-key "b" 'cider-eval-buffer)
 
-
 ;; Git commands
 (evil-leader/set-key "gs" 'magit-status)
 (evil-leader/set-key "gc" 'magit-commit)
 (evil-leader/set-key "gp" 'magit-push)
+
 ;; TODO -- try to start working with built-in magit keys
 ;; through the special magit buffer
 ;; In future possibly add alias function for "stage and commit current file"
@@ -27,6 +27,5 @@
   (magit-pull "origin" "master")
   (let ((filename (format-time-string "~/code/Turing/today/source/outlines/%Y-%m-%d.markdown")))
     (find-file filename)))
-
 
 (evil-define-key 'visual evil-surround-mode-map "s" 'evil-surround-edit)
