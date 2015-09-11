@@ -14,6 +14,7 @@
 ;; Git commands
 (evil-leader/set-key "gs" 'magit-status)
 (evil-leader/set-key "gc" 'magit-commit)
+(evil-leader/set-key "gp" 'magit-push)
 ;; TODO -- try to start working with built-in magit keys
 ;; through the special magit buffer
 ;; In future possibly add alias function for "stage and commit current file"
