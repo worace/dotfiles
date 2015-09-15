@@ -24,6 +24,9 @@
 (smartparens-global-mode t)
 (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
 (setq cider-show-error-buffer nil)
+(defun cider-setup ()
+  (setq show-trailing-whitespace nil))
+(add-hook 'cider-repl-mode-hook #'cider-setup)
 
 ;; Markdown Setup
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
@@ -33,3 +36,11 @@
 (global-auto-complete-mode)
 
 (global-evil-surround-mode 1)
+
+;; Javascript mode
+(setq js-indent-level 2)
+
+
+;;Hub Github Addon
+;;Currently just installed locally
+(require 'hub)
