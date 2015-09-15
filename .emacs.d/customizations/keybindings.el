@@ -15,6 +15,7 @@
 (evil-leader/set-key "gs" 'magit-status)
 (evil-leader/set-key "gc" 'magit-commit)
 (evil-leader/set-key "gp" 'magit-push)
+(evil-leader/set-key "hb" 'hub-browse)
 
 ;; TODO -- try to start working with built-in magit keys
 ;; through the special magit buffer
