@@ -26,6 +26,7 @@
 			  rainbow-delimiters
 			  markdown-mode
 			  web-mode
+			  jsx-mode
 			  enh-ruby-mode
 			  auto-complete
 			  solarized-theme))
