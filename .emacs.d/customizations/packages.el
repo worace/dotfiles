@@ -12,6 +12,7 @@
 (defvar worace/packages '(evil
 			  evil-leader
 			  evil-surround
+			  ace-window
 			  magit
 			  gist
 			  helm

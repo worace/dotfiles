@@ -24,13 +24,18 @@
 (smartparens-global-mode t)
 (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
 (setq cider-show-error-buffer nil)
-(defun cider-setup () (setq show-trailing-whitespace nil))
+(defun cider-setup ()
+  (setq show-trailing-whitespace nil)
+  (setq truncate-lines nil))
 (add-hook 'cider-repl-mode-hook #'cider-setup)
 
 ;; Markdown Setup
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(defun md-setup () (setq truncate-lines nil))
+(add-hook 'markdown-mode-hook #'md-setup)
 
 (global-auto-complete-mode)
 (global-evil-surround-mode 1)

@@ -6,7 +6,7 @@
 (evil-leader/set-key "/" 'comment-or-uncomment-region)
 (evil-leader/set-key "-" 'text-scale-decrease)
 (evil-leader/set-key "=" 'text-scale-increase)
-(evil-leader/set-key "w" 'other-window)
+(evil-leader/set-key "w" 'ace-window)
 
 ;;Clojure
 (evil-leader/set-key "b" 'cider-eval-buffer)
