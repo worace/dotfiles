@@ -26,6 +26,7 @@
 			  smartparens
 			  rainbow-delimiters
 			  markdown-mode
+			  markdown-toc
 			  web-mode
 			  jsx-mode
 			  enh-ruby-mode
