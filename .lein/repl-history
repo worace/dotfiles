@@ -1,0 +1,178 @@
+(symbol? :a)
+(symbol? 'a)
+(symbol? "a")
+(def a [1 2 3 4 5])
+(last a)
+(take (-1 (count a) ) a)
+(take (- 1 (count a)) a)
+(take 4 a)
+(count a)
+(- 1 4
+)
+(concat (last a) (take (- (count a) 1) a) )
+(conj (last a) (take (- (count a) 1) a) )
+(last a)
+(take (- (count a) 1) a)
+(conj 8 (take (- (count a) 1) a))
+(conj (take (- (count a) 1) a) 8)
+(let [[first-name last-name & aliases]
+           (list "Rich" "Hickey" "The Clojurer" "Go Time" "Macro Killah")]
+       (str (first-name " " last-name " aka " (interpose " aka " aliases))))
+(let [[first-name last-name & aliases]
+(list "Rich" "Hickey" "The Clojurer" "Go Time" "Macro Killah")]
+(str (first-name " " last-name " aka " (interpose " aka " aliases))))
+(let [aliases (list "The Clojurer" "Go Time" "MK")]
+(interpose " aka " aliases))
+(str (interpose " aka " aliases))
+(let [aliases (list "The Clojurer" "Go Time" "MK")]
+(str (interpose " aka " aliases))
+)
+(let [aliases (list "The Clojurer" "Go Time" "MK")]
+(apply (str (interpose " aka " aliases)))
+)
+(let [aliases (list "The Clojurer" "Go Time" "MK")]
+(apply str (interpose " aka " aliases)))
+{:a "b"}
+(interpose "," "pizza" "calzones" "lasagna")
+(str 123)
+(str 123 456 789)
+exit
+(+ 1 1)
+1234
+'abcd'
+"abcd"
+[1 2 3 4]
+[1 "abcd" 4 5.0
+]
+{:a "b"}
+{"b" :a}
+(get {"b" :a} "b")
+(def pizza "mmmmm")
+(str pizza)
+(let [my-string "pizza]
+(println my-string))
+(let [my-string "pizza"]
+(println my-string))
+(map str [1 2 3 4])
+(reduce * [2 4 6 8]
+)
+(defn my-function [an-argument another-argument]
+  (println (str an-argument another-argument)))
+(my-function 123 "pizza")
+(fn [x] (* 2 x))
+((fn [x] (* 2 x)) 3)
+if false
+  1234
+  5678)
+(if false
+1234
+5677)
+(loop [counter 10]
+  (if (= 0 counter)
+    (println "All done!")
+    (recur dec counter)))
+(loop [counter 10]
+  (if (= 0 counter)
+    (println "All done!")
+    (recur (dec counter)))
+)
+(loop [counter 10 sum 0]
+  (if (= 0 counter)
+    (println (str "Got: " sum))
+    (recur (dec counter) (+ counter sum))))
+(reduce + (range 1 11))
+(loop [counter 10]
+  (if (= 0 counter)
+    0
+    (+ counter (recur (dec counter)))))
+(def test-address
+  {:street-address "123 Test Lane"
+   :city "Testerville"
+   :state "TX"})
+(let [{street-address :street-address, city :city, state :state} test-address]
+       (str (interpose ", " street-address city state)))
+(let [{street-address :street-address, city :city, state :state} test-address]
+(str (interpose ", " [street-address city state])))
+(keys {:a "b"})
+(values {:a "b"})
+(:a {:a "b"})
+exit
+clojure
+clojure.lang.IFn
+(println "hi")
+(quit)
+(println "hello")
+exit
+(println "hello students, including horace")
+(+ 1 2)
+(- 1 2)
+()
+'(1 2 3)
+1.67
+5/6
+(type 5/6)
+[1, 2, 3]
+(type [1, 2, 3])
+[1 2 3]
+{:a "b" :c "d"}
+(type {:a "b" :c "d"})
+"horace"
+(type "horace")
++
+(type +)
+(type type)
+(defn hi [] (println "hi"))
+(type hi)
+(fn [] (println "hello"))
+(type (fn [] (println "hello")))
+(println "hi")
+(println "hi" " horace")
+(println "hi" "horace")
+(println "hi" "horace" "another word")
+(fn [] (println "hello"))
+((fn [] (println "hello")))
+((fn [an-argument] (println "hello")))
+(+ 1)
+((fn [an-argument] (println "hello")) "horace")
+((fn [an-argument] (println "hello" an-argument)) "horace")
+(def a-thing 123)
+a-thing
+(def my-name "horace")
+(+ 1 2)
+(count my-name)
+(def a-vector [1 2 3])
+(count a-vector)
+(def my-func (fn [name] (println "hello," name)))
+my-func
+(type my-func)
+(my-func my-name)
+(my-func "some string")
+(defn my-function [arg] (println "heres the function body" arg))
+(my-function "horace")
+(map count ["horace" "hello" "hi"])
+(type count)
+(println "hi")
+(println "hi" "buddy")
+(+ 1 2)
+(+ 1 2 3 4 5)
+(defn two-arg-func [a b] (println a b))
+(two-arg-func "horace" "student")
+(two-arg-func "horace")
+(two-arg-func "horace" "asdfas" "asdfasdf")
+*e
+["a" 1 [1 2] {:a "b"]]
+[+ -]
+(map count ["horace" "hi"])
+(map (fn [arg] (println "pizza")) ["horace" "hi"])
+(map (fn [arg] (println "pizza" arg)) ["horace" "hi"])
+(map (fn [func] (apply func [1 2 3])) [+ -])
+quit
+(in-ns slack-slurper)
+(in-ns 'slack-slurper.core)
+repl-server
+@repl-server
+(log/info "pizza")
+exit
+(use '[clojure.tools.nrepl.server :only (start-server stop-server)])
+(defonce server (start-server :port 7888))
+exit

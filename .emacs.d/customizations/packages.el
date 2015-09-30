@@ -8,6 +8,10 @@
 	     '("melpa-stable" . "http://stable.melpa.org/packages/")
 	      t)
 
+(add-to-list 'package-archives
+	     '("melpa-stable-milkbox" . "http://melpa-stable.milkbox.net/packages/")
+	      t)
+
 ;; Define list of packages to install
 (defvar worace/packages '(evil
 			  evil-leader
