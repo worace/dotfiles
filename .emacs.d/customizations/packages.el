@@ -12,8 +12,13 @@
 	     '("melpa-stable-milkbox" . "http://melpa-stable.milkbox.net/packages/")
 	      t)
 
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/")
+	      t)
+
 ;; Define list of packages to install
-(defvar worace/packages '(evil
+(defvar worace/packages '(elm-mode
+			  evil
 			  evil-leader
 			  evil-surround
 			  ace-window
