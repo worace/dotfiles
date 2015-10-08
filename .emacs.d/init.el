@@ -2,6 +2,8 @@
 (setq user-full-name "Horace Williams")
 (setq user-mail-address "horace.d.williams@gmail.com")
 
+(setq exec-path (append exec-path '("/usr/local/bin")))
+
 (add-to-list 'load-path "~/.emacs.d/customizations/")
 (load "packages.el")
 (load "ui.el")
