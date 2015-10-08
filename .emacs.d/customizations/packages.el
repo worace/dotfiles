@@ -12,9 +12,9 @@
 	     '("melpa-stable-milkbox" . "http://melpa-stable.milkbox.net/packages/")
 	      t)
 
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/")
-	      t)
+;; (add-to-list 'package-archives
+;; 	     '("melpa" . "https://melpa.org/packages/")
+;; 	      t)
 
 ;; Define list of packages to install
 (defvar worace/packages '(elm-mode
@@ -24,6 +24,7 @@
 			  ace-window
 			  magit
 			  gist
+                          haskell-mode
 			  helm
 			  helm-ag
 			  neotree
