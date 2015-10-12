@@ -2,8 +2,8 @@
 ;; Repositories
 (load "package")
 (package-initialize)
-;; (add-to-list 'package-archives
-;; 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives
+ 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives
 	     '("melpa-stable" . "http://stable.melpa.org/packages/")
 	      t)
@@ -12,9 +12,9 @@
 	     '("melpa-stable-milkbox" . "http://melpa-stable.milkbox.net/packages/")
 	      t)
 
-;; (add-to-list 'package-archives
-;; 	     '("melpa" . "https://melpa.org/packages/")
-;; 	      t)
+(add-to-list 'package-archives
+ 	     '("melpa" . "https://melpa.org/packages/")
+ 	      t)
 
 ;; Define list of packages to install
 (defvar worace/packages '(elm-mode
