@@ -27,7 +27,7 @@
   (interactive)
   (cd "~/Turing/today")
   (magit-pull "origin" "master")
-  (let ((filename (format-time-string "~/code/Turing/today/source/outlines/%Y-%m-%d.markdown")))
+  (let ((filename (format-time-string "~/Turing/today/source/outlines/%Y-%m-%d.markdown")))
     (find-file filename)))
 
 (evil-define-key 'visual evil-surround-mode-map "s" 'evil-surround-edit)
