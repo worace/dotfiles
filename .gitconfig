@@ -1,9 +1,7 @@
 [user]
 	name = Horace Williams
 	email = horace.d.williams@gmail.com
-[github]
-  user = worace
-  token = 7e8fd4498c1e8ddf76b46313abaf10f3
+
 [core]
   autocrlf = input
   safecrlf = false

@@ -49,8 +49,7 @@
 
 ;;Hub Github Addon
 ;;Currently just installed locally
-(require 'hub)
-
+;;(require 'hub)
 
 ;; Haskell
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
