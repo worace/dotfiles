@@ -25,7 +25,7 @@
 (defun edit-today ()
   "opens the outline for today's date in the turing outlines directory"
   (interactive)
-  (cd "~/code/Turing/today")
+  (cd "~/Turing/today")
   (magit-pull "origin" "master")
   (let ((filename (format-time-string "~/code/Turing/today/source/outlines/%Y-%m-%d.markdown")))
     (find-file filename)))
