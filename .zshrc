@@ -38,10 +38,12 @@ alias bl="bundle --local"
 
 alias lf="rlwrap lein figwheel dev test" #figwheel readline mode
 
-export GOPATH=$HOME/go
-export GOROOT=`go env GOROOT`
-export PATH="$GOPATH/bin:$PATH"
-export PATH="$PATH:/usr/local/opt/go/libexec/bin"
+# GOLANG
+#export GOPATH=$HOME/go
+#export GOROOT=`go env GOROOT`
+#export PATH="$GOPATH/bin:$PATH"
+#export PATH="$PATH:/usr/local/opt/go/libexec/bin"
+#alias gp="cd $GOPATH/src/github.com/worace"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -53,7 +55,6 @@ export PATH="/usr/local/bin:$PATH"
 alias bounce_dns="sudo killall -HUP mDNSResponder"
 alias turing="cd ~/Turing"
 alias code="cd ~/code"
-alias gp="cd $GOPATH/src/github.com/worace"
 alias clj="cd ~/code/clojure"
 
 if [[ -a ~/.secrets.sh ]]; then
@@ -74,3 +75,7 @@ export MIT_SCHEME_EXE="/usr/local/scheme"
 export DOCKER_HOST=tcp://192.168.59.103:2376
 export DOCKER_CERT_PATH=/Users/worace/.boot2docker/certs/boot2docker-vm
 export DOCKER_TLS_VERIFY=0
+
+# Chruby for ruby version management
+source /usr/local/share/chruby/chruby.sh
+chruby 2.2.2
