@@ -18,7 +18,6 @@ source $ZSH/oh-my-zsh.sh
 eval "defaults write NSGlobalDomain KeyRepeat -int 0"
 
 em () { open -a /usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs $* }
-alias c="/usr/bin/open -a '/Applications/Google Chrome.app'"
 alias racket="/Applications/Racket\ v6.2/bin/racket"
 
 # Git
@@ -38,14 +37,6 @@ alias be="bundle exec"
 alias bl="bundle --local"
 
 alias lf="rlwrap lein figwheel dev test" #figwheel readline mode
-alias el="tail -f /usr/local/var/log/elasticsearch/elasticsearch_worace.log"
-
-alias pg='postgres -D ~/postgres/ &'
-alias start_redis="redis-server /usr/local/etc/redis.conf"
-alias start_memcached='/usr/bin/memcached -d'
-
-export RBENV_ROOT=/usr/local/var/rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 export GOPATH=$HOME/go
 export GOROOT=`go env GOROOT`
@@ -54,18 +45,14 @@ export PATH="$PATH:/usr/local/opt/go/libexec/bin"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
-#RBENV
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
 export CC="gcc"
 
 #add homebrew bin directory to path
 export PATH="/usr/local/bin:$PATH"
 
 alias bounce_dns="sudo killall -HUP mDNSResponder"
-alias turing="cd ~/code/Turing"
+alias turing="cd ~/Turing"
 alias code="cd ~/code"
-alias so="cd ~/code/sello"
 alias gp="cd $GOPATH/src/github.com/worace"
 alias clj="cd ~/code/clojure"
 
