@@ -19,6 +19,9 @@ case `uname` in
   Darwin)
     eval "defaults write NSGlobalDomain KeyRepeat -int 0"
     ;;
+  Linux)
+    alias copy="xclip -selection c"
+    ;;
 esac
 
 em () { open -a /usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs $* }
