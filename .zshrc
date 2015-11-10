@@ -15,7 +15,11 @@ plugins=(git zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 #increase keyrepeat speed beyond os x allowed maximum
-eval "defaults write NSGlobalDomain KeyRepeat -int 0"
+case `uname` in
+  Darwin)
+    eval "defaults write NSGlobalDomain KeyRepeat -int 0"
+    ;;
+esac
 
 em () { open -a /usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs $* }
 alias racket="/Applications/Racket\ v6.2/bin/racket"
