@@ -9,7 +9,8 @@
 (evil-leader/set-key "w" 'ace-window)
 
 ;;Clojure
-(evil-leader/set-key "b" 'cider-eval-buffer)
+(evil-leader/set-key "eb" 'cider-eval-buffer)
+(evil-leader/set-key "er" 'cider-eval-region)
 
 ;; Git commands
 (evil-leader/set-key "gs" 'magit-status)

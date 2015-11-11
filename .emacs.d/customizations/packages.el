@@ -4,6 +4,7 @@
 (package-initialize)
 (add-to-list 'package-archives
  	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+
 (add-to-list 'package-archives
 	     '("melpa-stable" . "http://stable.melpa.org/packages/")
 	      t)
@@ -42,6 +43,11 @@
 			  enh-ruby-mode
 			  auto-complete
 			  solarized-theme))
+
+(when (boundp 'package-pinned-packages)
+  (setq package-pinned-packages
+                '((cider              . "melpa-stable"))))
+
 
 ;; Require the common-lisp emacs extension; will use this
 ;; To use some CL-style macros in following config functions
