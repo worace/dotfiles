@@ -133,3 +133,21 @@ sudo apt-get install wine
 ```
 
 Use standard windows installer [here](https://agilebits.com/onepassword/windows)
+
+### 12. F.lux
+
+This supposedly had a PPA but it seems to
+be defunct.
+
+Managed to install it with these instructions
+from [this post](https://gist.github.com/robertboloc/9feaa9150926efa4175a)
+
+```
+sudo apt-get install python-glade2 python-appindicator python-pexpect python-gconf
+cd ~/Downloads
+git clone https://github.com/Kilian/f.lux-indicator-applet.git
+cd f.lux-indicator-applet
+chmod +x setup.py
+sudo ./setup.py install
+fluxgui
+```
