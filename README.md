@@ -151,3 +151,6 @@ chmod +x setup.py
 sudo ./setup.py install
 fluxgui
 ```
+### Slack Client
+
+[ScudCloud](https://github.com/raelgc/scudcloud)
