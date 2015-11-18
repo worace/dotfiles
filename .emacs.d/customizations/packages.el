@@ -18,7 +18,7 @@
  	      t)
 
 ;; Define list of packages to install
-(defvar worace/packages '(elm-mode
+(defvar worace/packages '(;;elm-mode
 			  evil
 			  evil-leader
 			  evil-surround
