@@ -5,5 +5,6 @@
                   [com.jakemccrary/lein-test-refresh "0.6.0" :exclusions [org.clojure/tools.namespace]]]
         :dependencies [[alembic "0.3.2"]
                        [org.clojure/tools.namespace "0.2.11"]
-                       [org.clojure/tools.nrepl "0.2.7"]]}
+                       [org.clojure/tools.nrepl "0.2.7"]]
+        :jvm-opts ["-Djava.net.preferIPv4Stack=true"]}
  }
