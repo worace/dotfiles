@@ -113,3 +113,23 @@ sudo mv lein /usr/local/bin
 sudo chmod a+x /usr/local/bin/lein
 lein repl
 ```
+### 10. Dropbox
+
+Install with the ubuntu installer [here](https://www.dropbox.com/install?os=lnx)
+
+python-gpgme is also required for some verification stuff:
+
+```
+sudo apt-get install python-gpgme
+```
+
+### 11. WINE / 1password
+
+Somewhat miraculously got this working thanks
+to [this tutorial](https://discussions.agilebits.com/discussion/42126/making-1password-work-in-ubuntu-14-04)
+
+```
+sudo apt-get install wine
+```
+
+Use standard windows installer [here](https://agilebits.com/onepassword/windows)
