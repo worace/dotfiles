@@ -85,4 +85,5 @@ export DOCKER_TLS_VERIFY=0
 
 # Chruby for ruby version management
 source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
 chruby 2.2.2

@@ -51,5 +51,9 @@
 ;;Currently just installed locally
 (require 'hub)
 
+;;Emacs Livedown
+;;Installed manually from here https://github.com/shime/emacs-livedown
+(require 'livedown)
+
 ;; Haskell
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
