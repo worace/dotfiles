@@ -41,6 +41,7 @@
 			  web-mode
 			  jsx-mode
 			  enh-ruby-mode
+			  inf-ruby
 			  auto-complete
 			  solarized-theme))
 

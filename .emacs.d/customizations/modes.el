@@ -57,3 +57,11 @@
 
 ;; Haskell
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+
+;;ruby
+(require 'inf-ruby)
+(add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
+(when (executable-find "pry")
+    (add-to-list 'inf-ruby-implementations '("pry" . "pry"))
+    (setq inf-ruby-default-implementation "pry"))
+(require 'ruby-mode)
