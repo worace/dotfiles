@@ -18,13 +18,14 @@ source $ZSH/oh-my-zsh.sh
 case `uname` in
   Darwin)
     eval "defaults write NSGlobalDomain KeyRepeat -int 0"
+    em () { open -a /usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs $* }
     ;;
   Linux)
     alias copy="xclip -selection c"
+    em () { emacs $* & disown }
     ;;
 esac
 
-em () { open -a /usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs $* }
 alias racket="/Applications/Racket\ v6.2/bin/racket"
 
 # Git
