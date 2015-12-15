@@ -49,6 +49,7 @@ ln -s ~/dotfiles/.emacs.d ~/.emacs.d
 ```
 sudo apt-get install zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+cp ~/dotfiles/worace.zsh-theme ~/.oh-my-zsh/themes/
 chsh -s /bin/zsh 
 # Note -- need to log out and log in on ubuntu for this to take effect
 ```
