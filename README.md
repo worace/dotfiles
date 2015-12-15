@@ -47,6 +47,7 @@ ln -s ~/dotfiles/.emacs.d ~/.emacs.d
 ### 6. ZSH / Oh-my-zsh
 
 ```
+sudo apt-get install zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 chsh -s /bin/zsh 
 # Note -- need to log out and log in on ubuntu for this to take effect
