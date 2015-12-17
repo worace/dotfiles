@@ -19,6 +19,7 @@
 
 ;; Define list of packages to install
 (defvar worace/packages '(;;elm-mode
+			  ag
 			  evil
 			  evil-leader
 			  evil-surround
@@ -28,9 +29,11 @@
                           haskell-mode
 			  helm
 			  helm-ag
+			  json-reformat
 			  neotree
 			  cider
 			  clojure-mode
+			  clj-refactor
 			  projectile
 			  ace-jump-mode
 			  helm-projectile
@@ -47,7 +50,8 @@
 
 (when (boundp 'package-pinned-packages)
   (setq package-pinned-packages
-                '((cider              . "melpa-stable"))))
+	'((cider              . "melpa-stable")
+	  (clj-refactor       . "melpa-stable"))))
 
 
 ;; Require the common-lisp emacs extension; will use this

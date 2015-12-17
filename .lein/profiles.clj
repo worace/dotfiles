@@ -1,6 +1,7 @@
 ;;Hotloading deps with refactor-nrepl:
 ;;https://gist.github.com/worace/742d73e8d27a46ad759c
 {:user {:plugins [[lein-exec "0.3.4"]
+                  [lein-try "0.4.3"]
 	          [lein-create-template "0.1.1"]
                   [cider/cider-nrepl "0.9.1"]
                   [org.clojure/tools.namespace "0.2.11"]
