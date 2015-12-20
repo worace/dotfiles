@@ -5,7 +5,12 @@ dotfiles
 
 ### 1. Installing Git
 
-	$ sudo apt-get install git
+
+```
+sudo apt-add-repository ppa:git-core/ppa
+sudo apt-get update
+sudo apt-get install git
+```
 
 ### 2. SSH Keys
 
