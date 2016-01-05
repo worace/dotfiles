@@ -19,11 +19,6 @@
 (evil-leader/set-key "gp" 'magit-push)
 (evil-leader/set-key "hb" 'hub-browse)
 
-;; TODO -- try to start working with built-in magit keys
-;; through the special magit buffer
-;; In future possibly add alias function for "stage and commit current file"
-
-
 (defun edit-today ()
   "opens the outline for today's date in the turing outlines directory"
   (interactive)
