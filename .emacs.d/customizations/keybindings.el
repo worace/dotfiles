@@ -7,6 +7,7 @@
 (evil-leader/set-key "-" 'text-scale-decrease)
 (evil-leader/set-key "=" 'text-scale-increase)
 (evil-leader/set-key "w" 'ace-window)
+(evil-leader/set-key "ct" 'toggle-theme)
 
 ;;Clojure
 (evil-leader/set-key "eb" 'cider-eval-buffer)
