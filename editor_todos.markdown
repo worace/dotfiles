@@ -6,8 +6,7 @@
 * ~`em .` -- background this to allow opening from cmd-line without hanging~
 * ~Cmd-T to open fuzzy find~
 * ~leader-n to open neotree~
-* Fuzzy find clear cache
 * Cmd-/ to toggle comments -- sort of working -- only in visual mode
-* Cmd-+ / Cmd-- to increase font size -- http://www.emacswiki.org/emacs/GlobalTextScaleMode
-* Trailing whitespace and hard-tab display
+* ~Cmd-+ / Cmd-- to increase font size -- http://www.emacswiki.org/emacs/GlobalTextScaleMode~
+* ~Trailing whitespace and hard-tab display~
 * erb syntax highlighting
