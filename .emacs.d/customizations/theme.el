@@ -41,3 +41,11 @@
 (advice-add 'linum-update-window :after 'linum-update-window-scale-fix)
 
 (setq-default show-trailing-whitespace t)
+
+(defun disable-trailing-whitespace ()
+  (interactive)
+  (setq show-trailing-whitespace nil))
+
+(defun enable-trailing-whitespace ()
+  (interactive)
+  (setq show-trailing-whitespace t))
