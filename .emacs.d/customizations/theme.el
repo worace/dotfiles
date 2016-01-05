@@ -49,3 +49,5 @@
 (defun enable-trailing-whitespace ()
   (interactive)
   (setq show-trailing-whitespace t))
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
