@@ -65,3 +65,6 @@
     (add-to-list 'inf-ruby-implementations '("pry" . "pry"))
     (setq inf-ruby-default-implementation "pry"))
 (require 'ruby-mode)
+
+;;Fireplace :)
+(require 'fireplace)
