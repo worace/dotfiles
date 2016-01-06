@@ -20,6 +20,7 @@
 ;; Define list of packages to install
 (defvar worace/packages '(;;elm-mode
 			  ag
+			  default-text-scale
 			  evil
 			  evil-leader
 			  evil-surround

@@ -8,12 +8,6 @@
 	(enable-theme 'solarized-dark)
       (enable-theme 'solarized-light)))
 
-;; Set text-scale-increase to affect all buffers
-(defadvice text-scale-increase (around all-buffers (arg) activate)
-    (dolist (buffer (buffer-list))
-      (with-current-buffer buffer
-        ad-do-it)))
-
 ;; Typography
 (set-face-attribute 'default nil
 		    :family "Source Code Pro"

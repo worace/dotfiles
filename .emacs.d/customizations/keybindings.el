@@ -5,8 +5,8 @@
 (evil-leader/set-key "x" 'helm-M-x)
 (evil-leader/set-key "s" 'save-buffer)
 (evil-leader/set-key "/" 'comment-or-uncomment-region)
-(evil-leader/set-key "-" 'text-scale-decrease)
-(evil-leader/set-key "=" 'text-scale-increase)
+(evil-leader/set-key "-" 'default-text-scale-decrease)
+(evil-leader/set-key "=" 'default-text-scale-increase)
 (evil-leader/set-key "w" 'ace-window)
 (evil-leader/set-key "ct" 'toggle-theme)
 
