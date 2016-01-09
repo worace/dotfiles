@@ -3,12 +3,12 @@
 {:user {:plugins [[lein-exec "0.3.4"]
                   [lein-try "0.4.3"]
 	          [lein-create-template "0.1.1"]
-                  [cider/cider-nrepl "0.9.1"]
                   [org.clojure/tools.namespace "0.2.11"]
                   [refactor-nrepl "1.1.0"]
                   [com.jakemccrary/lein-test-refresh "0.6.0" :exclusions [org.clojure/tools.namespace]]]
         :dependencies [[alembic "0.3.2"]
                        [org.clojure/tools.namespace "0.2.11"]
-                       [org.clojure/tools.nrepl "0.2.7"]]
+                       [org.clojure/tools.nrepl "0.2.12"]]
         :jvm-opts ["-Djava.net.preferIPv4Stack=true"]}
- }
+ :repl {:plugins [[cider/cider-nrepl "0.10.1"]]
+        :dependencies [[debugger "0.1.7"]]}}
