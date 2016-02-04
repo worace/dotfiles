@@ -1,3 +1,5 @@
+(setq-default indent-tabs-mode nil)
+
 ;; Enable helm autofilter/complete interface
 (require 'helm-config)
 ;; Use helm-M-x as default finder in M-x
@@ -34,7 +36,8 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-(defun md-setup () (setq truncate-lines nil))
+(defun md-setup ()
+  (visual-line-mode))
 (add-hook 'markdown-mode-hook #'md-setup)
 
 (global-auto-complete-mode)
@@ -68,3 +71,13 @@
 
 ;;Fireplace :)
 (require 'fireplace)
+
+(require 'web-mode)
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2))
+(add-hook 'web-mode-hook  'my-web-mode-hook)

@@ -17,6 +17,7 @@
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+(setq create-lockfiles nil)
 
 (setq backup-by-copying t)
 (setq delete-old-versions t
@@ -41,3 +42,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'downcase-region 'disabled nil)

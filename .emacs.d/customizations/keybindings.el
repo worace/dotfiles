@@ -1,5 +1,6 @@
 (evil-define-key 'normal global-map "G" 'end-of-buffer)
 (evil-leader/set-key "<SPC>" 'ace-jump-char-mode)
+(evil-leader/set-key "b" 'previous-buffer)
 (evil-leader/set-key "t" 'helm-projectile-find-file-dwim)
 (evil-leader/set-key "r" 'helm-recentf)
 (evil-leader/set-key "x" 'helm-M-x)
@@ -18,7 +19,12 @@
 (evil-leader/set-key "gs" 'magit-status)
 (evil-leader/set-key "gc" 'magit-commit)
 (evil-leader/set-key "gp" 'magit-push)
+(evil-leader/set-key "gf" 'magit-pull)
 (evil-leader/set-key "hb" 'hub-browse)
+
+(defun keybind ()
+  (interactive)
+  (find-file "~/dotfiles/.emacs.d/customizations/keybindings.el"))
 
 (defun edit-today ()
   "opens the outline for today's date in the turing outlines directory"
