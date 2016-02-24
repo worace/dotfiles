@@ -5,8 +5,8 @@
     (interactive)
     (if (eq (frame-parameter (next-frame) 'background-mode)
 	    'light)
-	(enable-theme 'solarized-dark)
-      (enable-theme 'solarized-light)))
+        (load-theme 'solarized-dark)
+      (load-theme 'solarized-light)))
 
 ;; Typography
 (set-face-attribute 'default nil
