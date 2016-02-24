@@ -36,9 +36,22 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-(defun md-setup ()
-  (visual-line-mode))
-(add-hook 'markdown-mode-hook #'md-setup)
+;; (defun md-setup ()
+;;   (message "MARKDOWN SETUP RUNNING")
+;;   (setq evil-cross-lines t)
+;;   (visual-line-mode)
+;;   (toggle-word-wrap))
+
+(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (setq evil-cross-lines t)
+            (visual-line-mode)
+            (toggle-word-wrap)))
 
 (global-auto-complete-mode)
 (global-evil-surround-mode 1)
