@@ -1,6 +1,6 @@
 (evil-define-key 'normal global-map "G" 'end-of-buffer)
 (evil-leader/set-key "<SPC>" 'ace-jump-char-mode)
-(evil-leader/set-key "b" 'previous-buffer)
+(evil-leader/set-key "b" 'helm-buffers-list)
 (evil-leader/set-key "t" 'helm-projectile-find-file-dwim)
 (evil-leader/set-key "r" 'helm-recentf)
 (evil-leader/set-key "x" 'helm-M-x)
