@@ -10,6 +10,7 @@
 (evil-leader/set-key "=" 'text-scale-increase)
 (evil-leader/set-key "w" 'ace-window)
 (evil-leader/set-key "ct" 'toggle-theme)
+(evil-leader/set-key "f" 'helm-projectile-ag)
 
 (setq mac-command-modifier 'super)
 (global-set-key (kbd "s--") 'text-scale-decrease)
