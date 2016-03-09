@@ -17,6 +17,10 @@
 (require 'evil)
 (evil-mode 1)
 
+;; Was losing evil gg in dired mode for some reason
+;; probably using dired wrong but this fixes it...
+(evil-define-key 'normal dired-mode-map "gg" 'beginning-of-buffer)
+
 ;; rainbow delims!
 (rainbow-delimiters-mode)
 
