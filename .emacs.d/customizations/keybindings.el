@@ -17,8 +17,11 @@
 (global-set-key (kbd "s-=") 'text-scale-increase)
 
 ;;Clojure
-(evil-leader/set-key "eb" 'cider-eval-buffer)
-(evil-leader/set-key "er" 'cider-eval-region)
+(evil-leader/set-key-for-mode 'clojure-mode "eb" 'cider-eval-buffer)
+(evil-leader/set-key-for-mode 'clojure-mode "er" 'cider-eval-region)
+
+;;Emacs Lisp
+(evil-leader/set-key-for-mode 'emacs-lisp-mode "eb" 'eval-buffer)
 
 ;; Git commands
 (evil-leader/set-key "gs" 'magit-status)
