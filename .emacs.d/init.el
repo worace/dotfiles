@@ -5,7 +5,7 @@
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
 ;; raise GC threshold to 100 MB
-(set gc-cons-threshold 100000000)
+(setq gc-cons-threshold 100000000)
 
 (add-to-list 'load-path "~/.emacs.d/customizations/")
 (load "packages.el")
