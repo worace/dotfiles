@@ -47,6 +47,7 @@
 			  enh-ruby-mode
 			  inf-ruby
 			  auto-complete
+                          spotify
 			  solarized-theme))
 
 (when (boundp 'package-pinned-packages)
