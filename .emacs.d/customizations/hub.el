@@ -88,10 +88,10 @@
 
 ;; Helpers
 
-(defcustom hub-api
-  (gh-pulls-api "api" :sync t :cache nil :num-retries 1)
-  "Github API instance. This is a `gh-pulls'"
-  :group 'hub)
+;;(defcustom hub-api
+;;  (gh-pulls-api "api" :sync t :cache nil :num-retries 1)
+;;  "Github API instance. This is a `gh-pulls'"
+;;  :group 'hub)
 
 (defun hub--command-one-line (cmd)
   (with-temp-buffer
