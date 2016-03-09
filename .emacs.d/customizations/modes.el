@@ -94,3 +94,9 @@
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2))
 (add-hook 'web-mode-hook  'my-web-mode-hook)
+
+
+;; Save Recent Files
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
