@@ -19,36 +19,36 @@
 
 ;; Define list of packages to install
 (defvar worace/packages '(;;elm-mode
-			  ag
-			  default-text-scale
-			  evil
-			  evil-leader
-			  evil-surround
-			  ace-window
-			  magit
-			  gist
+                          ace-jump-mode
+                          ace-window
+                          ag
+                          auto-complete
+                          cider
+                          clj-refactor
+                          clojure-mode
+                          default-text-scale
+                          enh-ruby-mode
+                          evil
+                          evil-leader
+                          evil-surround
+                          gist
                           haskell-mode
-			  helm
-			  helm-ag
-			  json-reformat
-			  neotree
-			  cider
-			  clojure-mode
-			  clj-refactor
-			  projectile
-			  ace-jump-mode
-			  helm-projectile
-			  smartparens
-			  rainbow-delimiters
-			  markdown-mode
-			  markdown-toc
-			  web-mode
-			  jsx-mode
-			  enh-ruby-mode
-			  inf-ruby
-			  auto-complete
+                          helm
+                          helm-ag
+                          helm-projectile
+                          inf-ruby
+                          json-reformat
+                          jsx-mode
+                          magit
+                          markdown-mode
+                          markdown-toc
+                          neotree
+                          projectile
+                          rainbow-delimiters
+                          smartparens
+                          solarized-theme
                           spotify
-			  solarized-theme))
+                          web-mode))
 
 (when (boundp 'package-pinned-packages)
   (setq package-pinned-packages
