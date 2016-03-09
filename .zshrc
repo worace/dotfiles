@@ -18,7 +18,7 @@ source $ZSH/oh-my-zsh.sh
 case `uname` in
   Darwin)
     eval "defaults write NSGlobalDomain KeyRepeat -int 0"
-    em () { open -a /usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs $* }
+    em () { /usr/local/Cellar/emacs/24.5/bin/emacsclient -c -n $* }
     ;;
   Linux)
     alias copy="xclip -selection c"
