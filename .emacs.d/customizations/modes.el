@@ -40,6 +40,9 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
+(custom-set-variables
+ '(markdown-command "/usr/local/bin/markdown"))
+
 ;; (defun md-setup ()
 ;;   (message "MARKDOWN SETUP RUNNING")
 ;;   (setq evil-cross-lines t)
