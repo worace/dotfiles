@@ -57,8 +57,9 @@
 (add-hook 'markdown-mode-hook
           (lambda ()
             (setq evil-cross-lines t)
-            (visual-line-mode)
-            (toggle-word-wrap)))
+            ;; (visual-line-mode)
+            ;; (toggle-word-wrap)
+            ))
 
 (global-auto-complete-mode)
 (global-evil-surround-mode 1)
@@ -107,3 +108,7 @@
 (require 'recentf)
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
+
+;;Exercism
+(require 'request) ;; needed for exercism
+(require 'exercism)

@@ -45,6 +45,7 @@
                           neotree
                           projectile
                           rainbow-delimiters
+                          request
                           smartparens
                           solarized-theme
                           spotify
