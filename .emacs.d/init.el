@@ -4,6 +4,11 @@
 
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
+ (setenv "PATH"
+         (concat (getenv "PATH")
+                 ":/usr/local/bin"))
+
+
 ;; raise GC threshold to 100 MB
 (setq gc-cons-threshold 100000000)
 
@@ -46,3 +51,4 @@
  ;; If there is more than one, they won't work right.
  )
 (put 'downcase-region 'disabled nil)
+(put 'erase-buffer 'disabled nil)
