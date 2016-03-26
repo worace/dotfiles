@@ -6,6 +6,7 @@
                   [org.clojure/tools.namespace "0.2.11"]
                   [refactor-nrepl "1.1.0"]
                   [com.jakemccrary/lein-test-refresh "0.6.0" :exclusions [org.clojure/tools.namespace]]]
+        :injections [(require ['clojure.repl :refer ['doc]])]
         :dependencies [[alembic "0.3.2"]
                        [org.clojure/tools.namespace "0.2.11"]
                        [org.clojure/tools.nrepl "0.2.12"]]
