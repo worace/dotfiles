@@ -42,6 +42,7 @@
                           magit
                           markdown-mode
                           markdown-toc
+                          org-bullets
                           neotree
                           projectile
                           rainbow-delimiters
