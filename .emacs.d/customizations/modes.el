@@ -113,3 +113,39 @@
 ;;Exercism
 (require 'request) ;; needed for exercism
 (require 'exercism)
+
+;; OOOOOORG
+;; Don't show // around italics
+(setq org-hide-emphasis-markers t)
+;; Have org treat code blocks like their native lang
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
+;; No line numbers in org (looks weird with the different sized headers)
+(add-hook 'org-mode-hook (lambda () (global-linum-mode 0)))
+;;Evil Bindings
+(evil-leader/set-key-for-mode 'org-mode "o" 'org-open-at-point)
+
+;; use pretty unicode bullets for lists
+(font-lock-add-keywords 'org-mode
+                        '(("^ +\\([-*]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+
+(let* ((variable-tuple (cond ((x-list-fonts "Avenir Medium") '(:font "Avenir Medium"))
+                             ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+                             (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+       (base-font-color     (face-foreground 'default nil 'default))
+       (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+
+  (custom-theme-set-faces 'user
+                          `(org-level-8 ((t (,@headline ,@variable-tuple))))
+                          `(org-level-7 ((t (,@headline ,@variable-tuple))))
+                          `(org-level-6 ((t (,@headline ,@variable-tuple))))
+                          `(org-level-5 ((t (,@headline ,@variable-tuple))))
+                          `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+                          `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
+                          `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
+                          `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
+                          `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil))))))
