@@ -54,10 +54,11 @@
 (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
 (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
 
+;; (add-hook 'markdown-mode-hook 'visual-line-mode)
 (add-hook 'markdown-mode-hook
           (lambda ()
             (setq evil-cross-lines t)
-            ;; (visual-line-mode)
+            (visual-line-mode 1)
             ;; (toggle-word-wrap)
             ))
 
