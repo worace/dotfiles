@@ -48,13 +48,12 @@ alias bl="bundle --local"
 alias lf="rlwrap lein figwheel dev test" #figwheel readline mode
 
 # GOLANG
-#export GOPATH=$HOME/go
-#export GOROOT=`go env GOROOT`
-#export PATH="$GOPATH/bin:$PATH"
-#export PATH="$PATH:/usr/local/opt/go/libexec/bin"
-#alias gp="cd $GOPATH/src/github.com/worace"
+export GOPATH=$HOME/go
+export GOROOT=`go env GOROOT`
+export PATH="$GOPATH/bin:$PATH"
+export PATH="$PATH:/usr/local/opt/go/libexec/bin"
+alias gp="cd $GOPATH/src/github.com/worace"
 
-### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 export CC="gcc"
 
@@ -70,11 +69,22 @@ if [[ -a ~/.secrets.sh ]]; then
   source ~/.secrets.sh
 fi
 
-export MANDRILL_USERNAME="horace.d.williams@gmail.com"
-export MANDRILL_KEY="NyMQFrKPBDd4o-RARly3rA"
-
 function killgrep {
   kill $(ps aux | grep $1 | grep -v "grep" | awk '{print $2}')
+}
+
+function pgrep {
+    ps aux | grep $1 | grep -v "grep"
+}
+
+function emrestart {
+    if pgrep "emacs.*daemon" > /dev/null
+    then
+        echo "killing emacs daemon process"
+        emacsclient -e "(kill-emacs)"
+    fi
+  launchctl unload "/Users/worace/Library/LaunchAgents/emacsserver.plist" &&
+  launchctl load "/Users/worace/Library/LaunchAgents/emacsserver.plist"
 }
 
 export MITSCHEME_LIBRARY_PATH="/Applications/MIT\:GNU\ Scheme.app/Contents/Resources"
