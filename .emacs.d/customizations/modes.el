@@ -91,9 +91,6 @@
     (setq inf-ruby-default-implementation "pry"))
 (require 'ruby-mode)
 
-;;Fireplace :)
-(require 'fireplace)
-
 (require 'web-mode)
 (defun my-web-mode-hook ()
   "Hooks for Web mode."

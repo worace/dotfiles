@@ -18,7 +18,6 @@
 (load "theme.el")
 (load "modes.el")
 (load "keybindings.el")
-(load "fireplace.elc")
 
 ;; store all backup and autosave files in the tmp dir
 (setq backup-directory-alist
