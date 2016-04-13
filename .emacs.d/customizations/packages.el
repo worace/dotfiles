@@ -3,7 +3,8 @@
 (load "package")
 (package-initialize)
 (add-to-list 'package-archives
- 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+             '("marmalade" . "http://marmalade-repo.org/packages/")
+             t)
 
 (add-to-list 'package-archives
 	     '("melpa-stable" . "http://stable.melpa.org/packages/")
@@ -24,6 +25,7 @@
                           ag
                           auto-complete
                           cider
+                          circe
                           clj-refactor
                           clojure-mode
                           default-text-scale
@@ -55,6 +57,7 @@
 (when (boundp 'package-pinned-packages)
   (setq package-pinned-packages
 	'((cider              . "melpa-stable")
+          (circe              . "melpa-stable")
 	  (clj-refactor       . "melpa-stable"))))
 
 
