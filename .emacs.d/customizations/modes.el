@@ -1,5 +1,7 @@
 (setq-default indent-tabs-mode nil)
 
+(global-linum-mode 1)
+
 ;; Enable helm autofilter/complete interface
 (require 'helm-config)
 ;; Use helm-M-x as default finder in M-x
@@ -118,7 +120,7 @@
 (setq org-src-fontify-natively t)
 (setq org-src-tab-acts-natively t)
 ;; No line numbers in org (looks weird with the different sized headers)
-(add-hook 'org-mode-hook (lambda () (global-linum-mode 0)))
+(add-hook 'org-mode-hook (lambda () (linum-mode 0)))
 ;;Evil Bindings
 (evil-leader/set-key-for-mode 'org-mode "o" 'org-open-at-point)
 
