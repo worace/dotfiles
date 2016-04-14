@@ -15,11 +15,18 @@ plugins=(git zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
-#increase keyrepeat speed beyond os x allowed maximum
 case `uname` in
   Darwin)
+    #increase keyrepeat speed beyond os x allowed maximum
     eval "defaults write NSGlobalDomain KeyRepeat -int 0"
-    em () { /usr/local/Cellar/emacs/24.5/bin/emacsclient -c -n $* }
+    em () {
+        if [ "$#" -ne 0 ];
+        then
+            /usr/local/Cellar/emacs/24.5/bin/emacsclient -c -n $*
+        else
+            /usr/local/Cellar/emacs/24.5/bin/emacsclient -c -n "~/scratch"
+        fi
+    }
     ;;
   Linux)
     alias copy="xclip -selection c"
