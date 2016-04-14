@@ -37,6 +37,7 @@
                           haskell-mode
                           helm
                           helm-ag
+                          helm-circe
                           helm-projectile
                           inf-ruby
                           json-reformat
