@@ -6,7 +6,7 @@
 	          [lein-create-template "0.1.1"]
                   [org.clojure/tools.namespace "0.2.11"]
                   [refactor-nrepl "1.1.0"]
-                  [com.jakemccrary/lein-test-refresh "0.6.0" :exclusions [org.clojure/tools.namespace]]]
+                  [com.jakemccrary/lein-test-refresh "0.14.0" :exclusions [org.clojure/tools.namespace]]]
         :injections [(require ['clojure.repl :refer ['doc]])]
         :repl-options {
                        :init (do (println "HI")

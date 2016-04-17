@@ -36,6 +36,10 @@
   (interactive)
   (find-file "~/dotfiles/.emacs.d/customizations/keybindings.el"))
 
+(defun ed-config ()
+  (interactive)
+  (dired "~/dotfiles/.emacs.d/customizations"))
+
 (defun edit-today ()
   "opens the outline for today's date in the turing outlines directory"
   (interactive)
