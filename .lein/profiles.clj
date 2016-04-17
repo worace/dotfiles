@@ -17,7 +17,7 @@
         :dependencies [[alembic "0.3.2"]
                        [org.clojure/tools.namespace "0.2.11"]
                        [org.clojure/tools.nrepl "0.2.12"]]
-        :jvm-opts ["-Djava.net.preferIPv4Stack=true"]}
+        :jvm-opts ["-Djava.net.preferIPv4Stack=true" "-XX:-OmitStackTraceInFastThrow"]}
  :dev {:dependencies [[debugger "0.1.7"]]}
  :repl {:plugins [[cider/cider-nrepl "0.10.1"]]
         :dependencies [[debugger "0.1.7"]]}}
