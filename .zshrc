@@ -98,9 +98,15 @@ export MITSCHEME_LIBRARY_PATH="/Applications/MIT\:GNU\ Scheme.app/Contents/Resou
 export MIT_SCHEME_EXE="/usr/local/scheme"
 
 # Boot2Docker client config
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH=/Users/worace/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=0
+# export DOCKER_HOST=tcp://192.168.59.103:2376
+# export DOCKER_CERT_PATH=/Users/worace/.boot2docker/certs/boot2docker-vm
+# export DOCKER_TLS_VERIFY=0
+
+# docker-machine env default
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/worace/.docker/machine/machines/default"
+export DOCKER_MACHINE_NAME="default"
 
 # Chruby for ruby version management
 source /usr/local/share/chruby/chruby.sh
