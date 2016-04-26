@@ -163,3 +163,7 @@ fluxgui
 ### Slack Client
 
 [ScudCloud](https://github.com/raelgc/scudcloud)
+
+### Gitignore
+
+I have this in dotfiles as `.system_gitignore` so i can have a special gitignore for this actual repo. Thus to link this one use `ln -s ~/dotfiles/.system_gitignore ~/.gitignore`
