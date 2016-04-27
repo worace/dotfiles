@@ -112,3 +112,16 @@ export DOCKER_MACHINE_NAME="default"
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 chruby 2.2.2
+
+function scrape {
+	wget \
+		--recursive \
+		--no-clobber \
+		--page-requisites \
+		--html-extension \
+		--convert-links \
+		--restrict-file-names=windows \
+		--domains website.org \
+		--no-parent \
+			$1
+}
