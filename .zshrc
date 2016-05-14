@@ -56,7 +56,7 @@ alias lf="rlwrap lein figwheel dev test" #figwheel readline mode
 
 # GOLANG
 export GOPATH=$HOME/go
-export GOROOT=`go env GOROOT`
+export GOROOT=$HOME/go
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$PATH:/usr/local/opt/go/libexec/bin"
 alias gp="cd $GOPATH/src/github.com/worace"
