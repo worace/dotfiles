@@ -12,6 +12,10 @@
 (evil-leader/set-key "ct" 'toggle-theme)
 (evil-leader/set-key "f" 'helm-projectile-ag)
 
+(evil-leader/set-key "zf" 'origami-toggle-node)
+(evil-leader/set-key "za" 'origami-close-all-nodes)
+(evil-leader/set-key "zo" 'origami-open-all-nodes)
+
 (evil-define-key 'normal origami-mode-map (kbd "zo") 'origami-toggle-node)
 
 (setq mac-command-modifier 'super)
