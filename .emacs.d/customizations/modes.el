@@ -150,3 +150,6 @@
                             `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))))
 
 (add-hook 'org-mode-hook 'worace-org-mode-setup)
+
+(require 'origami)
+(global-origami-mode)

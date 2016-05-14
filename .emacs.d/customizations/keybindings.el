@@ -12,6 +12,8 @@
 (evil-leader/set-key "ct" 'toggle-theme)
 (evil-leader/set-key "f" 'helm-projectile-ag)
 
+(evil-define-key 'normal origami-mode-map (kbd "zo") 'origami-toggle-node)
+
 (setq mac-command-modifier 'super)
 (global-set-key (kbd "s--") 'text-scale-decrease)
 (global-set-key (kbd "s-=") 'text-scale-increase)
@@ -89,6 +91,7 @@
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
-;; (evil-define-key 'normal global-map (kbd "S-k") 'move-line-up)
+;; (evil-define-key 'normal origami-mode-map (kbd "zo") 'move-line-up)
+
 ;; (define-key evil-normal-state-map (kbd "S-J") 'move-line-down)
 ;; (define-key evil-normal-state-map (kbd "S-j") 'move-line-down)
