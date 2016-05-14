@@ -46,6 +46,7 @@
                           markdown-mode
                           markdown-toc
                           org-bullets
+                          origami
                           neotree
                           projectile
                           rainbow-delimiters

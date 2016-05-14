@@ -40,7 +40,10 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+.idea/
+*.iml
 
 .nrepl-port
 .gradle/
 build/
+.lein-failures

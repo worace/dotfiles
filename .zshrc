@@ -125,3 +125,7 @@ function scrape {
 		--no-parent \
 			$1
 }
+
+function countloc {
+	find $1 -name "*" | xargs wc -l
+}
