@@ -1,0 +1,3 @@
+* Emacs Config
+
+[[http://aaronbedra.com/emacs.d/][Useful tutorial for safe keeping]]
