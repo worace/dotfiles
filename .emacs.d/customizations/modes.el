@@ -136,6 +136,9 @@
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (add-hook 'org-mode-hook (lambda () (org-indent-mode 1)))
+(setq org-src-preserve-indentation nil
+      org-edit-src-content-indentation 0)
+
 
 (defun org-insert-src-block (src-code-type)
   "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
