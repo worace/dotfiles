@@ -11,6 +11,23 @@
 (evil-leader/set-key "w" 'ace-window)
 (evil-leader/set-key "ct" 'toggle-theme)
 (evil-leader/set-key "f" 'helm-projectile-ag)
+(evil-leader/set-key "q" 'evil-quit)
+
+;; TODO Dired Bindings:
+;; dired-kill-subdir
+;; Configure Dired list output:
+;; (setq dired-listing-switches "...." --group-directories-first)
+;; Don't prompt before copying/deleting dir recursively:
+;; (setq dired-recursive-copies 'always)
+;; (setq dired-recursive-deletes 'always)
+;; Move to trash rather than rm -rf:
+;; (setq delete-by-moving-to-trash t)
+;; Dired-Jump: C-x C-j -- open dired in directory of current file
+;; Investigate:
+;; https://github.com/Fuco1/dired-hacks
+;; 
+
+
 
 (evil-leader/set-key "zf" 'origami-toggle-node)
 (evil-leader/set-key "za" 'origami-close-all-nodes)

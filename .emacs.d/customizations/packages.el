@@ -24,6 +24,7 @@
                           ace-window
                           ag
                           auto-complete
+                          chruby
                           cider
                           circe
                           clj-refactor
@@ -52,6 +53,7 @@
                           rainbow-delimiters
                           rainbow-mode
                           request
+                          seeing-is-believing
                           smartparens
                           solarized-theme
                           spotify

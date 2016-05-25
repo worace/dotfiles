@@ -78,6 +78,10 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
 ;;ruby
+(require 'chruby)
+(chruby "2.2.2")
+(require 'seeing-is-believing)
+(add-hook 'ruby-mode-hook 'seeing-is-believing)
 (require 'inf-ruby)
 (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
 (when (executable-find "pry")
