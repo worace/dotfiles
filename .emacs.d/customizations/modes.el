@@ -56,14 +56,6 @@
 (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
 (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
 
-;; (add-hook 'markdown-mode-hook 'visual-line-mode)
-(add-hook 'markdown-mode-hook
-          (lambda ()
-            (setq evil-cross-lines t)
-            (visual-line-mode 1)
-            ;; (toggle-word-wrap)
-            ))
-
 (global-auto-complete-mode)
 (global-evil-surround-mode 1)
 
@@ -116,6 +108,14 @@
 (require 'request) ;; needed for exercism
 (require 'exercism)
 
+;; Text Mode (Org, Markdown, etc)
+(defun worace-text-mode-hook ()
+  (turn-on-visual-line-mode)
+  (toggle-word-wrap 1)
+  (setq evil-cross-lines t))
+(add-hook 'text-mode-hook 'worace-text-mode-hook)
+
+
 ;; OOOOOORG
 ;; Don't show // around italics
 (setq org-hide-emphasis-markers t)
@@ -124,8 +124,6 @@
 (setq org-src-tab-acts-natively t)
 ;; No line numbers in org (looks weird with the different sized headers)
 (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
-;;Evil Bindings
-(evil-leader/set-key-for-mode 'org-mode "o" 'org-open-at-point)
 
 ;; use pretty unicode bullets for lists
 (font-lock-add-keywords 'org-mode
@@ -134,7 +132,27 @@
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
+(defun org-insert-src-block (src-code-type)
+  "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
+  (interactive
+   (let ((src-code-types
+          '("emacs-lisp" "python" "C" "sh" "java" "js" "clojure" "C++" "css"
+            "calc" "asymptote" "dot" "gnuplot" "ledger" "lilypond" "mscgen"
+            "octave" "oz" "plantuml" "R" "sass" "screen" "sql" "awk" "ditaa"
+            "haskell" "latex" "lisp" "matlab" "ocaml" "org" "perl" "ruby"
+            "scheme" "sqlite")))
+     (list (ido-completing-read "Source code type: " src-code-types))))
+  (progn
+    (newline-and-indent)
+    (insert (format "#+BEGIN_SRC %s\n" src-code-type))
+    (newline-and-indent)
+    (insert "#+END_SRC\n")
+    (previous-line 2)
+    (org-edit-src-code)))
+
 (defun worace-org-mode-setup ()
+  ;; keybinding for inserting code blocks
+  (local-set-key (kbd "C-c s i") 'org-insert-src-block)
   (let* ((variable-tuple (cond ((x-list-fonts "Avenir Medium") '(:font "Avenir Medium"))
                                ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
                                (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
@@ -154,5 +172,12 @@
 
 (add-hook 'org-mode-hook 'worace-org-mode-setup)
 
+;;Evil Bindings
+(evil-leader/set-key-for-mode 'org-mode "o" 'org-open-at-point)
+(evil-leader/set-key-for-mode 'org-mode "i s" 'org-edit-src-code)
+(evil-leader/set-key-for-mode 'org-mode "i l" 'org-insert-link)
+
 (require 'origami)
 (global-origami-mode)
+
+(require 'yaml-mode)
