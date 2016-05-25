@@ -50,16 +50,19 @@
                           neotree
                           projectile
                           rainbow-delimiters
+                          rainbow-mode
                           request
                           smartparens
                           solarized-theme
                           spotify
-                          web-mode))
+                          web-mode
+                          yaml-mode))
 
 (when (boundp 'package-pinned-packages)
   (setq package-pinned-packages
 	'((cider              . "melpa-stable")
           (circe              . "melpa-stable")
+          (yaml-mode          . "melpa-stable")
 	  (clj-refactor       . "melpa-stable"))))
 
 

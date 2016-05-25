@@ -129,3 +129,4 @@ function scrape {
 function countloc {
 	find $1 -name "*" | xargs wc -l
 }
+alias rake='noglob rake'
