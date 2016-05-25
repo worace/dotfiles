@@ -135,6 +135,7 @@
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(add-hook 'org-mode-hook (lambda () (org-indent-mode 1)))
 
 (defun org-insert-src-block (src-code-type)
   "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
