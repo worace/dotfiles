@@ -30,6 +30,7 @@
                           clj-refactor
                           clojure-mode
                           default-text-scale
+                          dockerfile-mode
                           enh-ruby-mode
                           evil
                           evil-leader
