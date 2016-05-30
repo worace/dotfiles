@@ -44,6 +44,8 @@
 (evil-leader/set-key-for-mode 'clojure-mode "er" 'cider-eval-region)
 (evil-leader/set-key-for-mode 'clojure-mode "ps" 'sp-forward-slurp-sexp)
 (evil-leader/set-key-for-mode 'clojure-mode "pb" 'sp-forward-barf-sexp)
+(evil-leader/set-key-for-mode 'clojurescript-mode "ps" 'sp-forward-slurp-sexp)
+(evil-leader/set-key-for-mode 'clojurescript-mode "pb" 'sp-forward-barf-sexp)
 
 ;;Emacs Lisp
 (evil-leader/set-key-for-mode 'emacs-lisp-mode "eb" 'eval-buffer)

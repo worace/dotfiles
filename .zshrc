@@ -102,11 +102,21 @@ export MIT_SCHEME_EXE="/usr/local/scheme"
 # export DOCKER_CERT_PATH=/Users/worace/.boot2docker/certs/boot2docker-vm
 # export DOCKER_TLS_VERIFY=0
 
-# docker-machine env default
-export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.100:2376"
-export DOCKER_CERT_PATH="/Users/worace/.docker/machine/machines/default"
-export DOCKER_MACHINE_NAME="default"
+case `uname` in
+  Darwin)
+  # docker-machine env default
+  export DOCKER_TLS_VERIFY="1"
+  export DOCKER_HOST="tcp://192.168.99.100:2376"
+  export DOCKER_CERT_PATH="/Users/worace/.docker/machine/machines/default"
+  export DOCKER_MACHINE_NAME="default"
+    ;;
+  Linux)
+  export DOCKER_TLS_VERIFY="1"
+  export DOCKER_HOST="tcp://192.168.99.100:2376"
+  export DOCKER_CERT_PATH="/home/worace/.docker/machine/machines/default"
+  export DOCKER_MACHINE_NAME="default"
+    ;;
+esac
 
 # Chruby for ruby version management
 source /usr/local/share/chruby/chruby.sh
@@ -130,3 +140,6 @@ function countloc {
 	find $1 -name "*" | xargs wc -l
 }
 alias rake='noglob rake'
+
+export NVM_DIR="/home/worace/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
