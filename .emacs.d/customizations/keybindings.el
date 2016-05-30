@@ -25,9 +25,6 @@
 ;; Dired-Jump: C-x C-j -- open dired in directory of current file
 ;; Investigate:
 ;; https://github.com/Fuco1/dired-hacks
-;; 
-
-
 
 (evil-leader/set-key "zf" 'origami-toggle-node)
 (evil-leader/set-key "za" 'origami-close-all-nodes)
