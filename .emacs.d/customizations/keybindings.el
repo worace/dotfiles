@@ -36,6 +36,10 @@
 (global-set-key (kbd "s--") 'text-scale-decrease)
 (global-set-key (kbd "s-=") 'text-scale-increase)
 
+;; Ruby
+(evil-leader/set-key-for-mode 'ruby-mode "eb" 'seeing-is-believing-run)
+(evil-leader/set-key-for-mode 'ruby-mode "er" 'seeing-is-believing-run-as-xmpfilter)
+
 ;;Clojure
 (evil-leader/set-key-for-mode 'clojure-mode "eb" 'cider-eval-buffer)
 (evil-leader/set-key-for-mode 'clojure-mode "er" 'cider-eval-region)
