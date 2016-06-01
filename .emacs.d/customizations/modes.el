@@ -184,6 +184,7 @@
 (evil-leader/set-key-for-mode 'org-mode "o" 'org-open-at-point)
 (evil-leader/set-key-for-mode 'org-mode "i s" 'org-edit-src-code)
 (evil-leader/set-key-for-mode 'org-mode "i l" 'org-insert-link)
+(evil-leader/set-key-for-mode 'org-mode "i i" 'org-insert-list-item)
 
 (require 'origami)
 (global-origami-mode)
