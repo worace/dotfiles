@@ -38,6 +38,7 @@
 
 ;; Ruby
 (evil-leader/set-key-for-mode 'ruby-mode "eb" 'seeing-is-believing-run)
+(evil-leader/set-key-for-mode 'ruby-mode "ec" 'seeing-is-believing-clear)
 (evil-leader/set-key-for-mode 'ruby-mode "er" 'seeing-is-believing-run-as-xmpfilter)
 
 ;;Clojure
