@@ -54,6 +54,7 @@ alias be="bundle exec"
 alias bl="bundle --local"
 
 alias lf="rlwrap lein figwheel dev test" #figwheel readline mode
+alias ltr="lein test-refresh"
 
 # GOLANG
 export GOPATH=$HOME/go
