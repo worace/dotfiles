@@ -1,7 +1,7 @@
-.emacs.d/eshell/
-.emacs.d/url/
-.emacs.d/games/
-.emacs.d/rake.cache
-.emacs.d/projectile-bookmarks.eld
+emacs/eshell/
+emacs/url/
+emacs/games/
+emacs/rake.cache
+emacs/projectile-bookmarks.eld
 .lein/repl-history
 .lein/self-installs
