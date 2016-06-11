@@ -74,7 +74,7 @@
 
 (defun ed-config ()
   (interactive)
-  (dired "~/dotfiles/.emacs.d/customizations"))
+  (dired "~/dotfiles/emacs/customizations"))
 
 (defun edit-today ()
   "opens the outline for today's date in the turing outlines directory"
