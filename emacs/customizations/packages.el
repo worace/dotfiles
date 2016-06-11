@@ -29,9 +29,7 @@
                           circe
                           clj-refactor
                           clojure-mode
-                          default-text-scale
                           dockerfile-mode
-                          enh-ruby-mode
                           evil
                           evil-leader
                           evil-surround
@@ -54,6 +52,7 @@
                           rainbow-delimiters
                           rainbow-mode
                           request
+                          ruby-test-mode
                           seeing-is-believing
                           smartparens
                           solarized-theme

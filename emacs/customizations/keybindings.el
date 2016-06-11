@@ -48,6 +48,7 @@
 (evil-leader/set-key-for-mode 'ruby-mode "ec" 'seeing-is-believing-clear)
 (evil-leader/set-key-for-mode 'ruby-mode "er" 'seeing-is-believing-run-as-xmpfilter)
 (evil-leader/set-key-for-mode 'ruby-mode "et" 'insert-seeing-is-believing-xmp-tag)
+(evil-leader/set-key-for-mode 'ruby-mode "\\" 'ruby-test-run)
 
 ;;Clojure
 (evil-leader/set-key-for-mode 'clojure-mode "eb" 'cider-eval-buffer)

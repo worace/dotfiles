@@ -83,10 +83,20 @@
 (require 'seeing-is-believing)
 (add-hook 'ruby-mode-hook 'seeing-is-believing)
 (require 'inf-ruby)
-(add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
+(add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
 (when (executable-find "pry")
     (add-to-list 'inf-ruby-implementations '("pry" . "pry"))
     (setq inf-ruby-default-implementation "pry"))
+(require 'ruby-test-mode)
+(add-hook 'compilation-finish-functions
+          (lambda (buf strg)
+            (switch-to-buffer-other-window "*compilation*")
+            (read-only-mode)
+            (goto-char (point-max))
+            (local-set-key (kbd "q")
+                           (lambda () (interactive) (quit-restore-window)))))
+(add-hook 'ruby-mode-hook 'ruby-test-mode)
+
 (require 'ruby-mode)
 
 (require 'web-mode)
