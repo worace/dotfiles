@@ -9,8 +9,7 @@
                   [com.jakemccrary/lein-test-refresh "0.14.0" :exclusions [org.clojure/tools.namespace]]]
         :injections [(require ['clojure.repl :refer ['doc]])]
         :repl-options {
-                       :init (do (println "HI")
-                                 (defn hotload-dependency [dep-name version-string]
+                       :init (do (defn hotload-dependency [dep-name version-string]
                                    (refactor-nrepl.artifacts/hotload-dependency
                                     {:coordinates (str "[" dep-name " " "\"" version-string "\"]")})))
                        }
