@@ -187,15 +187,15 @@
          (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
 
     (custom-theme-set-faces 'user
-                            `(org-level-8 ((t (,@headline ,@variable-tuple))))
-                            `(org-level-7 ((t (,@headline ,@variable-tuple))))
-                            `(org-level-6 ((t (,@headline ,@variable-tuple))))
-                            `(org-level-5 ((t (,@headline ,@variable-tuple))))
-                            `(org-level-4 ((t (,@headline ,@variable-tuple))))
-                            `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.1))))
+                            `(org-level-8 ((t (,@headline ,@variable-tuple :height 1.2))))
+                            `(org-level-7 ((t (,@headline ,@variable-tuple :height 1.2))))
+                            `(org-level-6 ((t (,@headline ,@variable-tuple :height 1.2))))
+                            `(org-level-5 ((t (,@headline ,@variable-tuple :height 1.2))))
+                            `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.2))))
+                            `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.2))))
                             `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.2))))
-                            `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.3))))
-                            `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))))
+                            `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.4))))
+                            `(org-document-title ((t (,@headline ,@variable-tuple :height 1.4 :underline nil)))))))
 
 (add-hook 'org-mode-hook 'worace-org-mode-setup)
 

@@ -36,18 +36,17 @@
 (global-set-key (kbd "s--") 'text-scale-decrease)
 (global-set-key (kbd "s-=") 'text-scale-increase)
 
-(defun insert-seeing-is-believing-xmp-tag ()
+(defun seeing-is-believing-evaluate-current-line ()
   (interactive)
-  (let ((start-pos (point)))
-    (end-of-line)
-    (insert " # =>")
-    (goto-char start-pos)))
+  (seeing-is-believing-mark-current-line-for-xmpfilter)
+  (seeing-is-believing-run-as-xmpfilter))
 
 ;; Ruby
 (evil-leader/set-key-for-mode 'ruby-mode "eb" 'seeing-is-believing-run)
 (evil-leader/set-key-for-mode 'ruby-mode "ec" 'seeing-is-believing-clear)
 (evil-leader/set-key-for-mode 'ruby-mode "er" 'seeing-is-believing-run-as-xmpfilter)
-(evil-leader/set-key-for-mode 'ruby-mode "et" 'insert-seeing-is-believing-xmp-tag)
+(evil-leader/set-key-for-mode 'ruby-mode "et" 'seeing-is-believing-mark-current-line-for-xmpfilter)
+(evil-leader/set-key-for-mode 'ruby-mode "el" 'seeing-is-believing-evaluate-current-line)
 (evil-leader/set-key-for-mode 'ruby-mode "\\" 'ruby-test-run)
 
 ;;Clojure
