@@ -13,6 +13,9 @@
 (evil-leader/set-key "f" 'helm-projectile-ag)
 (evil-leader/set-key "q" 'evil-quit)
 
+;; try to stop me from constantly opening the stupid evil mode keymap help window...
+(define-key evil-normal-state-map (kbd "C-w C-h") 'evil-window-left)
+
 ;; TODO Dired Bindings:
 ;; dired-kill-subdir
 ;; Configure Dired list output:
