@@ -52,6 +52,8 @@
 (evil-leader/set-key-for-mode 'ruby-mode "el" 'seeing-is-believing-evaluate-current-line)
 (evil-leader/set-key-for-mode 'ruby-mode "\\" 'ruby-test-run)
 
+;; Python
+(evil-leader/set-key-for-mode 'python-mode "\\" 'nosetests-module)
 
 ;;Clojure
 (evil-leader/set-key-for-mode 'clojure-mode "eb" 'cider-eval-buffer)

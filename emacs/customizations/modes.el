@@ -108,6 +108,9 @@
   (let ((comint-buffer-maximum-size 0))
     (comint-truncate-buffer)))
 
+(require 'nose)
+(add-hook 'python-mode-hook (lambda () (nose-mode t)))
+
 (add-hook 'inferior-python-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c C-k")

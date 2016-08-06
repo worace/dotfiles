@@ -35,6 +35,7 @@
                           magit
                           markdown-mode
                           markdown-toc
+                          nose
                           org-bullets
                           origami
                           neotree
