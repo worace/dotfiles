@@ -52,11 +52,13 @@
 (evil-leader/set-key-for-mode 'ruby-mode "el" 'seeing-is-believing-evaluate-current-line)
 (evil-leader/set-key-for-mode 'ruby-mode "\\" 'ruby-test-run)
 
+
 ;;Clojure
 (evil-leader/set-key-for-mode 'clojure-mode "eb" 'cider-eval-buffer)
 (evil-leader/set-key-for-mode 'clojure-mode "er" 'cider-eval-region)
 (evil-leader/set-key-for-mode 'clojure-mode "ps" 'sp-forward-slurp-sexp)
 (evil-leader/set-key-for-mode 'clojure-mode "pb" 'sp-forward-barf-sexp)
+(evil-leader/set-key-for-mode 'cider-repl-mode "k" 'cider-repl-clear-buffer)
 
 (evil-leader/set-key-for-mode 'clojurescript-mode "ps" 'sp-forward-slurp-sexp)
 (evil-leader/set-key-for-mode 'clojurescript-mode "pb" 'sp-forward-barf-sexp)
