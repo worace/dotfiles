@@ -145,3 +145,6 @@ alias rake='noglob rake'
 
 export NVM_DIR="/home/worace/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Add Python local (user) installs to Path:
+export PATH="/home/worace/.local/bin:$PATH"
