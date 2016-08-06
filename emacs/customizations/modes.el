@@ -99,6 +99,20 @@
 
 (require 'ruby-mode)
 
+;;;;;;;;;;;;;
+;; Python ;;;
+;;;;;;;;;;;;;
+
+(defun python-shell-clear-output ()
+  (interactive)
+  (let ((comint-buffer-maximum-size 0))
+    (comint-truncate-buffer)))
+
+(add-hook 'inferior-python-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-k")
+                           'python-shell-clear-output)))
+
 (require 'web-mode)
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
@@ -209,3 +223,23 @@
 (global-origami-mode)
 
 (require 'yaml-mode)
+
+
+(require 'org-present)
+(evil-leader/set-key-for-mode 'org-present-mode "<right>" 'org-present-next)
+(evil-leader/set-key-for-mode 'org-present-mode "<left>" 'org-present-prev)
+(setq org-image-actual-width '(400))
+(eval-after-load "org-present"
+  '(progn
+     (add-hook 'org-present-mode-hook
+               (lambda ()
+                 (local-set-key (kbd "C-<right>") 'org-present-next)
+                 (local-set-key (kbd "C-<left>") 'org-present-prev)
+                 (org-display-inline-images)
+                 (org-present-hide-cursor)
+                 (org-present-read-only)))
+     (add-hook 'org-present-mode-quit-hook
+               (lambda ()
+                 (org-remove-inline-images)
+                 (org-present-show-cursor)
+                 (org-present-read-write)))))
