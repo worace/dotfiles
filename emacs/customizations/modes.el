@@ -211,8 +211,8 @@
                             `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.2))))
                             `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.2))))
                             `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.2))))
-                            `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.4))))
-                            `(org-document-title ((t (,@headline ,@variable-tuple :height 1.4 :underline nil)))))))
+                            `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.2))))
+                            `(org-document-title ((t (,@headline ,@variable-tuple :height 1.2 :underline nil)))))))
 
 (add-hook 'org-mode-hook 'worace-org-mode-setup)
 

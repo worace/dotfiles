@@ -37,6 +37,7 @@
                           markdown-toc
                           nose
                           org-bullets
+                          org-present
                           origami
                           neotree
                           projectile
