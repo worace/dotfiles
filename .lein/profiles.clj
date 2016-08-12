@@ -9,7 +9,6 @@
         :injections [(require ['clojure.repl :refer ['doc]])
                      (require 'pjstadig.humane-test-output)
                      (pjstadig.humane-test-output/activate!)]
-        :injections [(require '[clojure.repl :refer [doc]])]
         :repl-options {
                        :init (do (defn hotload-dependency [dep-name version-string]
                                    (refactor-nrepl.artifacts/hotload-dependency
