@@ -1,3 +1,13 @@
+# Check if Command is available:
+# if ! type "$foobar_command_name" > /dev/null; then
+    # do stuff
+# fi
+
+# Check if file exists:
+# if [[ -a file ]]; then
+#   do stuff
+# fi
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -122,9 +132,11 @@ case `uname` in
 esac
 
 # Chruby for ruby version management
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
-chruby 2.2.2
+if [[ -a /usr/local/share/chruby/chruby.sh ]]; then
+    source /usr/local/share/chruby/chruby.sh
+    source /usr/local/share/chruby/auto.sh
+    chruby 2.2.2
+fi
 
 function scrape {
 	wget \
