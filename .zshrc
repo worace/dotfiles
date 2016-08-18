@@ -8,22 +8,15 @@
 #   do stuff
 # fi
 
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-export ZSH_THEME="worace"
 export BUNDLER_EDITOR="emacs"
 export EDITOR="emacsclient -t"
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git zsh-syntax-highlighting)
-
-source $ZSH/oh-my-zsh.sh
+if [[ -a ~/dotfiles/antigen.zsh ]]; then
+    source ~/dotfiles/antigen.zsh
+    antigen bundle git
+    antigen bundle zsh-users/zsh-syntax-highlighting
+    antigen theme ~/dotfiles worace
+fi
 
 case `uname` in
   Darwin)
