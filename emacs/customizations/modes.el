@@ -144,6 +144,7 @@
 (require 'request) ;; needed for exercism
 (require 'exercism)
 
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode))
 ;; Text Mode (Org, Markdown, etc)
 (defun worace-text-mode-hook ()
   (turn-on-visual-line-mode)
@@ -153,6 +154,7 @@
 
 
 ;; OOOOOORG
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 ;; Don't show // around italics
 (setq org-hide-emphasis-markers t)
 ;; Have org treat code blocks like their native lang
