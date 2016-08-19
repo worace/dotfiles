@@ -132,6 +132,11 @@
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
+(defun take-note (file-name)
+  (interactive "sFile Name:")
+  (let ((path (concat "~/Dropbox/notes/" file-name)))
+    (find-file path)))
+
 ;; (evil-define-key 'normal origami-mode-map (kbd "zo") 'move-line-up)
 
 ;; (define-key evil-normal-state-map (kbd "S-J") 'move-line-down)
