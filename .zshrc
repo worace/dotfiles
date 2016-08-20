@@ -13,6 +13,8 @@ export EDITOR="emacsclient -t"
 
 if [[ -a ~/dotfiles/antigen.zsh ]]; then
     source ~/dotfiles/antigen.zsh
+    autoload -U colors && colors
+    setopt promptsubst
     antigen bundle git
     antigen bundle zsh-users/zsh-syntax-highlighting
     antigen theme ~/dotfiles worace
@@ -56,6 +58,7 @@ alias hb="hub browse"
 alias be="bundle exec"
 alias bl="bundle --local"
 
+alias la="ls -lah"
 alias lf="rlwrap lein figwheel dev test" #figwheel readline mode
 alias ltr="lein test-refresh"
 alias nt="nosetests --with-watch -s"
