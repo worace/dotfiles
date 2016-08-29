@@ -141,8 +141,11 @@
 (setq recentf-max-menu-items 25)
 
 ;;Exercism
-(require 'request) ;; needed for exercism
-(require 'exercism)
+
+(if (file-accessible-directory-p "~/.exercism.json")
+    (progn
+      (require 'request) ;; needed for exercism
+      (require 'exercism)))
 
 (add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode))
 ;; Text Mode (Org, Markdown, etc)
