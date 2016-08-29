@@ -176,3 +176,5 @@ HISTFILE="$HOME/.zsh_history"
 setopt share_history
 
 alias rl="source ~/.zshrc"
+
+[ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
