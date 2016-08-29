@@ -20,6 +20,11 @@ if [[ -a ~/dotfiles/antigen.zsh ]]; then
     antigen theme ~/dotfiles worace
 fi
 
+if [[ -a /usr/local/bin/virtualenvwrapper.sh ]]; then
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
+
+
 case `uname` in
   Darwin)
     #increase keyrepeat speed beyond os x allowed maximum
@@ -99,8 +104,8 @@ function emrestart {
         echo "killing emacs daemon process"
         emacsclient -e "(kill-emacs)"
     fi
-  launchctl unload "/Users/worace/Library/LaunchAgents/emacsserver.plist" &&
-  launchctl load "/Users/worace/Library/LaunchAgents/emacsserver.plist"
+  launchctl unload "$HOME/Library/LaunchAgents/emacsserver.plist" &&
+  launchctl load "$HOME/Library/LaunchAgents/emacsserver.plist"
 }
 
 export MITSCHEME_LIBRARY_PATH="/Applications/MIT\:GNU\ Scheme.app/Contents/Resources"
@@ -131,7 +136,7 @@ esac
 if [[ -a /usr/local/share/chruby/chruby.sh ]]; then
     source /usr/local/share/chruby/chruby.sh
     source /usr/local/share/chruby/auto.sh
-    chruby 2.2.2
+    chruby 2.3.1
 fi
 
 function scrape {
