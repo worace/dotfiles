@@ -47,6 +47,7 @@ ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/dotfiles/.lein ~/.lein
 ln -s ~/dotfiles/.gemrc ~/.gemrc
 ln -s ~/dotfiles/.emacs.d ~/.emacs.d
+ln -s ~/dotfiles/.system_gitignore ~/.gitignore
 # emacsserver launch on OS X via launchd:
 ln -s ~/dotfiles/emacsserver.plist ~/Library/LaunchAgents/emacsserver.plist
 ```
