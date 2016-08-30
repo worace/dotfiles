@@ -73,6 +73,8 @@
 (evil-leader/set-key "gc" 'magit-commit)
 (evil-leader/set-key "gp" 'magit-push)
 (evil-leader/set-key "gf" 'magit-pull)
+(evil-leader/set-key "gb" 'magit-blame)
+(evil-leader/set-key "gq" 'magit-blame-quit)
 (evil-leader/set-key "hb" 'hub-browse)
 
 (defun keybind ()
