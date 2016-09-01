@@ -51,6 +51,7 @@
 (evil-leader/set-key-for-mode 'ruby-mode "et" 'seeing-is-believing-mark-current-line-for-xmpfilter)
 (evil-leader/set-key-for-mode 'ruby-mode "el" 'seeing-is-believing-evaluate-current-line)
 (evil-leader/set-key-for-mode 'ruby-mode "\\" 'ruby-test-run)
+(evil-leader/set-key-for-mode 'ruby-mode "]" 'ruby-test-run-at-point)
 
 ;; Python
 (evil-leader/set-key-for-mode 'python-mode "\\" 'nosetests-module)
@@ -75,6 +76,7 @@
 (evil-leader/set-key "gf" 'magit-pull)
 (evil-leader/set-key "gb" 'magit-blame)
 (evil-leader/set-key "gq" 'magit-blame-quit)
+(evil-leader/set-key "go" 'magit-show-commit)
 (evil-leader/set-key "hb" 'hub-browse)
 
 (defun keybind ()
