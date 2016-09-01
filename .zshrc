@@ -17,12 +17,18 @@ if [[ -a ~/dotfiles/antigen.zsh ]]; then
     setopt promptsubst
     antigen bundle git
     antigen bundle zsh-users/zsh-syntax-highlighting
+    antigen bundle zsh-users/zsh-completions
     antigen theme ~/dotfiles worace
+    antigen apply
 fi
 
-if [[ -a /usr/local/bin/virtualenvwrapper.sh ]]; then
-    source /usr/local/bin/virtualenvwrapper.sh
+if [[ -a /usr/local/bin/virtualenvwrapper_lazy.sh ]]; then
+    export WORKON_HOME=$HOME/.virtualenvs
+    export PROJECT_HOME=$HOME/Devel
+    export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+    source /usr/local/bin/virtualenvwrapper_lazy.sh
 fi
+
 
 
 case `uname` in
@@ -111,11 +117,6 @@ function emrestart {
 export MITSCHEME_LIBRARY_PATH="/Applications/MIT\:GNU\ Scheme.app/Contents/Resources"
 export MIT_SCHEME_EXE="/usr/local/scheme"
 
-# Boot2Docker client config
-# export DOCKER_HOST=tcp://192.168.59.103:2376
-# export DOCKER_CERT_PATH=/Users/worace/.boot2docker/certs/boot2docker-vm
-# export DOCKER_TLS_VERIFY=0
-
 case `uname` in
   Darwin)
   # docker-machine env default
@@ -157,8 +158,8 @@ function countloc {
 }
 alias rake='noglob rake'
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh --no-use"  # This loads nvm
 
 # Add Python local (user) installs to Path:
 export PATH="/home/worace/.local/bin:$PATH"
