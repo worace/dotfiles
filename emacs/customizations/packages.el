@@ -23,6 +23,7 @@
                           evil
                           evil-leader
                           evil-surround
+                          flycheck
                           gist
                           haskell-mode
                           helm

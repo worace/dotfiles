@@ -111,6 +111,9 @@
 (require 'nose)
 (add-hook 'python-mode-hook (lambda () (nose-mode t)))
 
+(require 'flycheck)
+(add-hook 'python-mode-hook 'flycheck-mode)
+
 (add-hook 'inferior-python-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c C-k")
