@@ -70,6 +70,9 @@
 ;;Currently just installed locally
 (require 'hub)
 
+;; Magit allow longer commit lines than the default
+(setq git-commit-summary-max-length 70)
+
 ;;Emacs Livedown
 ;;Installed manually from here https://github.com/shime/emacs-livedown
 (require 'livedown)
