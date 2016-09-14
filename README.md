@@ -168,3 +168,10 @@ fluxgui
 ### Gitignore
 
 I have this in dotfiles as `.system_gitignore` so i can have a special gitignore for this actual repo. Thus to link this one use `ln -s ~/dotfiles/.system_gitignore ~/.gitignore`
+
+## Todo / Wishlist
+
+* [ ] Emacs -- helm-ag within specified directory
+* [ ] Emacs -- helm projectile search without pulling query term from point
+* [ ] zsh -- is there a better way to deal with slow NVM startup?
+* [ ] mpd -- play around with this for music playing with spotify
