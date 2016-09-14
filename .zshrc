@@ -159,7 +159,8 @@ function countloc {
 alias rake='noglob rake'
 
 # export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh --no-use"  # This loads nvm
+#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh --no-use"  # This loads nvm
+alias nvmu='source ~/.nvm/nvm.sh && nvm use'
 
 # Add Python local (user) installs to Path:
 export PATH="/home/worace/.local/bin:$PATH"
