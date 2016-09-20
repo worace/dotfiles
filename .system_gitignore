@@ -48,3 +48,7 @@ Thumbs.db
 .gradle/
 build/
 .lein-failures
+
+# Personal note files
+scratch
+.scratch
