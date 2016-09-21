@@ -64,6 +64,7 @@ alias gco="git checkout"
 alias gst="git status"
 alias gpum="git pull upstream master"
 alias gpom="git pull origin master"
+alias gpod="git pull origin devel"
 alias hb="hub browse"
 
 alias be="bundle exec"
@@ -72,7 +73,8 @@ alias bl="bundle --local"
 alias la="ls -lah"
 alias lf="rlwrap lein figwheel dev test" #figwheel readline mode
 alias ltr="lein test-refresh"
-alias nt="nosetests --with-watch -s"
+alias ntw="nosetests --with-watch -s"
+alias nt="nosetests"
 
 # GOLANG
 export GOPATH=$HOME/go
@@ -153,9 +155,7 @@ function scrape {
 			$1
 }
 
-function countloc {
-	find $1 -name "*" | xargs wc -l
-}
+function countloc { find $1 -name "*" -type f | xargs wc -l }
 alias rake='noglob rake'
 
 # export NVM_DIR="$HOME/.nvm"
