@@ -111,16 +111,29 @@
   (let ((comint-buffer-maximum-size 0))
     (comint-truncate-buffer)))
 
+(add-hook 'inferior-python-mode-hook
+          (lambda ()
+            (disable-trailing-whitespace)
+            (local-set-key (kbd "C-c C-k")
+                           'python-shell-clear-output)))
+
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "--simple-prompt -i")
+(setq-default py-shell-name "ipython")
+(setq-default py-which-bufname "IPython")
+(setq py-shell-switch-buffers-on-execute-p t)
+(setq py-switch-buffers-on-execute-p t)
+(setq py-smart-indentation t)
+
+(require 'virtualenvwrapper)
+(setq venv-location "~/.virtualenvs")
+
+
 (require 'nose)
 (add-hook 'python-mode-hook (lambda () (nose-mode t)))
 
 (require 'flycheck)
 (add-hook 'python-mode-hook 'flycheck-mode)
-
-(add-hook 'inferior-python-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c C-k")
-                           'python-shell-clear-output)))
 
 
 (require 'web-mode)

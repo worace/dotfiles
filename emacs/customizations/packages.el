@@ -50,6 +50,7 @@
                           smartparens
                           solarized-theme
                           spotify
+                          virtualenvwrapper
                           web-mode
                           yaml-mode))
 
