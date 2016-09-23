@@ -116,6 +116,14 @@ function emrestart {
   launchctl load "$HOME/Library/LaunchAgents/emacsserver.plist"
 }
 
+function emstop {
+    if pgrep "emacs.*daemon" > /dev/null
+    then
+        echo "killing emacs daemon process"
+        emacsclient -e "(kill-emacs)"
+    fi
+}
+
 export MITSCHEME_LIBRARY_PATH="/Applications/MIT\:GNU\ Scheme.app/Contents/Resources"
 export MIT_SCHEME_EXE="/usr/local/scheme"
 
