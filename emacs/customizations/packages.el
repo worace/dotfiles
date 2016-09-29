@@ -25,6 +25,7 @@
                           evil-surround
                           flycheck
                           gist
+                          groovy-mode
                           haskell-mode
                           helm
                           helm-ag
@@ -44,6 +45,7 @@
                           projectile
                           rainbow-delimiters
                           rainbow-mode
+                          restclient
                           request
                           ruby-test-mode
                           seeing-is-believing

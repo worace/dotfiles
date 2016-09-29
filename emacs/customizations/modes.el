@@ -19,6 +19,9 @@
 (require 'evil)
 (evil-mode 1)
 
+;; Disable Evil for certain modes
+(add-to-list 'evil-emacs-state-modes 'eshell-mode)
+
 ;; Was losing evil gg in dired mode for some reason
 ;; probably using dired wrong but this fixes it...
 (evil-define-key 'normal dired-mode-map "gg" 'beginning-of-buffer)
@@ -275,3 +278,7 @@
                  (org-remove-inline-images)
                  (org-present-show-cursor)
                  (org-present-read-write)))))
+
+
+(require 'groovy-mode)
+(add-to-list 'auto-mode-alist '("\\.gradle\\'" . groovy-mode))
