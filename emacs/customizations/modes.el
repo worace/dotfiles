@@ -65,9 +65,26 @@
 ;; Javascript mode
 (setq js-indent-level 2)
 (setq jsx-indent-level 2)
+(setq-default js2-global-externs
+              '("module" "require" "sinon" "assert" "refute" "setTimeout"
+                "clearTimeout" "setInterval" "clearInterval" "location"
+                "__dirname" "console" "JSON" "describe" "it" "beforeEach"
+                "before" "after" "afterEach"))
+(setq js2-bounce-indent-p t)
+(setq js2-basic-offset 2)
+(setq js2-include-node-externs t)
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
 
+(require 'nvm)
+(defun do-nvm-use (version)
+  (interactive "sVersion: ")
+  (nvm-use version)
+  (exec-path-from-shell-copy-env "PATH"))
+
+(defun node-repl () (interactive)
+       (pop-to-buffer (make-comint "node-repl" "node" nil "--interactive")))
 
 ;;Hub Github Addon
 ;;Currently just installed locally
@@ -93,15 +110,18 @@
 (when (executable-find "pry")
     (add-to-list 'inf-ruby-implementations '("pry" . "pry"))
     (setq inf-ruby-default-implementation "pry"))
+
 (require 'ruby-test-mode)
-(add-hook 'compilation-finish-functions
-          (lambda (buf strg)
-            (switch-to-buffer-other-window "*compilation*")
-            (read-only-mode)
-            (goto-char (point-max))
-            (local-set-key (kbd "q")
-                           (lambda () (interactive) (quit-restore-window)))))
 (add-hook 'ruby-mode-hook 'ruby-test-mode)
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (add-hook 'compilation-finish-functions
+                      (lambda (buf strg)
+                        (switch-to-buffer-other-window "*compilation*")
+                        (read-only-mode)
+                        (goto-char (point-max))
+                        (local-set-key (kbd "q")
+                                       (lambda () (interactive) (quit-restore-window)))))))
 
 (require 'ruby-mode)
 
@@ -143,8 +163,6 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
@@ -259,7 +277,6 @@
 
 (require 'yaml-mode)
 
-
 (require 'org-present)
 (evil-leader/set-key-for-mode 'org-present-mode "<right>" 'org-present-next)
 (evil-leader/set-key-for-mode 'org-present-mode "<left>" 'org-present-prev)
@@ -279,6 +296,6 @@
                  (org-present-show-cursor)
                  (org-present-read-write)))))
 
+(add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode))
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 
-(require 'groovy-mode)
-(add-to-list 'auto-mode-alist '("\\.gradle\\'" . groovy-mode))

@@ -56,6 +56,10 @@
 (evil-leader/set-key-for-mode 'ruby-mode "\\" 'ruby-test-run)
 (evil-leader/set-key-for-mode 'ruby-mode "]" 'ruby-test-run-at-point)
 
+;; Javascript
+(evil-leader/set-key-for-mode 'js2-mode "\\" 'mocha-test-file)
+(evil-leader/set-key-for-mode 'js2-mode "]" 'mocha-test-at-point)
+
 ;; Python
 (evil-leader/set-key-for-mode 'python-mode "\\" 'nosetests-module)
 

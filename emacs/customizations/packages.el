@@ -32,11 +32,14 @@
                           helm-circe
                           helm-projectile
                           inf-ruby
+                          jade
                           json-reformat
                           jsx-mode
+                          js2-mode
                           magit
                           markdown-mode
                           markdown-toc
+                          mocha
                           nose
                           org-bullets
                           org-present
