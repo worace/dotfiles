@@ -75,7 +75,7 @@
 ;; Git commands
 (evil-leader/set-key "gs" 'magit-status)
 (evil-leader/set-key "gc" 'magit-commit)
-(evil-leader/set-key "gp" 'magit-push)
+(evil-leader/set-key "gp" 'magit-push-popup)
 (evil-leader/set-key "gf" 'magit-pull)
 (evil-leader/set-key "gb" 'magit-blame)
 (evil-leader/set-key "gq" 'magit-blame-quit)
