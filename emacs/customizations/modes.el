@@ -82,6 +82,7 @@
   (interactive "sVersion: ")
   (nvm-use version)
   (exec-path-from-shell-copy-env "PATH"))
+(nvm-use "6.5.0")
 
 (defun node-repl () (interactive)
        (pop-to-buffer (make-comint "node-repl" "node" nil "--interactive")))
