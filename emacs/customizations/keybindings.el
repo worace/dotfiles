@@ -13,6 +13,8 @@
 (evil-leader/set-key "f" 'helm-projectile-ag)
 (evil-leader/set-key "q" 'evil-quit)
 (evil-leader/set-key "mp" 'spotify-playpause)
+(evil-leader/set-key "mb" 'spotify-previous)
+(evil-leader/set-key "mf" 'spotify-next)
 
 ;; try to stop me from constantly opening the stupid evil mode keymap help window...
 (define-key evil-normal-state-map (kbd "C-w C-h") 'evil-window-left)
