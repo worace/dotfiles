@@ -1,5 +1,7 @@
 (setq-default indent-tabs-mode nil)
 
+(ido-mode)
+
 (global-linum-mode 1)
 
 ;; Enable helm autofilter/complete interface
