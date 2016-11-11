@@ -25,6 +25,7 @@
                           evil-surround
                           flycheck
                           gist
+                          go-mode
                           groovy-mode
                           haskell-mode
                           helm

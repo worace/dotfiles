@@ -1,8 +1,9 @@
 (setq-default indent-tabs-mode nil)
 
 (ido-mode)
-
 (global-linum-mode 1)
+(setq column-number-mode t)
+(global-pabbrev-mode)
 
 ;; Enable helm autofilter/complete interface
 (require 'helm-config)
@@ -142,21 +143,27 @@
     (add-to-list 'inf-ruby-implementations '("pry" . "pry"))
     (setq inf-ruby-default-implementation "pry"))
 
+(defun worace-ruby-compilation-finish-hook (buf strg)
+  (interactive)
+  (message "finished compilatino function")
+  (switch-to-buffer-other-window "*compilation*")
+  (read-only-mode)
+  (goto-char (point-max))
+  (local-set-key (kbd "q")
+                 (lambda () (interactive) (quit-restore-window))))
+
 (require 'ruby-test-mode)
 (add-hook 'ruby-mode-hook 'ruby-test-mode)
 (add-hook 'ruby-mode-hook
           (lambda ()
+            (message "running ruby hook ")
             (add-hook 'compilation-finish-functions
-                      (lambda (buf strg)
-                        (switch-to-buffer-other-window "*compilation*")
-                        (read-only-mode)
-                        (goto-char (point-max))
-                        (local-set-key (kbd "q")
-                                       (lambda () (interactive) (quit-restore-window))))
-                      nil
+                      'worace-ruby-compilation-finish-hook
+                      't
                       ;; This can be any truthy value but prevents this compilation hook
                       ;; from bleeding over to other buffers
-                      'make-it-buffer-local)))
+                      ;; 'make-it-buffer-local
+                      )))
 
 (require 'ruby-mode)
 

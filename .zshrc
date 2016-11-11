@@ -78,7 +78,6 @@ alias nt="nosetests"
 
 # GOLANG
 export GOPATH=$HOME/go
-export GOROOT=$HOME/go
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$PATH:/usr/local/opt/go/libexec/bin"
 alias gp="cd $GOPATH/src/github.com/worace"

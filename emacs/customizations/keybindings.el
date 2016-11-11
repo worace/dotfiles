@@ -12,6 +12,7 @@
 (evil-leader/set-key "ct" 'toggle-theme)
 (evil-leader/set-key "f" 'helm-projectile-ag)
 (evil-leader/set-key "q" 'evil-quit)
+(evil-leader/set-key "k" 'kill-this-buffer)
 (evil-leader/set-key "mp" 'spotify-playpause)
 (evil-leader/set-key "mb" 'spotify-previous)
 (evil-leader/set-key "mf" 'spotify-next)
@@ -62,6 +63,8 @@
 
 ;; Python
 (evil-leader/set-key-for-mode 'python-mode "\\" 'nosetests-module)
+(evil-leader/set-key-for-mode 'python-mode "eb" 'python-shell-send-buffer)
+(evil-leader/set-key-for-mode 'python-mode "er" 'python-shell-send-region)
 
 ;;Clojure
 (evil-leader/set-key-for-mode 'clojure-mode "eb" 'cider-eval-buffer)

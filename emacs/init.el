@@ -10,10 +10,11 @@
 (setq user-mail-address "horace.d.williams@gmail.com")
 
 (setq exec-path (append exec-path '("/usr/local/bin")))
+(setq exec-path (append exec-path '("/usr/local/go/bin")))
 
- (setenv "PATH"
-         (concat (getenv "PATH")
-                 ":/usr/local/bin"))
+(setenv "PATH"
+        (concat (getenv "PATH")
+                ":/usr/local/bin"))
 
 
 ;; raise GC threshold to 100 MB
@@ -46,10 +47,11 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4"
-     "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879"
-     "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0"
-     default))))
+    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" default)))
+ '(markdown-command "/usr/local/bin/markdown")
+ '(package-selected-packages
+   (quote
+    (lua-mode flymake-go go-mode smart-mode-line-powerline-theme smart-mode-line powerline alert solarized-theme yaml-mode web-mode virtualenvwrapper spotify smartparens seeing-is-believing ruby-test-mode restclient request rainbow-mode rainbow-delimiters pyvenv pytest pabbrev origami org-present org-bullets nvm nose neotree mocha markdown-toc magit libmpdee jsx-mode json-reformat js2-refactor jade inf-ruby highlight-indentation helm-spotify helm-projectile helm-circe helm-ag haskell-mode groovy-mode gist flymake-python-pyflakes flycheck exec-path-from-shell evil-surround evil-leader dockerfile-mode csv-mode color-theme-solarized clj-refactor chruby auto-complete ag ace-window ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
