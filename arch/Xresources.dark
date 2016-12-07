@@ -55,4 +55,5 @@
 *color7:                S_base2
 *color15:               S_base3
 
-XTerm*faceName: Source Code Pro
+URxvt.font: xft:SourceCodePro:pixelsize=18
+URxvt.scrollBar: false
