@@ -107,12 +107,15 @@
 (add-hook 'js2-mode-hook #'flycheck-mode)
 
 
-(require 'nvm)
-(defun do-nvm-use (version)
-  (interactive "sVersion: ")
-  (nvm-use version)
-  (exec-path-from-shell-copy-env "PATH"))
-(nvm-use "6.5.0")
+(if (executable-find "nvm")
+ (progn
+  (require 'nvm)
+  (defun do-nvm-use (version)
+   (interactive "sVersion: ")
+   (nvm-use version)
+   (exec-path-from-shell-copy-env "PATH"))
+  (nvm-use "6.5.0")))
+
 
 (defun node-repl () (interactive)
        (pop-to-buffer (make-comint "node-repl" "node" nil "--interactive")))
