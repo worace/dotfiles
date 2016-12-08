@@ -10,6 +10,7 @@ xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
 feh --bg-scale /home/worace/goat.jpg
 
 xset -b
-xset r rate 200 60
+# xset r rate <delay ms> <speed hz>
+xset r rate 220 50
 
 exec i3
