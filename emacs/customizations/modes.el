@@ -46,6 +46,7 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(sp-local-pair 'markdown-mode "`" nil :actions '(insert))
 
 (custom-set-variables
  '(markdown-command "/usr/local/bin/markdown"))
