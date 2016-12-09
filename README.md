@@ -175,3 +175,53 @@ I have this in dotfiles as `.system_gitignore` so i can have a special gitignore
 * [ ] Emacs -- helm projectile search without pulling query term from point
 * [ ] zsh -- is there a better way to deal with slow NVM startup?
 * [ ] mpd -- play around with this for music playing with spotify
+
+## Arch Setup Todo
+
+* [ ] i3 window styling
+* [ ] i3 bar - add icons to workspace (firefox, emacs, etc)
+* [ ] i3 bar - wifi icon, battery icon
+* [ ] lemonbar or alternate
+* [ ] suspend to disk config
+* [ ] lockscreen on suspend
+* [ ] emacs daemon on startup
+* [ ] reinstalling with full disk encryption and with encrypted swap partition (LUKs?)
+* [ ] launch x on system startup? - https://wiki.archlinux.org/index.php/Xinit#Autostart_X_at_login
+* [ ] disable trackpad while typing
+* [ ] multi swipe gesture -- 3 finger swipe for tabs (libinput?)
+* [ ] i3 - alt-tab to cycle workspaces
+* [ ] emacs (and vim?) - yank to system clipboard
+* [ ] urxvt - copy/paste with keyboard commands - https://nixmeal.wordpress.com/2012/07/24/copypaste-text-in-urxvt-rxvt-unicode-using-keyboard/
+* [ ] better wifi manager?
+* [ ] style rofi (solarized? limit # of lines shown?)
+* [X] Rofi launcher - bound to Alt+Space in i3; could still use some tweaks
+
+## Incomplete Setup Notes
+
+* symlinks...
+
+### Packages to install
+
+```
+yaourt ttf-font-awesome
+yaourt mpstat
+yaourt acpi
+yaourt ttf-dejavu
+yaourt wqy-zenhei
+yaourt evince
+```
+
+### Local Postgres Setup
+
+```
+sudo pacman -S postgresql
+sudo -i -u postgres
+initdb -D '/var/lib/postgres/data'
+logout
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+# create user account for your user:
+createuser -s -U postgres --interactive
+createdb
+psql # verify it works
+```
