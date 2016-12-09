@@ -29,6 +29,12 @@ if [[ -a /usr/local/bin/virtualenvwrapper_lazy.sh ]]; then
     source /usr/local/bin/virtualenvwrapper_lazy.sh
 fi
 
+if [[ -a $HOME/.local/bin/virtualenvwrapper_lazy.sh ]]; then
+    export WORKON_HOME=$HOME/.virtualenvs
+    export VIRTUALENVWRAPPER_SCRIPT=$HOME/.local/bin/virtualenvwrapper.sh
+    source $HOME/.local/bin/virtualenvwrapper_lazy.sh
+fi
+
 
 
 case `uname` in
