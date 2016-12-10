@@ -57,4 +57,3 @@
 
 URxvt.font: xft:SourceCodePro:pixelsize=18
 URxvt.scrollBar: false
-URxvt.borderLess: true

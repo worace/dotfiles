@@ -180,7 +180,7 @@ I have this in dotfiles as `.system_gitignore` so i can have a special gitignore
 
 * [ ] i3 window styling
 * [ ] i3 bar - add icons to workspace (firefox, emacs, etc)
-* [ ] i3 bar - wifi icon, battery icon
+* [X] i3 bar - wifi icon, battery icon
 * [ ] lemonbar or alternate
 * [ ] suspend to disk config
 * [ ] lockscreen on suspend
@@ -191,10 +191,11 @@ I have this in dotfiles as `.system_gitignore` so i can have a special gitignore
 * [ ] multi swipe gesture -- 3 finger swipe for tabs (libinput?)
 * [ ] i3 - alt-tab to cycle workspaces
 * [ ] emacs (and vim?) - yank to system clipboard
-* [ ] urxvt - copy/paste with keyboard commands - https://nixmeal.wordpress.com/2012/07/24/copypaste-text-in-urxvt-rxvt-unicode-using-keyboard/
+* [X] urxvt - copy/paste with keyboard commands - https://nixmeal.wordpress.com/2012/07/24/copypaste-text-in-urxvt-rxvt-unicode-using-keyboard/ -- solved use Alt+Ctrl+C / Alt+Ctrl+V
 * [ ] better wifi manager?
 * [ ] style rofi (solarized? limit # of lines shown?)
 * [X] Rofi launcher - bound to Alt+Space in i3; could still use some tweaks
+* [ ] i3 assign programs to consistent workspaces
 
 ## Incomplete Setup Notes
 

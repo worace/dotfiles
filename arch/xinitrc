@@ -7,7 +7,7 @@ xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
 [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 [[ -f ~/.xbindkeysrc ]] && xbindkeys
 
-feh --bg-scale /home/worace/goat.jpg
+feh --bg-scale /home/worace/dotfiles/wallpaper/goat.jpg
 
 xset -b
 # xset r rate <delay ms> <speed hz>
