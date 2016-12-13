@@ -1,1 +1,1 @@
-PROMPT='%{$fg[yellow]%}%n %{$fg[red]%}@ %{$fg[cyan]%}%c %{$fg[red]%}➸ %{$reset_color%} '
+PROMPT='%{$fg[cyan]%}%c %{$fg[red]%}➸ %{$reset_color%}'
