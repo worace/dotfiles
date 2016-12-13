@@ -11,28 +11,28 @@ MIDDLE_VALUE=65
 HIGH_VALUE=90
 
 if [[ "${BATTERY_STATE}" = "Charging" ]]; then
-echo " ${BATTERY_POWER}%"
-
+  echo " ${BATTERY_POWER}%"
 elif [[ "${BATTERY_STATE}" = "Discharging" ]]; then
-  if [[ "${BATTERY_POWER}" -le "${URGENT_VALUE}" ]]; then
-    echo " ${BATTERY_POWER}%"
-
-  elif [[ "${BATTERY_POWER}" -ge "${URGENT_VALUE}"  ]]; then
-    echo " ${BATTERY_POWER}%"
-
-  elif [[ "${BATTERY_POWER}" -ge "${LOW_VALUE}"  ]]; then
-    echo " ${BATTERY_POWER}%"
+  if [[ "${BATTERY_POWER}" -ge "${HIGH_VALUE}"  ]]; then
+    echo "  ${BATTERY_POWER}% "
 
   elif [[ "${BATTERY_POWER}" -ge "${MIDDLE_VALUE}"  ]]; then
-    echo "  ${BATTERY_POWER}%"
+    echo "  ${BATTERY_POWER}% "
 
-  elif [[ "${BATTERY_POWER}" -ge "${HIGH_VALUE}"  ]]; then
-    echo "  ${BATTERY_POWER}%"
+  elif [[ "${BATTERY_POWER}" -ge "${LOW_VALUE}"  ]]; then
+    echo " ${BATTERY_POWER}% "
+
+  elif [[ "${BATTERY_POWER}" -ge "${URGENT_VALUE}"  ]]; then
+    echo " ${BATTERY_POWER}% "
+
+  elif [[ "${BATTERY_POWER}" -le "${URGENT_VALUE}" ]]; then
+    echo " ${BATTERY_POWER}% "
+
+  else
+    echo "${BATTERY_POWER}% "
 
   fi
 
 else
-  echo "${BATTERY_POWER}%"
-  echo "${BATTERY_POWER}%"
-  echo ""
+  echo "${BATTERY_POWER}% "
 fi
