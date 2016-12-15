@@ -51,7 +51,8 @@ case `uname` in
     }
     ;;
   Linux)
-    alias copy="xclip -selection c"
+    alias copy="xclip -selection clipboard"
+    alias paste="xclip -o -selection clipboard"
     em () { emacs $* & disown }
     ;;
 esac
@@ -150,11 +151,15 @@ case `uname` in
 esac
 
 # Chruby for ruby version management
-if [[ -a /usr/local/share/chruby/chruby.sh ]]; then
-    source /usr/local/share/chruby/chruby.sh
-    source /usr/local/share/chruby/auto.sh
-    chruby 2.3.1
-fi
+function loadChruby {
+    if [[ -a $1/chruby.sh ]]; then
+        source $1/chruby.sh
+        source $1/auto.sh
+        chruby 2.3.3
+    fi
+}
+loadChruby '/usr/local/share/chruby'
+loadChruby '/usr/share/chruby'
 
 function scrape {
 	wget \
