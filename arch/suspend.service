@@ -1,0 +1,13 @@
+[Unit]
+Description=Starts i3lock at suspend time
+Before=sleep.target
+
+[Service]
+User=worace
+Type=forking
+Environment="DISPLAY=:0"
+Environment=XAUTHORITY=/home/worace/.Xauthority
+ExecStart=/home/worace/dotfiles/arch/scripts/lock.sh
+
+[Install]
+WantedBy=sleep.target
