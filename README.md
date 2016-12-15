@@ -210,6 +210,7 @@ yaourt acpi
 yaourt ttf-dejavu
 yaourt wqy-zenhei
 yaourt evince
+sudo pacman -S wget
 ```
 
 ### Local Postgres Setup
@@ -225,4 +226,33 @@ sudo systemctl enable postgresql
 createuser -s -U postgres --interactive
 createdb
 psql # verify it works
+```
+
+### Password Manager
+
+#### Keepass
+
+* keepassx2 (1password alternative) `sudo pacman -S keepassx2`
+* Using minikeepass on ios: https://itunes.apple.com/us/app/minikeepass-secure-password/id451661808?mt=8
+* Writeup on ios<->dropbox syncing (semi-manual): https://groups.google.com/forum/#!topic/viphone/ke4NVQ8QfC8
+
+#### 1Password
+
+* mostly following https://discussions.agilebits.com/discussion/42126/making-1password-work-in-ubuntu-14-04
+* also needed to go to Preferences > Browsers > Check "Unlock on secure desktop" and reopen firefox
+
+### Lockscreen
+
+* i3lock-color (fork of i3lock): `sudo pacman -S i3lock-color`
+* use script in scripts/lock.sh
+* set binding in i3 config:
+
+`bindsym $mod+shift+l exec "$home/dotfiles/arch/scripts/lock.sh"`
+
+### Dropbox
+
+Setup to allow dropbox to work properly:
+
+```
+echo fs.inotify.max_user_watches=100000 | sudo tee -a /etc/sysctl.conf; sudo sysctl -p
 ```
