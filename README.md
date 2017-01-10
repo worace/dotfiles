@@ -28,8 +28,7 @@ and going to profile -> ssh keys
 
 ```
 sudo add-apt-repository ppa:cpick/hub
-sudo apt-get update
-sudo apt-get install hub
+sudo apt-get update sudo apt-get install hub
 ```
 
 ### 4. Cloning Dotfiles
@@ -287,7 +286,7 @@ sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 sudo rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup | sudo tee /etc/pacman.d/mirrorlist
 
 # for my desktop i have a gtx 960 hence the nvidia drivers
-sudo pacman -S nvidia nvidia-libgl hub openssh xclip xorg-server xorg-xinit firefox emacs
+sudo pacman -S nvidia nvidia-libgl hub openssh xclip xorg-server xorg-xinit firefox emacs xorg-server-utils the_silver_searcher xbindkeys
 sudo reboot
 
 # install yaourt
@@ -301,7 +300,11 @@ cd yaourt
 makepkg -si
 cd ~
 
-yaourt -S dropbox redshift ttf-font-awesome mpstat ttf-dejavu wqy-zenhei evince i3-gaps-git rxvt-unicode rofi termite
+yaourt -S dropbox python3 redshift ttf-font-awesome mpstat ttf-dejavu wqy-zenhei evince i3-gaps-git rxvt-unicode rofi termite i3blocks spotify slack-desktop
+
+# fix dropbox file watchers limit
+sudo echo "fs.inotify.max_user_watches = 100000" | sudo tee --append /etc/sysctl.d/99-sysctl.conf
+sudo sysctl --system
 
 
 
@@ -313,9 +316,25 @@ mkdir ~/.config/i3
 ln -s ~/dotfiles/arch/i3.config ~/.config/i3/config
 ln -sf ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/emacs ~/.emacs.d
+ln -s ~/dotfiles/.system_gitignore ~/.gitignore
+ln -s ~/dotfiles/.gitconfig ~/.gitconfig
+mkdir ~/.config/termite
+ln -s ~/dotfiles/arch/termite-dark ~/.config/termite/config
+ln -s ~/dotfiles/arch/.i3blocks.conf ~/.i3blocks.conf
+mkdir ~/.local/share/applications
+ln -s ~/dotfiles/arch/1Password.desktop ~/.local/share/applications/1Password.desktop
+
 
 
 # Github SSH setup
+
+# multilib and wine/1password
+# uncomment the multilib section from /etc/pacman.conf:
+# [multilib]
+# Include = /etc/pacman.d/mirrorlist
+
+sudo pacman -Syy
+sudo pacman -S wine
 
 
 ```
