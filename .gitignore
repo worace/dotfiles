@@ -2,6 +2,7 @@ emacs/eshell/
 emacs/url/
 emacs/games/
 emacs/rake.cache
+emacs/network-security.data
 emacs/projectile-bookmarks.eld
 .lein/repl-history
 .lein/self-installs
