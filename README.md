@@ -199,6 +199,128 @@ I have this in dotfiles as `.system_gitignore` so i can have a special gitignore
 
 ## Incomplete Setup Notes
 
+1. Wiped existing SSD using hdparm instructions [here](https://wiki.archlinux.org/index.php/Solid_State_Drives/Memory_cell_clearing)
+2. Paritioned Drive:
+
+```
+1 100MB EFI partition # Hex code ef00
+2 250MB Boot partition # Hex code 8300
+3 100% size partiton # (to be encrypted) Hex code 8300
+```
+
+3. Format UEFI partition: `mkfs.fat -F32 /dev/sda1`
+4. Format boot partition `mkfs.ext4 /dev/sda2`
+5. Setup disk encryption `cryptsetup --cipher aes-xts-plain64 --verify-passphrase --use-random luksFormat /dev/sda3`
+6. open the partition `cryptsetup luksOpen /dev/sdX3 luks` - note that the final argument here "`luks`" determines the name of the device under `/dev/mapper`
+7. Create physical volume for lvm `pvcreate /dev/mapper/luks`
+8. create volume group (this will be container both root and swap partitions): `vgcreate vg0 /dev/mapper/luks`
+9. Create swap logical volume: `lvcreate --size 8G vg0 --name swap` -- generally make this the size of RAM (8gb in this case)
+10. Create root logical volume in remainder of free space `lvcreate -l +100%FREE vg0 --name root`
+11. Format root filesystem: `mkfs.ext4 /dev/mapper/vg0-root`
+12. make swap: `mkswap /dev/mapper/vg0-swap`
+13. Mount system:
+
+```
+mount /dev/mapper/vg0-root /mnt # /mnt will be the installed system once we bootstrap it in a sec...
+swapon /dev/mapper/vg0-swap # Not needed but a good thing to test
+mkdir /mnt/boot
+mount /dev/sdX2 /mnt/boot # the unencrypted boot partition we created before
+mkdir /mnt/boot/efi
+mount /dev/sdX1 /mnt/boot/efi
+```
+
+14. bootstrap the system `pacstrap /mnt base base-devel grub-efi-x86_64 zsh vim git efibootmgr` (for my desktop i left off wifi)
+15. Fstab `genfstab -pU /mnt >> /mnt/etc/fstab`
+16. `arch-chroot /mnt /bin/bash`
+17. `ln -s /usr/share/zoneinfo/America/Los_Angeles /etc/localtime`
+18. `hwclock --systohc --utc`
+19. `echo Bors > /etc/hostname`
+20. Uncomment `en_US.UTF-8 UTF-8 ` from /etc/locale.gen and run `locale-gen`
+21. Also set LANG and LANGUAGE in `/etc/locale.conf` (may be redundant with locale-gen)
+
+```
+echo LANG=en_US.UTF-8 >> /etc/locale.conf
+echo LANGUAGE=en_US >> /etc/locale.conf
+echo LC_ALL=C >> /etc/locale.conf
+
+# set root passwd
+passwd
+
+# create user acct
+useradd -m -g users -G wheel -s /bin/zsh worace
+passwd worace
+
+# /etc/mkinitcpio.conf
+# MODULES="ext4"
+# HOOKS="base udev autodetect modconf block filesystems keyboard fsck"
+# (keyboard moved up and added encrypt and lvm2 _before_ filesystems)
+mkinitcpio -p linux
+
+grub-install
+
+# In /etc/default/grub edit the line GRUB_CMDLINE_LINUX to GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda3:luks:allow-discards" then run:
+# (allow discards lets TRIM instructions be passed through to the SSD supposedly)
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# finish and reboot
+exit
+umount -R /mnt
+swapoff -a
+reboot
+
+# ...
+
+# add wheel to sudoers
+su root
+visudo /etc/sudoers
+# uncomment:
+# %wheel ALL=(ALL) ALL
+
+
+# enable dhcp auto connection
+sudo systemctl enable dhcpcd.service
+sudo systemctl enable dhcpcd@eth0.service
+# configure mirrors
+# refresh list
+sudo pacman -Syyu
+sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+sudo rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup | sudo tee /etc/pacman.d/mirrorlist
+
+# for my desktop i have a gtx 960 hence the nvidia drivers
+sudo pacman -S nvidia nvidia-libgl hub openssh xclip xorg-server xorg-xinit firefox emacs
+sudo reboot
+
+# install yaourt
+cd /tmp
+git clone https://aur.archlinux.org/package-query.git
+cd package-query
+makepkg -si
+cd ..
+git clone https://aur.archlinux.org/yaourt.git
+cd yaourt
+makepkg -si
+cd ~
+
+yaourt -S dropbox redshift ttf-font-awesome mpstat ttf-dejavu wqy-zenhei evince i3-gaps-git rxvt-unicode rofi termite
+
+
+
+git clone https://github.com/worace/dotfiles.git
+
+ln -s ~/dotfiles/arch/xinitrc ~/.xinitrc
+ln -s ~/dotfiles/arch/Xresources.light ~/.Xresources
+mkdir ~/.config/i3
+ln -s ~/dotfiles/arch/i3.config ~/.config/i3/config
+ln -sf ~/dotfiles/.zshrc ~/.zshrc
+ln -s ~/dotfiles/emacs ~/.emacs.d
+
+
+# Github SSH setup
+
+
+```
+
+
 * symlinks...
 
 ### Packages to install
