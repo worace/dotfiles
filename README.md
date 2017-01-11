@@ -306,6 +306,9 @@ yaourt -S dropbox python3 redshift ttf-font-awesome mpstat ttf-dejavu wqy-zenhei
 sudo echo "fs.inotify.max_user_watches = 100000" | sudo tee --append /etc/sysctl.d/99-sysctl.conf
 sudo sysctl --system
 
+# fix timezone clock issue
+sudo pacman -S ntp
+sudo ntpd -qg
 
 
 git clone https://github.com/worace/dotfiles.git
