@@ -2,22 +2,37 @@
 
 !!!!!!!!!!!!!!!!!
 !! Leopold FC660c
-keycode 37 = Control_L
-keycode 105 = Control_R
-keycode 66 = Caps_Lock
-keycode 64 = Super_L
-keycode 133 = Meta_L
-keycode 108 = Meta_R
+!! keycode 37 = Control_L
+!! keycode 105 = Control_R
+!! keycode 66 = Caps_Lock
+!! keycode 64 = Super_L
+!! keycode 133 = Meta_L
+!! keycode 108 = Meta_R
 
 
 !clear labels
-clear Lock
+!! clear Lock
+!! clear Control
+!! clear Mod1
+!! clear Mod4
+
+! add labels
+!! add Control = Control_L Control_R Caps_Lock
+!! add Mod1 = Meta_L Meta_R
+!! add Mod4 = Super_L Super_R
+
+!!!!!!!!!!!!!!!!!
+!! Ergodox
+keycode 37 = Control_L
+keycode 64 = Meta_L
+keycode 133 = Super_L
+
+!clear labels
 clear Control
 clear Mod1
 clear Mod4
 
 ! add labels
-add Control = Control_L Control_R Caps_Lock
-add Mod1 = Meta_L Meta_R
-add Mod4 = Super_L Super_R
-
+add Control = Control_L
+add Mod1 = Meta_L
+add Mod4 = Super_L
