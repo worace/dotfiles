@@ -14,6 +14,7 @@
                           ace-window
                           ag
                           auto-complete
+                          cargo
                           chruby
                           cider
                           circe
@@ -23,7 +24,9 @@
                           evil
                           evil-leader
                           evil-surround
+                          exec-path-from-shell
                           flycheck
+                          flycheck-rust
                           gist
                           groovy-mode
                           haskell-mode
@@ -46,15 +49,18 @@
                           origami
                           neotree
                           projectile
+                          racer
                           rainbow-delimiters
                           rainbow-mode
                           restclient
                           request
                           ruby-test-mode
+                          rust-mode
                           seeing-is-believing
                           smartparens
                           solarized-theme
                           spotify
+                          toml-mode
                           virtualenvwrapper
                           web-mode
                           yaml-mode))

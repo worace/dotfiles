@@ -37,6 +37,7 @@
 (smartparens-global-mode t)
 (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
 (setq cider-show-error-buffer nil)
+(setq cider-use-fringe-indicators nil)
 (defun cider-setup ()
   (setq show-trailing-whitespace nil)
   (setq truncate-lines nil))
@@ -338,3 +339,13 @@
 (add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode))
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 
+
+(add-hook 'sql-interactive-mode-hook
+          (lambda ()
+            (toggle-truncate-lines t)
+            (disable-trailing-whitespace)))
+
+
+(custom-set-variables '(coffee-tab-width 2))
+
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
