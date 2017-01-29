@@ -8,6 +8,8 @@
 #   do stuff
 # fi
 
+source $HOME/.profile
+
 export BUNDLER_EDITOR="emacs"
 export EDITOR="emacsclient -t"
 
