@@ -40,13 +40,13 @@ fi
 case `uname` in
   Darwin)
     #increase keyrepeat speed beyond os x allowed maximum
-    eval "defaults write NSGlobalDomain KeyRepeat -int 0"
+    # eval "defaults write NSGlobalDomain KeyRepeat -int 1"
     em () {
         if [ "$#" -ne 0 ];
         then
-            /usr/local/Cellar/emacs/24.5/bin/emacsclient -c -n $*
+            /usr/local/Cellar/emacs/25.1/bin/emacsclient -c -n $*
         else
-            /usr/local/Cellar/emacs/24.5/bin/emacsclient -c -n "~/scratch"
+            /usr/local/Cellar/emacs/25.1/bin/emacsclient -c -n "~/scratch.org"
         fi
     }
     ;;
@@ -86,15 +86,9 @@ alias nt="nosetests"
 # GOLANG
 export GOPATH=$HOME/go
 export GOROOT=$HOME/go
-export PATH="$GOPATH/bin:$PATH"
-export PATH="$PATH:/usr/local/opt/go/libexec/bin"
 alias gp="cd $GOPATH/src/github.com/worace"
-
-export PATH="/usr/local/heroku/bin:$PATH"
 export CC="gcc"
 
-#add homebrew bin directory to path
-export PATH="/usr/local/bin:$PATH"
 
 alias bounce_dns="sudo killall -HUP mDNSResponder"
 alias turing="cd ~/Turing"
@@ -181,8 +175,6 @@ alias rake='noglob rake'
 #[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh --no-use"  # This loads nvm
 alias nvmu='source ~/.nvm/nvm.sh && nvm use'
 
-# Add Python local (user) installs to Path:
-export PATH="/home/worace/.local/bin:$PATH"
 
 HISTSIZE=100000
 SAVEHIST=100000

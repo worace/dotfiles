@@ -1,0 +1,6 @@
+export PATH="$PATH:/usr/local/opt/go/libexec/bin"
+export PATH="/usr/local/heroku/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
