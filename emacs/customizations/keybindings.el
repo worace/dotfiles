@@ -17,21 +17,20 @@
 (evil-leader/set-key "mb" 'spotify-previous)
 (evil-leader/set-key "mf" 'spotify-next)
 
-(defun worace-text-scale-increase ()
-  (interactive)
+(defun worace-text-scale-change (increment direction)
   (let ((cur-height (face-attribute 'default :height)))
     (set-face-attribute 'default
                         nil
                         :height
-                        (+ 20 cur-height))))
+                        (funcall direction cur-height increment))))
+
+(defun worace-text-scale-increase ()
+  (interactive)
+  (worace-text-scale-change 20 '+))
 
 (defun worace-text-scale-decrease ()
   (interactive)
-  (let ((cur-height (face-attribute 'default :height)))
-    (set-face-attribute 'default
-                        nil
-                        :height
-                        (- cur-height 20))))
+  (worace-text-scale-change 20 '-))
 
 ;; try to stop me from constantly opening the stupid evil mode keymap help window...
 (define-key evil-normal-state-map (kbd "C-w C-h") 'evil-window-left)
