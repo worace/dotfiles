@@ -6,8 +6,8 @@
 (evil-leader/set-key "x" 'helm-M-x)
 (evil-leader/set-key "s" 'save-buffer)
 (evil-leader/set-key "/" 'comment-or-uncomment-region)
-(evil-leader/set-key "-" 'text-scale-decrease)
-(evil-leader/set-key "=" 'text-scale-increase)
+(evil-leader/set-key "-" 'worace-text-scale-decrease)
+(evil-leader/set-key "=" 'worace-text-scale-increase)
 (evil-leader/set-key "w" 'other-window)
 (evil-leader/set-key "ct" 'toggle-theme)
 (evil-leader/set-key "f" 'helm-projectile-ag)
@@ -16,6 +16,22 @@
 (evil-leader/set-key "mp" 'spotify-playpause)
 (evil-leader/set-key "mb" 'spotify-previous)
 (evil-leader/set-key "mf" 'spotify-next)
+
+(defun worace-text-scale-increase ()
+  (interactive)
+  (let ((cur-height (face-attribute 'default :height)))
+    (set-face-attribute 'default
+                        nil
+                        :height
+                        (+ 20 cur-height))))
+
+(defun worace-text-scale-decrease ()
+  (interactive)
+  (let ((cur-height (face-attribute 'default :height)))
+    (set-face-attribute 'default
+                        nil
+                        :height
+                        (- cur-height 20))))
 
 ;; try to stop me from constantly opening the stupid evil mode keymap help window...
 (define-key evil-normal-state-map (kbd "C-w C-h") 'evil-window-left)
@@ -40,8 +56,8 @@
 (evil-define-key 'normal origami-mode-map (kbd "zo") 'origami-toggle-node)
 
 (setq mac-command-modifier 'super)
-(global-set-key (kbd "s--") 'text-scale-decrease)
-(global-set-key (kbd "s-=") 'text-scale-increase)
+(global-set-key (kbd "s--") 'worace-text-scale-decrease)
+(global-set-key (kbd "s-=") 'worace-text-scale-increase)
 
 (defun seeing-is-believing-evaluate-current-line ()
   (interactive)
