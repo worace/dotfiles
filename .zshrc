@@ -101,6 +101,10 @@ if [[ -a ~/.secrets.sh ]]; then
   source ~/.secrets.sh
 fi
 
+if [[ -a ~/.factual.sh ]]; then
+  source ~/.factual.sh
+fi
+
 function killgrep {
   kill $(ps aux | grep $1 | grep -v "grep" | awk '{print $2}')
 }
