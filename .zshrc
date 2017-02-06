@@ -83,6 +83,8 @@ alias lf="rlwrap lein figwheel dev test" #figwheel readline mode
 alias ltr="lein test-refresh"
 alias ntw="nosetests --with-watch -s"
 alias nt="nosetests"
+alias pd="pushd $*"
+alias po="popd $*"
 
 # GOLANG
 export GOPATH=$HOME/go
