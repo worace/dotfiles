@@ -1,6 +1,6 @@
 (setq-default indent-tabs-mode nil)
 
-(ido-mode)
+(ido-mode t)
 
 (global-linum-mode 1)
 
