@@ -156,7 +156,7 @@ function loadChruby {
     if [[ -a $1/chruby.sh ]]; then
         source $1/chruby.sh
         source $1/auto.sh
-        chruby 2.3.3
+        chruby 2.3
     fi
 }
 loadChruby '/usr/local/share/chruby'
