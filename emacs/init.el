@@ -19,6 +19,7 @@
 (setq gc-cons-threshold 100000000)
 
 (add-to-list 'load-path "~/.emacs.d/customizations/")
+(add-to-list 'load-path "~/.emacs.d/customizations/vendor")
 (load "packages.el")
 (load "ui.el")
 (load "theme.el")
