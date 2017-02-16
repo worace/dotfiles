@@ -350,4 +350,8 @@
 
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
 
+;; Octave Setup
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+(evil-leader/set-key-for-mode 'octave-mode "e b" 'octave-send-buffer)
+(evil-leader/set-key-for-mode 'octave-mode "e r" 'octave-send-region)
+(evil-leader/set-key-for-mode 'inferior-octave-mode "k" 'comint-clear-buffer)
