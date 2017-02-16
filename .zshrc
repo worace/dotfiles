@@ -136,13 +136,6 @@ export MITSCHEME_LIBRARY_PATH="/Applications/MIT\:GNU\ Scheme.app/Contents/Resou
 export MIT_SCHEME_EXE="/usr/local/scheme"
 
 case `uname` in
-  Darwin)
-  # docker-machine env default
-  export DOCKER_TLS_VERIFY="1"
-  export DOCKER_HOST="tcp://192.168.99.100:2376"
-  export DOCKER_CERT_PATH="/Users/worace/.docker/machine/machines/default"
-  export DOCKER_MACHINE_NAME="default"
-    ;;
   Linux)
   export DOCKER_TLS_VERIFY="1"
   export DOCKER_HOST="tcp://192.168.99.100:2376"
