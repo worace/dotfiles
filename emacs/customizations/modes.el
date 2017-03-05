@@ -349,3 +349,5 @@
 (custom-set-variables '(coffee-tab-width 2))
 
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
+
+(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))

@@ -170,3 +170,9 @@
 
 ;; (define-key evil-normal-state-map (kbd "S-J") 'move-line-down)
 ;; (define-key evil-normal-state-map (kbd "S-j") 'move-line-down)
+
+
+;; Octave
+(evil-leader/set-key-for-mode 'octave-mode "eb" 'octave-send-buffer)
+(evil-leader/set-key-for-mode 'octave-mode "er" 'octave-send-region)
+(evil-leader/set-key-for-mode 'inferior-octave-mode "k" 'comint-clear-buffer)
