@@ -39,3 +39,10 @@
 ;; Disable auto-line-wrapping (truncate instead)
 (add-hook 'hack-local-variables-hook
 	  (lambda () (setq truncate-lines t)))
+
+(defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
+  "Create parent directory if not exists while visiting file."
+  (unless (file-exists-p filename)
+    (let ((dir (file-name-directory filename)))
+      (unless (file-exists-p dir)
+        (make-directory dir)))))
