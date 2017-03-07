@@ -397,3 +397,6 @@
 (evil-leader/set-key-for-mode 'octave-mode "e b" 'octave-send-buffer)
 (evil-leader/set-key-for-mode 'octave-mode "e r" 'octave-send-region)
 (evil-leader/set-key-for-mode 'inferior-octave-mode "k" 'comint-clear-buffer)
+(defun inferior-octave-setup ()
+  (setq show-trailing-whitespace nil))
+(add-hook 'inferior-octave-mode-hook #'inferior-octave-setup)
