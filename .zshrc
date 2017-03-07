@@ -168,7 +168,7 @@ function scrape {
 			$1
 }
 
-function countloc { find $1 -name "*" -type f | xargs wc -l }
+function countloc { find $1 -name "*" -type f | xargs wc -l | sort }
 alias rake='noglob rake'
 
 # export NVM_DIR="$HOME/.nvm"

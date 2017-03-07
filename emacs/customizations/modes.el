@@ -20,6 +20,10 @@
 ;; Evil (vim) Mode
 (require 'evil)
 (evil-mode 1)
+;; Make evil treat language-dependent "symbols" as full words
+;; e.g. move past underscores for ruby as part of same word
+(with-eval-after-load 'evil
+  (defalias #'forward-evil-word #'forward-evil-symbol))
 
 ;; Disable Evil for certain modes
 (add-to-list 'evil-emacs-state-modes 'eshell-mode)
@@ -138,7 +142,7 @@
 
 ;;ruby
 (require 'chruby)
-(chruby "2.2.2")
+(chruby "2.3.3")
 (require 'seeing-is-believing)
 (add-hook 'ruby-mode-hook 'seeing-is-believing)
 (require 'inf-ruby)
@@ -146,6 +150,17 @@
 (when (executable-find "pry")
     (add-to-list 'inf-ruby-implementations '("pry" . "pry"))
     (setq inf-ruby-default-implementation "pry"))
+
+(defun my-compilation-hook (buf strg)
+  (message "RUBY TEST MODE COMPILATION FINISHED")
+  (switch-to-buffer-other-window "*compilation*")
+  (read-only-mode)
+  (goto-char (point-max))
+  (local-set-key (kbd "q")
+                 (lambda () (interactive) (quit-restore-window))))
+
+(add-hook 'compilation-finish-functions
+          'my-compilation-hook)
 
 (require 'ruby-test-mode)
 (add-hook 'ruby-mode-hook 'ruby-test-mode)

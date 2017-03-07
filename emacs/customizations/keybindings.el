@@ -9,6 +9,7 @@
 (evil-leader/set-key "-" 'worace-text-scale-decrease)
 (evil-leader/set-key "=" 'worace-text-scale-increase)
 (evil-leader/set-key "w" 'ace-window)
+(evil-leader/set-key "asw" 'ace-swap-window)
 (evil-leader/set-key "ct" 'toggle-theme)
 (evil-leader/set-key "f" 'helm-projectile-ag)
 (evil-leader/set-key "q" 'evil-quit)
@@ -97,6 +98,7 @@
 
 ;;Emacs Lisp
 (evil-leader/set-key-for-mode 'emacs-lisp-mode "eb" 'eval-buffer)
+(evil-leader/set-key-for-mode 'emacs-lisp-mode "er" 'eval-region)
 
 ;; Git commands
 (evil-leader/set-key "gs" 'magit-status)
@@ -176,7 +178,5 @@
 ;; (define-key evil-normal-state-map (kbd "S-j") 'move-line-down)
 
 
-;; Octave
-(evil-leader/set-key-for-mode 'octave-mode "eb" 'octave-send-buffer)
-(evil-leader/set-key-for-mode 'octave-mode "er" 'octave-send-region)
-(evil-leader/set-key-for-mode 'inferior-octave-mode "k" 'comint-clear-buffer)
+;; Markdown
+(evil-leader/set-key-for-mode 'markdown-mode "o" 'markdown-follow-link-at-point)
