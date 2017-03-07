@@ -1,3 +1,6 @@
+(if (file-exists-p "~/.secrets.el")
+    (load "~/.secrets.el"))
+
 (setq-default indent-tabs-mode nil)
 
 (ido-mode t)
@@ -355,6 +358,8 @@
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 
 
+;; Postgres / SQL Mode
+;; sql-connection-alist defined in ~/.secrets.el
 (add-hook 'sql-interactive-mode-hook
           (lambda ()
             (toggle-truncate-lines t)
@@ -364,6 +369,28 @@
 (custom-set-variables '(coffee-tab-width 2))
 
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
+
+(setq tramp-default-method "ssh")
+
+(require 'circe)
+(evil-set-initial-state 'circe-mode 'emacs)
+
+(add-to-list 'circe-networks '("Mozilla"  :host "irc.mozilla.org"  :port (6667 . 6697)))
+
+(add-hook 'circe-mode-hook
+          (lambda ()
+            (setq show-trailing-whitespace nil)))
+
+;; irc-nick, irc-pass loaded from ~/.secrets.el
+(setq circe-network-options
+      `(("Mozilla"
+         :nick ,irc-nick
+         :channels ("#rust" "#rust-beginners")
+         :nickserv-password ,irc-pass)))
+
+
+(setq sh-basic-offset 2
+      sh-indentation 2)
 
 ;; Octave Setup
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
