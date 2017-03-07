@@ -155,12 +155,11 @@
     (setq inf-ruby-default-implementation "pry"))
 
 (defun my-compilation-hook (buf strg)
-  (message "RUBY TEST MODE COMPILATION FINISHED")
   (switch-to-buffer-other-window "*compilation*")
   (read-only-mode)
   (goto-char (point-max))
   (local-set-key (kbd "q")
-                 (lambda () (interactive) (quit-restore-window))))
+                 (lambda () (interactive) (quit-restore-window nil 'kill))))
 
 (add-hook 'compilation-finish-functions
           'my-compilation-hook)
@@ -400,3 +399,7 @@
 (defun inferior-octave-setup ()
   (setq show-trailing-whitespace nil))
 (add-hook 'inferior-octave-mode-hook #'inferior-octave-setup)
+
+(custom-set-faces
+ '(aw-leading-char-face
+   ((t (:inherit ace-jump-face-foreground :height 0.95)))))
