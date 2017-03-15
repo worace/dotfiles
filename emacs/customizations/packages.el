@@ -29,6 +29,7 @@
                           flycheck-rust
                           gist
                           groovy-mode
+                          haml-mode
                           haskell-mode
                           helm
                           helm-ag

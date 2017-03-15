@@ -58,7 +58,7 @@ case `uname` in
     ;;
 esac
 
-alias racket="/Applications/Racket\ v6.2/bin/racket"
+alias racket="/Applications/Racket\ v6.8/bin/racket"
 
 # Git
 alias gs='git status '

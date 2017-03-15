@@ -54,12 +54,13 @@
  '(markdown-command "/usr/local/bin/markdown")
  '(package-selected-packages
    (quote
-    (logstash-conf typescript-mode gruvbox-theme toml-mode exec-path-from-shell cargo racer flycheck-rust coffee-mode yaml-mode web-mode virtualenvwrapper spotify solarized-theme smartparens seeing-is-believing ruby-test-mode request restclient rainbow-mode rainbow-delimiters neotree origami org-present org-bullets nose mocha markdown-toc markdown-mode magit jsx-mode json-reformat jade inf-ruby helm-projectile helm-circe helm-ag helm haskell-mode groovy-mode gist flycheck evil-surround evil-leader evil dockerfile-mode clj-refactor circe cider chruby auto-complete ag ace-window ace-jump-mode))))
+    (haml-mode logstash-conf typescript-mode gruvbox-theme toml-mode exec-path-from-shell cargo racer flycheck-rust coffee-mode yaml-mode web-mode virtualenvwrapper spotify solarized-theme smartparens seeing-is-believing ruby-test-mode request restclient rainbow-mode rainbow-delimiters neotree origami org-present org-bullets nose mocha markdown-toc markdown-mode magit jsx-mode json-reformat jade inf-ruby helm-projectile helm-circe helm-ag helm haskell-mode groovy-mode gist flycheck evil-surround evil-leader evil dockerfile-mode clj-refactor circe cider chruby auto-complete ag ace-window ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 0.95))))
  '(org-document-title ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2 :underline nil))))
  '(org-level-1 ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2))))
  '(org-level-2 ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2))))
