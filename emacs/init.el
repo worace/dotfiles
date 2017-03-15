@@ -38,9 +38,9 @@
 
 (setq backup-by-copying t)
 (setq delete-old-versions t
-  kept-new-versions 6
-  kept-old-versions 2
-  version-control t)
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -54,7 +54,7 @@
  '(markdown-command "/usr/local/bin/markdown")
  '(package-selected-packages
    (quote
-    (haml-mode logstash-conf typescript-mode gruvbox-theme toml-mode exec-path-from-shell cargo racer flycheck-rust coffee-mode yaml-mode web-mode virtualenvwrapper spotify solarized-theme smartparens seeing-is-believing ruby-test-mode request restclient rainbow-mode rainbow-delimiters neotree origami org-present org-bullets nose mocha markdown-toc markdown-mode magit jsx-mode json-reformat jade inf-ruby helm-projectile helm-circe helm-ag helm haskell-mode groovy-mode gist flycheck evil-surround evil-leader evil dockerfile-mode clj-refactor circe cider chruby auto-complete ag ace-window ace-jump-mode))))
+    (racket-mode haml-mode logstash-conf typescript-mode gruvbox-theme toml-mode exec-path-from-shell cargo racer flycheck-rust coffee-mode yaml-mode web-mode virtualenvwrapper spotify solarized-theme smartparens seeing-is-believing ruby-test-mode request restclient rainbow-mode rainbow-delimiters neotree origami org-present org-bullets nose mocha markdown-toc markdown-mode magit jsx-mode json-reformat jade inf-ruby helm-projectile helm-circe helm-ag helm haskell-mode groovy-mode gist flycheck evil-surround evil-leader evil dockerfile-mode clj-refactor circe cider chruby auto-complete ag ace-window ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

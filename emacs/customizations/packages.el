@@ -51,6 +51,7 @@
                           neotree
                           projectile
                           racer
+                          racket-mode
                           rainbow-delimiters
                           rainbow-mode
                           restclient
