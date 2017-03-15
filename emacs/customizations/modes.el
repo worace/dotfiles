@@ -154,13 +154,6 @@
     (add-to-list 'inf-ruby-implementations '("pry" . "pry"))
     (setq inf-ruby-default-implementation "pry"))
 
-(defun my-compilation-hook (buf strg)
-  (switch-to-buffer-other-window "*compilation*")
-  (read-only-mode)
-  (goto-char (point-max))
-  (local-set-key (kbd "q")
-                 (lambda () (interactive) (quit-restore-window nil 'kill))))
-
 (add-hook 'compilation-finish-functions
           'my-compilation-hook)
 
@@ -403,3 +396,17 @@
 (custom-set-faces
  '(aw-leading-char-face
    ((t (:inherit ace-jump-face-foreground :height 0.95)))))
+
+
+(setq racket-racket-program "/Applications/Racket v6.8/bin/racket")
+(setq racket-raco-program "/Applications/Racket v6.8/bin/raco")
+(evil-leader/set-key-for-mode 'racket-mode "e b" 'racket-run)
+(evil-leader/set-key-for-mode 'racket-mode "e r" 'racket-send-region)
+(evil-leader/set-key-for-mode 'racket-repl-mode "k" 'comint-clear-buffer)
+(evil-leader/set-key-for-mode 'racket-mode "ps" 'sp-forward-slurp-sexp)
+(evil-leader/set-key-for-mode 'racket-mode "pb" 'sp-forward-barf-sexp)
+(evil-leader/set-key-for-mode 'racket-mode "pp" 'sp-splice-sexp-killing-around)
+(defun racket-repl-setup ()
+  (setq show-trailing-whitespace nil)
+  (setq truncate-lines nil))
+(add-hook 'racket-repl-mode-hook #'racket-repl-setup)
