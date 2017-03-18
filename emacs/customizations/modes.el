@@ -297,23 +297,21 @@
 (defun worace-org-mode-setup ()
   ;; keybinding for inserting code blocks
   (local-set-key (kbd "C-c s i") 'org-insert-src-block)
-  ;; (let* ((variable-tuple (cond ((x-list-fonts "Avenir Medium") '(:font "Avenir Medium"))
-  ;;                              ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
-  ;;                              (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-  ;;        (base-font-color     (face-foreground 'default nil 'default))
-  ;;        (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+  (let* ((variable-tuple (cond ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+                               (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+         (base-font-color     (face-foreground 'default nil 'default))
+         (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
 
-  ;;   (custom-theme-set-faces 'user
-  ;;                           `(org-level-8 ((t (,@headline ,@variable-tuple :height 1))))
-  ;;                           `(org-level-7 ((t (,@headline ,@variable-tuple :height 1))))
-  ;;                           `(org-level-6 ((t (,@headline ,@variable-tuple :height 1))))
-  ;;                           `(org-level-5 ((t (,@headline ,@variable-tuple :height 1))))
-  ;;                           `(org-level-4 ((t (,@headline ,@variable-tuple :height 1))))
-  ;;                           `(org-level-3 ((t (,@headline ,@variable-tuple :height 1))))
-  ;;                           `(org-level-2 ((t (,@headline ,@variable-tuple :height 1))))
-  ;;                           `(org-level-1 ((t (,@headline ,@variable-tuple :height 2))))
-  ;;                           `(org-document-title ((t (,@headline ,@variable-tuple :height 1 :underline nil))))))
-
+    (custom-theme-set-faces 'user
+                            `(org-level-8 ((t (,@headline ,@variable-tuple :height 1))))
+                            `(org-level-7 ((t (,@headline ,@variable-tuple :height 1))))
+                            `(org-level-6 ((t (,@headline ,@variable-tuple :height 1))))
+                            `(org-level-5 ((t (,@headline ,@variable-tuple :height 1))))
+                            `(org-level-4 ((t (,@headline ,@variable-tuple :height 1))))
+                            `(org-level-3 ((t (,@headline ,@variable-tuple :height 1))))
+                            `(org-level-2 ((t (,@headline ,@variable-tuple :height 1))))
+                            `(org-level-1 ((t (,@headline ,@variable-tuple :height 1))))
+                            `(org-document-title ((t (,@headline ,@variable-tuple :height 1 :underline nil))))))
   )
 
 (add-hook 'org-mode-hook 'worace-org-mode-setup)
