@@ -1,5 +1,4 @@
 ;; Set Color Scheme
-;; (load-theme 'solarized-light t)
 (load-theme 'gruvbox t)
 
 (defun toggle-theme ()

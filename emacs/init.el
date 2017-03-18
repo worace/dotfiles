@@ -60,15 +60,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 0.95))))
- '(org-document-title ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2 :underline nil))))
- '(org-level-1 ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2))))
- '(org-level-2 ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2))))
- '(org-level-3 ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2))))
- '(org-level-4 ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2))))
- '(org-level-5 ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2))))
- '(org-level-6 ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2))))
- '(org-level-7 ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2))))
- '(org-level-8 ((t (:inherit default :weight bold :foreground "#657b83" :font "Avenir Medium" :height 1.2)))))
-(put 'downcase-region 'disabled nil)
-(put 'erase-buffer 'disabled nil)
+ '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 0.95)))))
