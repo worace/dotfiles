@@ -20,6 +20,7 @@
                           circe
                           clj-refactor
                           clojure-mode
+                          coffee-mode
                           dockerfile-mode
                           evil
                           evil-leader
