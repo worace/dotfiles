@@ -72,7 +72,7 @@ alias gco="git checkout"
 alias gst="git status"
 alias gpum="git pull upstream master"
 alias gpom="git pull origin master"
-alias gpod="git pull origin devel"
+alias gpod="git pull origin develop"
 alias hb="hub browse"
 
 alias be="bundle exec"
