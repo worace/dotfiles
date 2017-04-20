@@ -85,6 +85,7 @@
 (evil-leader/set-key-for-mode 'clojure-mode "er" 'cider-eval-region)
 (evil-leader/set-key-for-mode 'clojure-mode "ep" 'cider-eval-sexp-at-point)
 (evil-leader/set-key-for-mode 'clojure-mode "ee" 'cider-eval-defun-at-point)
+(evil-leader/set-key-for-mode 'clojure-mode "et" 'cider-test-run-test)
 (evil-leader/set-key-for-mode 'clojure-mode "ps" 'sp-forward-slurp-sexp)
 (evil-leader/set-key-for-mode 'clojure-mode "pb" 'sp-forward-barf-sexp)
 (evil-leader/set-key-for-mode 'clojure-mode "pp" 'sp-splice-sexp-killing-around)

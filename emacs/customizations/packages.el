@@ -12,6 +12,7 @@
 (defvar worace/packages '(;;elm-mode
                           ace-jump-mode
                           ace-window
+                          alchemist
                           ag
                           auto-complete
                           cargo
@@ -22,6 +23,7 @@
                           clojure-mode
                           coffee-mode
                           dockerfile-mode
+                          elixir-mode
                           evil
                           evil-leader
                           evil-surround

@@ -249,7 +249,7 @@
 ;; OOOOOORG
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 ;; Don't show // around italics
-(setq org-hide-emphasis-markers t)
+;; (setq org-hide-emphasis-markers t)
 ;; Have org treat code blocks like their native lang
 (setq org-src-fontify-natively t)
 (setq org-src-tab-acts-natively t)
@@ -260,8 +260,8 @@
 (font-lock-add-keywords 'org-mode
                         '(("^ +\\([-*]\\) "
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;; (require 'org-bullets)
+;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (add-hook 'org-mode-hook (lambda () (org-indent-mode 1)))
 (setq org-src-preserve-indentation nil
       org-edit-src-content-indentation 0)
@@ -283,7 +283,7 @@
           '("emacs-lisp" "python" "C" "sh" "shell" "java" "js" "clojure" "C++" "css"
             "calc" "asymptote" "dot" "gnuplot" "ledger" "lilypond" "mscgen"
             "octave" "oz" "plantuml" "R" "sass" "screen" "sql" "awk" "ditaa"
-            "haskell" "latex" "lisp" "matlab" "ocaml" "org" "perl" "ruby"
+            "haskell" "latex" "lisp" "matlab" "ocaml" "org" "perl" "racket" "ruby"
             "scheme" "sqlite")))
      (list (ido-completing-read "Source code type: " src-code-types))))
   (progn
@@ -297,22 +297,24 @@
 (defun worace-org-mode-setup ()
   ;; keybinding for inserting code blocks
   (local-set-key (kbd "C-c s i") 'org-insert-src-block)
-  (let* ((variable-tuple (cond ((x-list-fonts "Avenir Medium") '(:font "Avenir Medium"))
-                               ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
-                               (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-         (base-font-color     (face-foreground 'default nil 'default))
-         (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+  ;; (let* ((variable-tuple (cond ((x-list-fonts "Avenir Medium") '(:font "Avenir Medium"))
+  ;;                              ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+  ;;                              (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+  ;;        (base-font-color     (face-foreground 'default nil 'default))
+  ;;        (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
 
-    (custom-theme-set-faces 'user
-                            `(org-level-8 ((t (,@headline ,@variable-tuple :height 1.2))))
-                            `(org-level-7 ((t (,@headline ,@variable-tuple :height 1.2))))
-                            `(org-level-6 ((t (,@headline ,@variable-tuple :height 1.2))))
-                            `(org-level-5 ((t (,@headline ,@variable-tuple :height 1.2))))
-                            `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.2))))
-                            `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.2))))
-                            `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.2))))
-                            `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.2))))
-                            `(org-document-title ((t (,@headline ,@variable-tuple :height 1.2 :underline nil)))))))
+  ;;   (custom-theme-set-faces 'user
+  ;;                           `(org-level-8 ((t (,@headline ,@variable-tuple :height 1))))
+  ;;                           `(org-level-7 ((t (,@headline ,@variable-tuple :height 1))))
+  ;;                           `(org-level-6 ((t (,@headline ,@variable-tuple :height 1))))
+  ;;                           `(org-level-5 ((t (,@headline ,@variable-tuple :height 1))))
+  ;;                           `(org-level-4 ((t (,@headline ,@variable-tuple :height 1))))
+  ;;                           `(org-level-3 ((t (,@headline ,@variable-tuple :height 1))))
+  ;;                           `(org-level-2 ((t (,@headline ,@variable-tuple :height 1))))
+  ;;                           `(org-level-1 ((t (,@headline ,@variable-tuple :height 2))))
+  ;;                           `(org-document-title ((t (,@headline ,@variable-tuple :height 1 :underline nil))))))
+
+  )
 
 (add-hook 'org-mode-hook 'worace-org-mode-setup)
 
@@ -321,6 +323,13 @@
 (evil-leader/set-key-for-mode 'org-mode "i s" 'org-edit-src-code)
 (evil-leader/set-key-for-mode 'org-mode "i l" 'org-insert-link)
 (evil-leader/set-key-for-mode 'org-mode "i i" 'org-insert-list-item)
+
+;; Configure additional languages for org mode
+(require 'ob-racket)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((racket . t)))
+
 
 (require 'origami)
 (global-origami-mode)
@@ -400,6 +409,7 @@
 
 (setq racket-racket-program "/Applications/Racket v6.8/bin/racket")
 (setq racket-raco-program "/Applications/Racket v6.8/bin/raco")
+(setq org-babel-racket-command "/Applications/Racket v6.8/bin/racket")
 (evil-leader/set-key-for-mode 'racket-mode "e b" 'racket-run)
 (evil-leader/set-key-for-mode 'racket-mode "e r" 'racket-send-region)
 (evil-leader/set-key-for-mode 'racket-repl-mode "k" 'comint-clear-buffer)
@@ -410,3 +420,11 @@
   (setq show-trailing-whitespace nil)
   (setq truncate-lines nil))
 (add-hook 'racket-repl-mode-hook #'racket-repl-setup)
+
+
+;; Elixir
+(add-hook 'alchemist-iex-mode-hook
+          (lambda ()
+            (setq show-trailing-whitespace nil)))
+(evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
+(evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
