@@ -327,8 +327,6 @@ ln -s ~/dotfiles/arch/.i3blocks.conf ~/.i3blocks.conf
 mkdir ~/.local/share/applications
 ln -s ~/dotfiles/arch/1Password.desktop ~/.local/share/applications/1Password.desktop
 
-
-
 # Github SSH setup
 
 # multilib and wine/1password
@@ -338,10 +336,7 @@ ln -s ~/dotfiles/arch/1Password.desktop ~/.local/share/applications/1Password.de
 
 sudo pacman -Syy
 sudo pacman -S wine
-
-
 ```
-
 
 * symlinks...
 
@@ -399,4 +394,11 @@ Setup to allow dropbox to work properly:
 
 ```
 echo fs.inotify.max_user_watches=100000 | sudo tee -a /etc/sysctl.conf; sudo sysctl -p
+```
+
+### Node JS
+
+```
+sudo pacman -S nodejs
+sudo pacman -S npm
 ```
