@@ -155,6 +155,9 @@ function loadChruby {
 loadChruby '/usr/local/share/chruby'
 loadChruby '/usr/share/chruby'
 
+# For adding system-ruby gem dir to path
+PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+
 function scrape {
 	wget \
 		--recursive \
