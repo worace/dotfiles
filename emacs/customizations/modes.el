@@ -15,6 +15,8 @@
 ;; And some other standard uses
 (helm-mode 1)
 
+(setq helm-ag-use-agignore t)
+
 ;; Set up evil leader
 ;; Make sure to enable this before evil-mode
 (global-evil-leader-mode)
@@ -95,9 +97,13 @@
 (setq js2-bounce-indent-p t)
 (setq js2-basic-offset 2)
 (setq js2-include-node-externs t)
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
+
+(add-hook 'js2-jsx-mode-hook
+          (lambda ()
+            (toggle-truncate-lines nil)))
 
 (setq flycheck-disabled-checkers '(javascript-jshint))
 (setq flycheck-checkers '(javascript-eslint))
