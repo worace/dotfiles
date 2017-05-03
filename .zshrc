@@ -194,3 +194,11 @@ setopt share_history
 alias rl="source ~/.zshrc"
 
 [ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
+
+
+# Custom thrift version needed for engine
+PATH="/usr/local/opt/thrift@0.90/bin:$PATH"
+
+# Hadoop + Kerberos Local Setup
+export HADOOP_CONF_DIR=/etc/hadoop/conf
+PATH=/usr/local/Cellar/krb5/1.14.4/bin:$PATH
