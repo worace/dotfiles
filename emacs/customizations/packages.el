@@ -24,6 +24,7 @@
                           coffee-mode
                           dockerfile-mode
                           elixir-mode
+                          ensime
                           evil
                           evil-leader
                           evil-surround
