@@ -41,7 +41,7 @@ fi
 case `uname` in
   Darwin)
     #increase keyrepeat speed beyond os x allowed maximum
-    # eval "defaults write NSGlobalDomain KeyRepeat -int 1"
+    eval "defaults write NSGlobalDomain KeyRepeat -int 1"
     em () {
         if [ "$#" -ne 0 ];
         then
@@ -92,11 +92,15 @@ export GOROOT=$HOME/go
 alias gp="cd $GOPATH/src/github.com/worace"
 export CC="gcc"
 
-
 alias bounce_dns="sudo killall -HUP mDNSResponder"
 alias turing="cd ~/Turing"
 alias code="cd ~/code"
 alias clj="cd ~/code/clojure"
+
+# hdfs aliases
+alias hls='hadoop fs -ls'
+alias htx='hadoop fs -text'
+alias hc='hadoop fs -cat'
 
 if [[ -a ~/.secrets.sh ]]; then
   source ~/.secrets.sh
@@ -202,3 +206,6 @@ PATH="/usr/local/opt/thrift@0.90/bin:$PATH"
 # Hadoop + Kerberos Local Setup
 export HADOOP_CONF_DIR=/etc/hadoop/conf
 PATH=/usr/local/Cellar/krb5/1.14.4/bin:$PATH
+
+# Autojump shell extension
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
