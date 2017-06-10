@@ -433,3 +433,13 @@
             (setq show-trailing-whitespace nil)))
 (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
 (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
+
+(sp-with-modes '(elixir-mode)
+  (sp-local-pair "fn" "end"
+         :when '(("SPC" "RET"))
+         :actions '(insert navigate))
+  (sp-local-pair "do" "end"
+         :when '(("SPC" "RET"))
+         :post-handlers '(sp-ruby-def-post-handler)
+         :actions '(insert navigate)))
+
