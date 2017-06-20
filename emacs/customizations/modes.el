@@ -3,7 +3,9 @@
 
 (setq-default indent-tabs-mode nil)
 
-(ido-mode t)
+(ido-mode 1)
+(ido-everywhere 1)
+
 ;;Projectile
 (setq projectile-git-submodule-command "echo ''")
 
@@ -86,15 +88,15 @@
                 "__dirname" "console" "JSON" "describe" "it" "beforeEach"
                 "before" "after" "afterEach"))
 
-(setq-default js2-bounce-indent-p t
-              js2-include-node-externs t
-              js2-include-browser-externs t
-              js2-basic-offset 2
-              js2-mode-show-parse-errors t
-              js2-mode-show-strict-warnings t
-              js2-strict-trailing-comma-warning nil
-              js2-strict-missing-semi-warning t
-              js2-strict-inconsistent-return-warning nil)
+(setq js2-bounce-indent-p t
+      js2-include-node-externs t
+      js2-include-browser-externs t
+      js2-basic-offset 2
+      js2-mode-show-parse-errors nil
+      js2-mode-show-strict-warnings nil
+      js2-strict-trailing-comma-warning nil
+      js2-strict-missing-semi-warning nil
+      js2-strict-inconsistent-return-warning nil)
 
 (setq js2-bounce-indent-p t)
 (setq js2-basic-offset 2)
@@ -107,22 +109,35 @@
           (lambda ()
             (toggle-truncate-lines nil)))
 
-(setq flycheck-disabled-checkers '(javascript-jshint))
-(setq flycheck-checkers '(javascript-eslint))
+(setq-default flycheck-eslintrc "~/.eslintrc.json")
+(setq-default flycheck-disabled-checkers
+              (append flycheck-disabled-checkers
+                      '(javascript-jshint)))
+;; (setq flycheck-checkers '(javascript-eslint))
 
-(defun my/use-eslint-from-node-modules ()
+(defun use-eslint-from-node-modules ()
   (let* ((root (locate-dominating-file
                 (or (buffer-file-name) default-directory)
                 "node_modules"))
          (eslint (and root
                       (expand-file-name "node_modules/eslint/bin/eslint.js"
-                                        root))))
+                                        root)))
+         (eslintrc (and root
+                        (expand-file-name ".eslintrc.json"
+                                          root))))
+    (when eslintrc
+      (setq-local flycheck-eslintrc eslintrc)
+      (setq-local flycheck-eslint-rules-directories (list (expand-file-name root))))
     (when (and eslint (file-executable-p eslint))
       (setq-local flycheck-javascript-eslint-executable eslint))))
 
-(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
-(add-hook 'js2-mode-hook #'flycheck-mode)
-
+(add-hook 'js2-mode-hook
+          (lambda ()
+            (toggle-truncate-lines nil)
+            (flycheck-mode t)
+            (when (executable-find "eslint")
+              (flycheck-select-checker 'javascript-eslint)
+              (use-eslint-from-node-modules))))
 
 (if (executable-find "nvm")
  (progn
@@ -205,6 +220,11 @@
 (setq py-shell-switch-buffers-on-execute-p t)
 (setq py-switch-buffers-on-execute-p t)
 (setq py-smart-indentation t)
+
+(custom-set-variables
+ '(python-guess-indent nil)
+ '(python-indent 2))
+
 
 (require 'virtualenvwrapper)
 (setq venv-location "~/.virtualenvs")
