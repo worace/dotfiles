@@ -15,7 +15,7 @@
 
 (defvar drakefile-highlights nil "first element for `font-lock-defaults'")
 
-(setq drakefile-constant-assignment "\s?\\([a-zA-Z_]+\\)\s?=")
+(setq drakefile-constant-assignment "\s?\\([a-zA-Z_]+\\)\s?:?=")
 (setq drakefile-tags "\\(%[[:alnum:]_\\-]+\\)")
 (setq drakefile-variable-injection-brackets "[]$\\[]")
 (setq drakefile-variable-injection "\\[\\([[:alnum:]_]+\\)\\]")
@@ -23,16 +23,12 @@
 (setq drakefile-comment ";.*")
 
 (setq drakefile-font-lock-keywords
-      `(
-        (,drakefile-comment . font-lock-comment-face)
+      `((,drakefile-comment . font-lock-comment-face)
         (,drakefile-variable-injection . (1 font-lock-variable-name-face))
         (,drakefile-variable-injection-brackets . font-lock-keyword-face)
         (,drakefile-keywords . font-lock-keyword-face)
         (,drakefile-constant-assignment . (1 font-lock-constant-face))
-        (,drakefile-tags . font-lock-function-name-face)
-        )
-      )
-
+        (,drakefile-tags . font-lock-function-name-face)))
 
 (defconst drakefile-syntax-table
   (let ((table (make-syntax-table)))
