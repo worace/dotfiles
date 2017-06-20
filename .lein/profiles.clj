@@ -1,5 +1,10 @@
 ;;Hotloading deps with refactor-nrepl:
 ;;https://gist.github.com/worace/742d73e8d27a46ad759c
+#_(comment
+  (defn hotload-dep [package-name version-str]
+    (refactor-nrepl.artifacts/hotload-dependency
+     {:coordinates (str "[" package-name "\"" version-str "\"" "]")}))
+  (hotload-dep "selmer" "1.10.7"))
 
 {:user {:plugins [[lein-exec "0.3.4"]
                   [lein-try "0.4.3"]
