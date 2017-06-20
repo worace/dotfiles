@@ -36,8 +36,6 @@ if [[ -a $HOME/.local/bin/virtualenvwrapper_lazy.sh ]]; then
     source $HOME/.local/bin/virtualenvwrapper_lazy.sh
 fi
 
-
-
 case `uname` in
   Darwin)
     #increase keyrepeat speed beyond os x allowed maximum
@@ -98,9 +96,13 @@ alias code="cd ~/code"
 alias clj="cd ~/code/clojure"
 
 # hdfs aliases
+alias hfs='hadoop fs'
 alias hls='hadoop fs -ls'
 alias htx='hadoop fs -text'
 alias hc='hadoop fs -cat'
+
+# Run spark docker devbox
+alias sparkdev='docker run -v ~/code:/code -ti --name dev -e "START_SCRIPT=http://resources.prod.factual.com/services/hadoop/cdh5/scripts/get_configs.sh" spark-devbox:latest /sbin/my_init -- /sbin/setuser `whoami` /bin/bash -l'
 
 if [[ -a ~/.secrets.sh ]]; then
   source ~/.secrets.sh
@@ -206,6 +208,11 @@ PATH="/usr/local/opt/thrift@0.90/bin:$PATH"
 # Hadoop + Kerberos Local Setup
 export HADOOP_CONF_DIR=/etc/hadoop/conf
 PATH=/usr/local/Cellar/krb5/1.14.4/bin:$PATH
+
+export HADOOP_INSTALL=/usr/local/Cellar/hadoop/2.8.0
+export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$HADOOP_INSTALL/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar
+export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_INSTALL/lib/lzo/Mac_OS_X-x86_64-64:$HADOOP_INSTALL/lib/native"
+
 
 # Autojump shell extension
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
