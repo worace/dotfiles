@@ -4,6 +4,8 @@
 (setq-default indent-tabs-mode nil)
 
 (ido-mode t)
+;;Projectile
+(setq projectile-git-submodule-command "echo ''")
 
 (global-linum-mode 1)
 
