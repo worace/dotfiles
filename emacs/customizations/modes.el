@@ -301,7 +301,7 @@
     (newline-and-indent)
     (insert "#+BEGIN_EXAMPLE\n")
     (newline-and-indent)
-    (insert "#+END_SRC\n")
+    (insert "#+END_EXAMPLE\n")
     (previous-line 2)
     (org-edit-src-code)))
 
@@ -310,10 +310,8 @@
   (interactive
    (let ((src-code-types
           '("emacs-lisp" "python" "C" "sh" "shell" "java" "js" "clojure" "C++" "css"
-            "calc" "asymptote" "dot" "gnuplot" "ledger" "lilypond" "mscgen"
-            "octave" "oz" "plantuml" "R" "sass" "screen" "sql" "awk" "ditaa"
-            "haskell" "latex" "lisp" "matlab" "ocaml" "org" "perl" "racket" "ruby"
-            "scheme" "sqlite")))
+            "octave" "sass" "scala" "sql" "awk" "haskell" "lisp"
+            "org" "racket" "ruby" "scheme")))
      (list (ido-completing-read "Source code type: " src-code-types))))
   (progn
     (newline-and-indent)
@@ -326,6 +324,7 @@
 (defun worace-org-mode-setup ()
   ;; keybinding for inserting code blocks
   (local-set-key (kbd "C-c s i") 'org-insert-src-block)
+  (local-set-key (kbd "C-c s e") 'org-insert-example-block)
   (let* ((variable-tuple (cond ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
                                (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
          (base-font-color     (face-foreground 'default nil 'default))
