@@ -86,8 +86,6 @@ alias po="popd $*"
 
 # GOLANG
 export GOPATH=$HOME/go
-export GOROOT=$HOME/go
-alias gp="cd $GOPATH/src/github.com/worace"
 export CC="gcc"
 
 alias bounce_dns="sudo killall -HUP mDNSResponder"
@@ -116,8 +114,29 @@ function killgrep {
   kill $(ps aux | grep $1 | grep -v "grep" | awk '{print $2}')
 }
 
+function alert {
+  terminal-notifier -message $1
+}
+
 function pgrep {
     ps aux | grep $1 | grep -v "grep"
+}
+
+function fetch_tile {
+  TILE=$1
+  TILE_VERSION=${2:-v3.0.0}
+  if ! [[ -a /tmp/tiles/$TILE_VERSION/$TILE ]]; then
+    aws s3 cp s3://factual-us-west-1-tiles/$TILE_VERSION/$1 /tmp/tiles/$TILE_VERSION/$TILE
+  fi
+  cat /tmp/tiles/$TILE_VERSION/$TILE | \
+    java -cp ~/tile_builder.jar com.factual.tile.builder.mapreduce.outputFormat.TileReader
+}
+
+function fetch_uuid {
+  UUID=$1
+  INDEX=${2:-Iw1HPj}
+  curl -s "http://constellation.prod.factual.com/$INDEX/live/summaries/query?q=factual_id:$UUID" \
+    | jq -cM ".response.docs[0]"
 }
 
 function emrestart {
