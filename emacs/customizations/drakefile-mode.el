@@ -15,7 +15,7 @@
 
 (defvar drakefile-highlights nil "first element for `font-lock-defaults'")
 
-(setq drakefile-constant-assignment "\s?\\([a-zA-Z_]+\\)\s?:?=")
+(setq drakefile-constant-assignment "\s?\\([a-zA-Z_0-9]+\\)\s?:?=")
 (setq drakefile-tags "\\(%[[:alnum:]_\\-]+\\)")
 (setq drakefile-variable-injection-brackets "[]$\\[]")
 (setq drakefile-variable-injection "\\[\\([[:alnum:]_]+\\)\\]")
