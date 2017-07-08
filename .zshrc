@@ -126,9 +126,15 @@ function fetch_tile {
   TILE=$1
   TILE_VERSION=${2:-v3.0.0}
   if ! [[ -a /tmp/tiles/$TILE_VERSION/$TILE ]]; then
-    aws s3 cp s3://factual-us-west-1-tiles/$TILE_VERSION/$1 /tmp/tiles/$TILE_VERSION/$TILE
+    aws s3 --quiet cp s3://factual-us-west-1-tiles/$TILE_VERSION/$1 /tmp/tiles/$TILE_VERSION/$TILE
   fi
   cat /tmp/tiles/$TILE_VERSION/$TILE | \
+    java -cp ~/tile_builder.jar com.factual.tile.builder.mapreduce.outputFormat.TileReader
+}
+
+function ts_tile {
+  TILE=$1
+  curl http://marathon-services.la.prod.factual.com:31012/tiles/v3.0.1-all/$TILE | \
     java -cp ~/tile_builder.jar com.factual.tile.builder.mapreduce.outputFormat.TileReader
 }
 
