@@ -68,6 +68,7 @@
                           solarized-theme
                           spotify
                           toml-mode
+                          use-package
                           virtualenvwrapper
                           web-mode
                           yaml-mode))

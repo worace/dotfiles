@@ -1,6 +1,7 @@
 (if (file-exists-p "~/.secrets.el")
     (load "~/.secrets.el"))
 
+(setq-default truncate-lines 1)
 (setq-default indent-tabs-mode nil)
 
 (ido-mode 1)
@@ -107,12 +108,13 @@
 
 (add-hook 'js2-jsx-mode-hook
           (lambda ()
+            (setq truncate-lines t)
             (toggle-truncate-lines nil)))
 
 (setq-default flycheck-eslintrc "~/.eslintrc.json")
-(setq-default flycheck-disabled-checkers
-              (append flycheck-disabled-checkers
-                      '(javascript-jshint)))
+;; (setq flycheck-disabled-checkers
+;;       (append flycheck-disabled-checkers
+;;               '(javascript-jshint)))
 ;; (setq flycheck-checkers '(javascript-eslint))
 
 (defun use-eslint-from-node-modules ()
@@ -283,7 +285,7 @@
 (setq org-src-fontify-natively t)
 (setq org-src-tab-acts-natively t)
 ;; No line numbers in org (looks weird with the different sized headers)
-(add-hook 'org-mode-hook (lambda () (linum-mode 0)))
+;; (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
 
 ;; use pretty unicode bullets for lists
 (font-lock-add-keywords 'org-mode
@@ -291,6 +293,21 @@
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 ;; (require 'org-bullets)
 ;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(use-package org-bullets
+  :ensure t
+  :init
+  ;; org-bullets-bullet-list
+  ;; default: "◉ ○ ✸ ✿"
+  ;; large: ♥ ● ◇ ✚ ✜ ☯ ◆ ♠ ♣ ♦ ☢ ❀ ◆ ◖ ▶
+  ;; Small: ► • ★ ▸
+  (setq org-bullets-bullet-list '("•"))
+  ;; others: ▼, ↴, ⬎, ⤷,…, and ⋱.
+  ;; (setq org-ellipsis "⤵")
+  (setq org-ellipsis "…")
+  :config
+  (add-hook 'org-mode-hook #'org-bullets-mode))
+
+
 (add-hook 'org-mode-hook (lambda () (org-indent-mode 1)))
 (setq org-src-preserve-indentation nil
       org-edit-src-content-indentation 0)
@@ -328,19 +345,19 @@
   (let* ((variable-tuple (cond ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
                                (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
          (base-font-color     (face-foreground 'default nil 'default))
-         (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+         (headline           `(:inherit default :foreground ,base-font-color)))
 
-    (custom-theme-set-faces 'user
-                            `(org-level-8 ((t (,@headline ,@variable-tuple :height 1.1))))
-                            `(org-level-7 ((t (,@headline ,@variable-tuple :height 1.1))))
-                            `(org-level-6 ((t (,@headline ,@variable-tuple :height 1.1))))
-                            `(org-level-5 ((t (,@headline ,@variable-tuple :height 1.1))))
-                            `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
-                            `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.1))))
-                            `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.1))))
-                            `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.1))))
-                            `(org-document-title ((t (,@headline ,@variable-tuple :height 1.1 :underline nil))))))
-  )
+    ;; (custom-theme-set-faces 'user
+    ;;                         `(org-level-8 ((t (,@headline ,@variable-tuple))))
+    ;;                         `(org-level-7 ((t (,@headline ,@variable-tuple))))
+    ;;                         `(org-level-6 ((t (,@headline ,@variable-tuple))))
+    ;;                         `(org-level-5 ((t (,@headline ,@variable-tuple))))
+    ;;                         `(org-level-4 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
+    ;;                         `(org-level-3 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
+    ;;                         `(org-level-2 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
+    ;;                         `(org-level-1 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
+    ;;                         `(org-document-title ((t (,@headline ,@variable-tuple :color "#bdbdb3" :underline nil)))))
+    ))
 
 (add-hook 'org-mode-hook 'worace-org-mode-setup)
 
@@ -464,3 +481,6 @@
          :post-handlers '(sp-ruby-def-post-handler)
          :actions '(insert navigate)))
 
+(add-hook 'java-mode-hook (lambda ()
+                            (setq c-basic-offset 2)
+                            (setq truncate-lines t)))
