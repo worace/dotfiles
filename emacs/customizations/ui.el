@@ -21,7 +21,7 @@
 ;; Give empty scratch buffer, and start in markdown mode
 (setq inhibit-splash-screen t
       initial-scratch-message nil
-      initial-major-mode 'markdown-mode)
+      initial-major-mode 'org-mode)
 
 ;; Add vim-style tilde gutter when file is empty
 (setq-default indicate-empty-lines t)

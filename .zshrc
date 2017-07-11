@@ -45,7 +45,7 @@ case `uname` in
         then
             /usr/local/Cellar/emacs/25.1/bin/emacsclient -c -n $*
         else
-            /usr/local/Cellar/emacs/25.1/bin/emacsclient -c -n "~/scratch.org"
+            /usr/local/Cellar/emacs/25.1/bin/emacsclient -c -n "~/Dropbox/notes/scratch.org"
         fi
     }
     ;;
