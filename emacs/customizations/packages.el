@@ -1,7 +1,6 @@
 ;; Set up emacs package system and add a few extra
 ;; Repositories
 (load "package")
-(package-initialize)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
@@ -22,6 +21,8 @@
                           clj-refactor
                           clojure-mode
                           coffee-mode
+                          company-irony
+                          company-rtags
                           dockerfile-mode
                           elixir-mode
                           ensime
@@ -41,6 +42,7 @@
                           helm-circe
                           helm-projectile
                           inf-ruby
+                          irony
                           jade-mode
                           json-mode
                           json-reformat
@@ -62,6 +64,7 @@
                           rainbow-mode
                           restclient
                           request
+                          rtags
                           ruby-test-mode
                           rust-mode
                           seeing-is-believing
@@ -79,7 +82,8 @@
 	'((cider              . "melpa-stable")
           (circe              . "melpa-stable")
           (yaml-mode          . "melpa-stable")
-	  (clj-refactor       . "melpa-stable"))))
+	  (clj-refactor       . "melpa-stable")
+          (rtags              . "melpa-stable"))))
 
 
 ;; Require the common-lisp emacs extension; will use this
