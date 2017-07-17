@@ -138,6 +138,10 @@ function ts_tile {
     java -cp ~/tile_builder.jar com.factual.tile.builder.mapreduce.outputFormat.TileReader
 }
 
+function decode_tile {
+  cat $1 | java -cp ~/tile_builder.jar com.factual.tile.builder.mapreduce.outputFormat.TileReader
+}
+
 function fetch_uuid {
   UUID=$1
   INDEX=${2:-Iw1HPj}
