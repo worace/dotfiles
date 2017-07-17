@@ -86,6 +86,7 @@ alias po="popd $*"
 
 # GOLANG
 export GOPATH=$HOME/go
+export PATH=$PATH:"$GOPATH/bin"
 export CC="gcc"
 
 alias bounce_dns="sudo killall -HUP mDNSResponder"

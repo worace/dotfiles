@@ -56,7 +56,7 @@
  '(markdown-command "/usr/local/bin/markdown")
  '(package-selected-packages
    (quote
-    (json-mode company-irony irony company-rtags rtags exercism handlebars-mode cmake-mode flx-ido thrift ensime alchemist elixir-mode sass-mode racket-mode haml-mode logstash-conf typescript-mode gruvbox-theme toml-mode exec-path-from-shell cargo racer flycheck-rust coffee-mode yaml-mode web-mode virtualenvwrapper spotify solarized-theme smartparens seeing-is-believing ruby-test-mode request restclient rainbow-mode rainbow-delimiters neotree origami org-present org-bullets nose mocha markdown-toc markdown-mode magit jsx-mode json-reformat jade inf-ruby helm-projectile helm-circe helm-ag helm haskell-mode groovy-mode gist flycheck evil-surround evil-leader evil dockerfile-mode clj-refactor circe cider chruby auto-complete ag ace-window ace-jump-mode)))
+    (company-go go-autocomplete go-mode json-mode company-irony irony company-rtags rtags exercism handlebars-mode cmake-mode flx-ido thrift ensime alchemist elixir-mode sass-mode racket-mode haml-mode logstash-conf typescript-mode gruvbox-theme toml-mode exec-path-from-shell cargo racer flycheck-rust coffee-mode yaml-mode web-mode virtualenvwrapper spotify solarized-theme smartparens seeing-is-believing ruby-test-mode request restclient rainbow-mode rainbow-delimiters neotree origami org-present org-bullets nose mocha markdown-toc markdown-mode magit jsx-mode json-reformat jade inf-ruby helm-projectile helm-circe helm-ag helm haskell-mode groovy-mode gist flycheck evil-surround evil-leader evil dockerfile-mode clj-refactor circe cider chruby auto-complete ag ace-window ace-jump-mode)))
  '(projectile-indexing-method (quote alien))
  '(python-guess-indent nil)
  '(python-indent 2)

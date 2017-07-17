@@ -21,6 +21,7 @@
                           clj-refactor
                           clojure-mode
                           coffee-mode
+                          company-go
                           company-irony
                           company-rtags
                           dockerfile-mode
@@ -33,6 +34,7 @@
                           flycheck
                           flycheck-rust
                           gist
+                          go-mode
                           groovy-mode
                           gruvbox-theme
                           haml-mode
