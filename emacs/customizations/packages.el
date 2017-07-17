@@ -42,6 +42,7 @@
                           helm-projectile
                           inf-ruby
                           jade-mode
+                          json-mode
                           json-reformat
                           jsx-mode
                           js2-mode
