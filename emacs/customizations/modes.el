@@ -217,6 +217,7 @@
 
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
+
 (setq-default py-shell-name "ipython")
 (setq-default py-which-bufname "IPython")
 (setq py-shell-switch-buffers-on-execute-p t)
@@ -242,6 +243,7 @@
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 
 (defun my-web-mode-hook ()
@@ -503,6 +505,10 @@
 (add-hook 'c++-mode-hook 'irony-mode)
 (add-hook 'c-mode-hook 'irony-mode)
 (add-hook 'objc-mode-hook 'irony-mode)
+
+(add-hook 'c++-mode-hook 'company-mode)
+(add-hook 'c-mode-hook 'company-mode)
+(add-hook 'objc-mode-hook 'company-mode)
 
 (defun my-irony-mode-hook ()
   (define-key irony-mode-map [remap completion-at-point]
