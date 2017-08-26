@@ -17,6 +17,11 @@
 (evil-leader/set-key "mp" 'spotify-playpause)
 (evil-leader/set-key "mb" 'spotify-previous)
 (evil-leader/set-key "mf" 'spotify-next)
+(evil-leader/set-key "l" 'helm-projectile-switch-project)
+
+(defun scratch ()
+  (interactive)
+  (find-file "~/Dropbox/notes/scratch.org"))
 
 (defun worace-text-scale-change (increment direction)
   (let ((cur-height (face-attribute 'default :height)))
@@ -56,8 +61,10 @@
 (evil-define-key 'normal origami-mode-map (kbd "zo") 'origami-toggle-node)
 
 (setq mac-command-modifier 'super)
+(setq mac-option-modifier 'meta)
 (global-set-key (kbd "s--") 'worace-text-scale-decrease)
 (global-set-key (kbd "s-=") 'worace-text-scale-increase)
+(global-set-key (kbd "s-v") 'clipboard-yank)
 
 (defun seeing-is-believing-evaluate-current-line ()
   (interactive)
