@@ -23,6 +23,8 @@
       initial-scratch-message nil
       initial-major-mode 'org-mode)
 
+(setq-default tab-width 2)
+
 ;; Add vim-style tilde gutter when file is empty
 (setq-default indicate-empty-lines t)
 (when (not indicate-empty-lines)
