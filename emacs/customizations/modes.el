@@ -426,12 +426,12 @@
             (setq show-trailing-whitespace nil)))
 
 ;; irc-nick, irc-pass loaded from ~/.secrets.el
-(setq circe-network-options
-      `(("Mozilla"
-         :nick ,irc-nick
-         :channels ("#rust" "#rust-beginners")
-         :nickserv-password ,irc-pass)))
-
+(if (boundp 'irc-nick)
+    (setq circe-network-options
+          `(("Mozilla"
+             :nick ,irc-nick
+             :channels ("#rust" "#rust-beginners")
+             :nickserv-password ,irc-pass))))
 
 (setq sh-basic-offset 2
       sh-indentation 2)
