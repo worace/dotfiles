@@ -116,6 +116,13 @@ sudo apt-get install python-gpgme
 
 ### 11. WINE / 1password
 
+#### Command Line Client
+
+```
+sudo apt install -y python-pip
+pip install --user 1pass python-Levenshtein
+```
+
 Somewhat miraculously got this working thanks
 to [this tutorial](https://discussions.agilebits.com/discussion/42126/making-1password-work-in-ubuntu-14-04)
 
@@ -125,23 +132,19 @@ sudo apt-get install wine
 
 Use standard windows installer [here](https://agilebits.com/onepassword/windows)
 
-### 12. F.lux
+### 12. Redshift
 
-This supposedly had a PPA but it seems to
-be defunct.
-
-Managed to install it with these instructions
-from [this post](https://gist.github.com/robertboloc/9feaa9150926efa4175a)
 
 ```
-sudo apt-get install python-glade2 python-appindicator python-pexpect python-gconf
-cd ~/Downloads
-git clone https://github.com/Kilian/f.lux-indicator-applet.git
-cd f.lux-indicator-applet
-chmod +x setup.py
-sudo ./setup.py install
-fluxgui
+sudo apt-get install redshift redshift-gtk
 ```
+
+## Packages
+
+```
+sudo apt-get install -y redshift redshift-gtk silversearcher-ag
+```
+
 ### Slack Client
 
 [ScudCloud](https://github.com/raelgc/scudcloud)
