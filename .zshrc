@@ -186,8 +186,10 @@ function loadChruby {
 loadChruby '/usr/local/share/chruby'
 loadChruby '/usr/share/chruby'
 
-# For adding system-ruby gem dir to path
-PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+if type ruby > /dev/null; then
+  # For adding system-ruby gem dir to path
+  PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+fi
 
 function scrape {
 	wget \
