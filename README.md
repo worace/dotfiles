@@ -55,9 +55,7 @@ ln -s ~/dotfiles/emacsserver.plist ~/Library/LaunchAgents/emacsserver.plist
 
 ```
 sudo apt-get install zsh
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-cp ~/dotfiles/worace.zsh-theme ~/.oh-my-zsh/themes/
-chsh -s /bin/zsh 
+chsh -s /bin/zsh
 # Note -- need to log out and log in on ubuntu for this to take effect
 ```
 
@@ -83,27 +81,11 @@ gem install pry
 
 ### 8. Emacs
 
-Doesn't currently seem to be a good PPA for emacs 24.4+
-(lots of old discontinued ones around).
-
-Ended up building it from source.
-
-Thanks to [this tutorial](http://ubuntuhandbook.org/index.php/2014/10/emacs-24-4-released-install-in-ubuntu-14-04/)
-
 ```
-sudo apt-get install build-essential
-sudo apt-get build-dep emacs24
-cd ~/Downloads
-curl http://ftp.gnu.org/gnu/emacs/emacs-24.5.tar.gz > emacs-24.5.tar.gz
-tar -xf emacs-24.5.tar.*
-cd emacs-24.5
-./configure
-make
-sudo make install
+sudo add-apt-repository ppa:kelleyk/emacs
+sudo apt-get update
+sudo apt-get install emacs25
 ```
-
-With luck packages will auto-install on first emacs boot based
-on symlinked `.emacs.d`
 
 ### 9. JDK / Clojure
 
