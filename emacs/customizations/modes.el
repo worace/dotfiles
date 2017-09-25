@@ -488,7 +488,7 @@
                             (setq truncate-lines t)))
 
 
-;; C/C++
+;; C/CPP
 ;; http://syamajala.github.io/c-ide.html
 (require 'rtags)
 (require 'company-rtags)
@@ -500,24 +500,25 @@
 (setq rtags-autostart-diagnostics t)
 ;; (rtags-enable-standard-keybindings)
 (setq rtags-display-result-backend 'helm)
-
 (require 'irony)
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
 
-(add-hook 'c++-mode-hook 'company-mode)
-(add-hook 'c-mode-hook 'company-mode)
-(add-hook 'objc-mode-hook 'company-mode)
-
-(defun my-irony-mode-hook ()
+(defun my-c-mode-hook ()
+  (irony-mode)
+  (company-mode)
+  (flycheck-mode)
+  (setq tab-width 4)
+  (setq c-basic-offset 4)
+  (setq flycheck-clang-include-path (list "/usr/local/include"))
+  (company-irony-setup-begin-commands)
   (define-key irony-mode-map [remap completion-at-point]
     'irony-completion-at-point-async)
   (define-key irony-mode-map [remap complete-symbol]
     'irony-completion-at-point-async))
 
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+(add-hook 'c++-mode-hook 'my-c-mode-hook)
+(add-hook 'c-mode-hook 'my-c-mode-hook)
+(add-hook 'objc-mode-hook 'my-c-mode-hook)
+
 (setq company-backends (delete 'company-semantic company-backends))
 (eval-after-load 'company
   '(add-to-list
