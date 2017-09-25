@@ -6,7 +6,7 @@
     <string>gnu.emacs.daemon</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/usr/local/bin/emacs</string>
+      <string>/usr/local/opt/emacs-mac/bin/emacs</string>
       <string>--daemon</string>
     </array>
     <key>RunAtLoad</key>

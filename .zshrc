@@ -10,8 +10,9 @@
 
 source $HOME/.profile
 
-export BUNDLER_EDITOR="emacs"
-export EDITOR="emacsclient -t"
+EMACS_BIN_DIR=/usr/local/opt/emacs-mac/bin
+export BUNDLER_EDITOR="$EMACS_BIN_DIR/emacs"
+export EDITOR="$EMACS_BIN_DIR/emacsclient -t"
 
 if [[ -a ~/dotfiles/antigen.zsh ]]; then
     source ~/dotfiles/antigen.zsh
@@ -43,9 +44,9 @@ case `uname` in
     em () {
         if [ "$#" -ne 0 ];
         then
-            /usr/local/Cellar/emacs/25.1/bin/emacsclient -c -n $*
+            $EMACS_BIN_DIR/emacsclient -c -n $*
         else
-            /usr/local/Cellar/emacs/25.1/bin/emacsclient -c -n "~/Dropbox/notes/scratch.org"
+            $EMACS_BIN_DIR/emacsclient -c -n "~/Dropbox/notes/scratch.org"
         fi
     }
     ;;
@@ -154,7 +155,7 @@ function emrestart {
     if pgrep "emacs.*daemon" > /dev/null
     then
         echo "killing emacs daemon process"
-        emacsclient -e "(kill-emacs)"
+        $EMACS_BIN_DIR/emacsclient -e "(kill-emacs)"
     fi
   launchctl unload "$HOME/Library/LaunchAgents/emacsserver.plist" &&
   launchctl load "$HOME/Library/LaunchAgents/emacsserver.plist"
@@ -164,7 +165,7 @@ function emstop {
     if pgrep "emacs.*daemon" > /dev/null
     then
         echo "killing emacs daemon process"
-        emacsclient -e "(kill-emacs)"
+        $EMACS_BIN_DIR/emacsclient -e "(kill-emacs)"
     fi
 }
 

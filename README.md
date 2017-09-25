@@ -387,3 +387,16 @@ echo fs.inotify.max_user_watches=100000 | sudo tee -a /etc/sysctl.conf; sudo sys
 sudo pacman -S nodejs
 sudo pacman -S npm
 ```
+
+## Setting up emacs-mac on OS X
+
+This is a fork of the default emacs homebrew formula which includes some mac-specific tweaks, as well as a few patches from the emacs devel branch that puts it ahead of the default emacs formula in terms of new features.
+
+At the moment the one I'm most interested is the patch for improved subprocess forking in emacs which makes performance much better for things like magit.
+
+```
+brew tap railwaycat/emacsmacport
+brew install emacs-mac --with-no-title-bars --with-modern-icon
+```
+
+https://emacs.stackexchange.com/questions/141/emacsdaemon-and-emacsclient-on-mac
