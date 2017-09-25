@@ -328,7 +328,7 @@
   "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
   (interactive
    (let ((src-code-types
-          '("emacs-lisp" "python" "C" "sh" "shell" "java" "js" "json" "clojure" "C++" "css"
+          '("emacs-lisp" "python" "C" "sh" "shell" "html" "java" "js" "json" "clojure" "C++" "css"
             "octave" "sass" "scala" "sql" "awk" "haskell" "lisp"
             "org" "racket" "ruby" "scheme")))
      (list (ido-completing-read "Source code type: " src-code-types))))

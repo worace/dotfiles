@@ -18,6 +18,7 @@
 (evil-leader/set-key "mb" 'spotify-previous)
 (evil-leader/set-key "mf" 'spotify-next)
 (evil-leader/set-key "l" 'helm-projectile-switch-project)
+(evil-leader/set-key "d" 'dired)
 
 (defun scratch ()
   (interactive)
