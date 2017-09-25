@@ -140,8 +140,25 @@ function ts_tile {
     java -cp ~/tile_builder.jar com.factual.tile.builder.mapreduce.outputFormat.TileReader
 }
 
+function 312tile {
+  curl --compressed http://marathon-services.la.prod.factual.com:31015/tiles/$1 > /tmp/$1
+  cat /tmp/$1
+}
+
 function decode_tile {
   cat $1 | java -cp ~/tile_builder.jar com.factual.tile.builder.mapreduce.outputFormat.TileReader
+}
+
+# curl -H "Content-Type: application/octet-stream" -X POST shapes-ui.prod.factual.com/api/tiles/decode --data-binary @-
+
+
+function gjtile {
+  curl -H "Content-Type: application/octet-stream" \
+       -H "Transfer-Encoding: Chunked" \
+       -H "Expect:" \
+       --no-keepalive \
+       -X POST shapes-ui.prod.factual.com/api/tiles/decode \
+       --data-binary "@$1"
 }
 
 function fetch_uuid {
