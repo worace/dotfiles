@@ -251,3 +251,6 @@ export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_INSTALL/lib/lzo/Mac
 
 export ONEPASSWORD_KEYCHAIN=$HOME/Dropbox/1Password/1Password.agilekeychain/
 PATH=$PATH:$HOME/.local/bin
+if [[ -a $HOME/.fastlane/bin ]]; then
+  export PATH=$PATH:"$HOME/.fastlane/bin"
+fi
