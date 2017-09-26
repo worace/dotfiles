@@ -20,6 +20,7 @@
                           circe
                           clj-refactor
                           clojure-mode
+                          cmake-mode
                           coffee-mode
                           company-go
                           company-irony

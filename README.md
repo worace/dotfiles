@@ -55,8 +55,7 @@ ln -s ~/dotfiles/emacsserver.plist ~/Library/LaunchAgents/emacsserver.plist
 
 ```
 sudo apt-get install zsh
-chsh -s /bin/zsh
-# Note -- need to log out and log in on ubuntu for this to take effect
+chsh -s /bin/zsh $(whoami) # takes a logout to take effect
 ```
 
 ### 7. Chruby / Ruby Install
@@ -104,6 +103,7 @@ sudo mv lein /usr/local/bin
 sudo chmod a+x /usr/local/bin/lein
 lein repl
 ```
+
 ### 10. Dropbox
 
 Install with the ubuntu installer [here](https://www.dropbox.com/install?os=lnx)
@@ -127,22 +127,39 @@ Somewhat miraculously got this working thanks
 to [this tutorial](https://discussions.agilebits.com/discussion/42126/making-1password-work-in-ubuntu-14-04)
 
 ```
-sudo apt-get install wine
+sudo dpkg --add-architecture i386
+wget -nc https://dl.winehq.org/wine-builds/Release.key
+sudo apt-key add Release.key
+sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
+sudo apt-get update
+sudo apt-get install --install-recommends winehq-stable
+sudo apt install ttf-mscorefonts-installer
+sudo apt-get install -y winehq-staging
 ```
 
 Use standard windows installer [here](https://agilebits.com/onepassword/windows)
 
 ### 12. Redshift
 
-
 ```
 sudo apt-get install redshift redshift-gtk
 ```
 
-## Packages
+## Misc Packages
 
 ```
-sudo apt-get install -y redshift redshift-gtk silversearcher-ag
+sudo apt-get install -y redshift redshift-gtk silversearcher-ag htop pv jq caffeine
+```
+
+### Font
+
+```
+cd ~/Downloads
+wget https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip
+unzip 1.050R-it.zip
+mkdir ~/.fonts
+cp source-code-pro-*-it/OTF/*.otf ~/.fonts/
+fc-cache -f -v
 ```
 
 ### Slack Client
@@ -152,6 +169,29 @@ sudo apt-get install -y redshift redshift-gtk silversearcher-ag
 ### Gitignore
 
 I have this in dotfiles as `.system_gitignore` so i can have a special gitignore for this actual repo. Thus to link this one use `ln -s ~/dotfiles/.system_gitignore ~/.gitignore`
+
+### GTK Theme
+
+```
+sudo add-apt-repository ppa:system76/pop
+sudo apt update
+sudo apt install -y pop-theme gnome-tweak-tool
+# Theme: Pop-dark
+# Icons: Pop
+```
+
+### UI Settings
+
+```
+gsettings set com.canonical.Unity.Launcher launcher-position Bottom
+```
+
+### Nvidia
+
+```
+# restart to take effect
+sudo apt-get install -y nvidia-375
+```
 
 ## Todo / Wishlist
 
