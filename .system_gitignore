@@ -4,6 +4,8 @@
 *#
 .ensime
 .ensime_cache/
+session.*
+
 
 # Compiled source #
 ###################
