@@ -506,8 +506,8 @@
   (irony-mode)
   (company-mode)
   (flycheck-mode)
-  (setq tab-width 4)
-  (setq c-basic-offset 4)
+  (setq tab-width 2)
+  (setq c-basic-offset 2)
   (setq flycheck-clang-include-path (list "/usr/local/include"))
   (company-irony-setup-begin-commands)
   (define-key irony-mode-map [remap completion-at-point]
