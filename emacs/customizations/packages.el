@@ -25,6 +25,7 @@
                           company-go
                           company-irony
                           company-rtags
+                          company-sourcekit
                           dockerfile-mode
                           elixir-mode
                           ensime
@@ -34,6 +35,7 @@
                           exec-path-from-shell
                           flycheck
                           flycheck-rust
+                          flycheck-swift
                           gist
                           go-mode
                           groovy-mode
@@ -74,6 +76,7 @@
                           smartparens
                           solarized-theme
                           spotify
+                          swift-mode
                           toml-mode
                           use-package
                           virtualenvwrapper

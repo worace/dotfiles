@@ -42,30 +42,3 @@
       kept-new-versions 6
       kept-old-versions 2
       version-control t)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(coffee-tab-width 2)
- '(custom-safe-themes
-   (quote
-    ("8d3c5e9ba9dcd05020ccebb3cc615e40e7623b267b69314bdb70fe473dd9c7a8" "f23a961abba42fc5d75bf94c46b5688c52683c02b3a81313dd0738b4d48afd1d" "2d16a5d1921feb826a6a9b344837c1ab3910f9636022fa6dc1577948694b7d84" "24685b60b28b071596be6ba715f92ed5e51856fb87114cbdd67775301acf090d" "10e231624707d46f7b2059cc9280c332f7c7a530ebc17dba7e506df34c5332c4" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" default)))
- '(ido-enable-flex-matching t)
- '(markdown-command "/usr/local/bin/markdown")
- '(package-selected-packages
-   (quote
-    (company-go go-autocomplete go-mode json-mode company-irony irony company-rtags rtags exercism handlebars-mode cmake-mode flx-ido thrift ensime alchemist elixir-mode sass-mode racket-mode haml-mode logstash-conf typescript-mode gruvbox-theme toml-mode exec-path-from-shell cargo racer flycheck-rust coffee-mode yaml-mode web-mode virtualenvwrapper spotify solarized-theme smartparens seeing-is-believing ruby-test-mode request restclient rainbow-mode rainbow-delimiters neotree origami org-present org-bullets nose mocha markdown-toc markdown-mode magit jsx-mode json-reformat jade inf-ruby helm-projectile helm-circe helm-ag helm haskell-mode groovy-mode gist flycheck evil-surround evil-leader evil dockerfile-mode clj-refactor circe cider chruby auto-complete ag ace-window ace-jump-mode)))
- '(projectile-indexing-method (quote alien))
- '(python-guess-indent nil)
- '(python-indent 2)
- '(python-indent-guess-indent-offset nil)
- '(python-indent-offset 2))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 0.95)))))
-(put 'upcase-region 'disabled nil)
