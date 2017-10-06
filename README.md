@@ -5,7 +5,6 @@ dotfiles
 
 ### 1. Installing Git
 
-
 ```
 sudo apt-add-repository ppa:git-core/ppa
 sudo apt-get update

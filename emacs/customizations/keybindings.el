@@ -123,7 +123,7 @@
   (interactive)
   (find-file "~/dotfiles/.emacs.d/customizations/keybindings.el"))
 
-(defun ed-config ()
+(defun dots ()
   (interactive)
   (dired "~/dotfiles"))
 
