@@ -251,7 +251,6 @@ alias rl="source ~/.zshrc"
 
 [ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
 
-
 # Custom thrift version needed for engine
 PATH="/usr/local/opt/thrift@0.90/bin:$PATH"
 
@@ -272,3 +271,8 @@ PATH=$PATH:$HOME/.local/bin
 if [[ -a $HOME/.fastlane/bin ]]; then
   export PATH=$PATH:"$HOME/.fastlane/bin"
 fi
+# tmux
+alias tn="tmux new -s"
+alias tls="tmux ls"
+alias tl="tmux ls"
+alias tr="tmux a -t"
