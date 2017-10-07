@@ -69,6 +69,7 @@
                           rainbow-mode
                           restclient
                           request
+                          rinari
                           rtags
                           ruby-test-mode
                           rust-mode
