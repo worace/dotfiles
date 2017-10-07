@@ -263,9 +263,10 @@ export HADOOP_INSTALL=/usr/local/Cellar/hadoop/2.8.0
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$HADOOP_INSTALL/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar
 export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_INSTALL/lib/lzo/Mac_OS_X-x86_64-64:$HADOOP_INSTALL/lib/native"
 
-
-# Autojump shell extension
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+# 'z' directory-switching utility
+# https://github.com/rupa/z
+. $HOME/dotfiles/z.sh
+alias j=z
 
 export ONEPASSWORD_KEYCHAIN=$HOME/Dropbox/1Password/1Password.agilekeychain/
 PATH=$PATH:$HOME/.local/bin
