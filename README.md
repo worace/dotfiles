@@ -221,6 +221,14 @@ sudo apt-get update
 sudo apt-get install -y spotify-client
 ```
 
+### Firefox (beta)
+
+```
+sudo add-apt-repository ppa:mozillateam/firefox-next
+sudo apt-get update
+sudo apt-get install -y firefox
+```
+
 ## Setting up emacs-mac on OS X
 
 This is a fork of the default emacs homebrew formula which includes some mac-specific tweaks, as well as a few patches from the emacs devel branch that puts it ahead of the default emacs formula in terms of new features.
