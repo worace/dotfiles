@@ -179,8 +179,8 @@
     (add-to-list 'inf-ruby-implementations '("pry" . "pry"))
     (setq inf-ruby-default-implementation "pry"))
 
-(add-hook 'compilation-finish-functions
-          'my-compilation-hook)
+;; (add-hook 'compilation-finish-functions
+;;           'my-compilation-hook)
 
 (require 'ruby-test-mode)
 (add-hook 'ruby-mode-hook 'ruby-test-mode)

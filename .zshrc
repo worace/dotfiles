@@ -190,15 +190,6 @@ function emstop {
 export MITSCHEME_LIBRARY_PATH="/Applications/MIT\:GNU\ Scheme.app/Contents/Resources"
 export MIT_SCHEME_EXE="/usr/local/scheme"
 
-case `uname` in
-  Linux)
-  export DOCKER_TLS_VERIFY="1"
-  export DOCKER_HOST="tcp://192.168.99.100:2376"
-  export DOCKER_CERT_PATH="/home/worace/.docker/machine/machines/default"
-  export DOCKER_MACHINE_NAME="default"
-    ;;
-esac
-
 # Chruby for ruby version management
 function loadChruby {
     if [[ -a $1/chruby.sh ]]; then
@@ -259,9 +250,25 @@ PATH="/usr/local/opt/thrift@0.90/bin:$PATH"
 export HADOOP_CONF_DIR=/etc/hadoop/conf
 PATH=/usr/local/Cellar/krb5/1.14.4/bin:$PATH
 
-export HADOOP_INSTALL=/usr/local/Cellar/hadoop/2.8.0
-export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$HADOOP_INSTALL/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar
-export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_INSTALL/lib/lzo/Mac_OS_X-x86_64-64:$HADOOP_INSTALL/lib/native"
+
+case `uname` in
+  Darwin)
+    export HADOOP_INSTALL=/usr/local/Cellar/hadoop/2.8.0
+    export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$HADOOP_INSTALL/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar
+    export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_INSTALL/lib/lzo/Mac_OS_X-x86_64-64:$HADOOP_INSTALL/lib/native"
+    ;;
+  Linux)
+    export HADOOP_INSTALL=/usr/local/hadoop
+    export PATH=$PATH:$HADOOP_INSTALL/bin
+    export SPARK_HOME=/usr/local/spark
+    export PATH=$PATH:$SPARK_HOME/bin
+    export HADOOP_CLASSPATH=$HADOOP_INSTALL/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar
+    export SPARK_CLASSPATH=$HADOOP_CLASSPATH
+    HADOOP_LIBRARY_PATH=$HADOOP_INSTALL/lib/native
+    export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_LIBRARY_PATH"
+    export SPARK_LIBRARY_PATH=$HADOOP_LIBRARY_PATH
+    ;;
+esac
 
 # 'z' directory-switching utility
 # https://github.com/rupa/z
@@ -269,6 +276,7 @@ export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_INSTALL/lib/lzo/Mac
 alias j=z
 
 export ONEPASSWORD_KEYCHAIN=$HOME/Dropbox/1Password/1Password.agilekeychain/
+alias 1p="1pass --fuzzy"
 PATH=$PATH:$HOME/.local/bin
 if [[ -a $HOME/.fastlane/bin ]]; then
   # export PATH=$PATH:"$HOME/.fastlane/bin"
@@ -278,3 +286,5 @@ alias tn="tmux new -s"
 alias tls="tmux ls"
 alias tl="tmux ls"
 alias tr="tmux a -t"
+
+alias i="sudo apt install"

@@ -27,7 +27,8 @@ and going to profile -> ssh keys
 
 ```
 sudo add-apt-repository ppa:cpick/hub
-sudo apt-get update sudo apt-get install hub
+sudo apt-get update
+sudo apt-get install -y hub
 ```
 
 ### 4. Cloning Dotfiles
@@ -44,10 +45,9 @@ ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/dotfiles/.lein ~/.lein
 ln -s ~/dotfiles/.gemrc ~/.gemrc
-ln -s ~/dotfiles/.emacs.d ~/.emacs.d
+ln -s ~/dotfiles/emacs ~/.emacs.d
 ln -s ~/dotfiles/.system_gitignore ~/.gitignore
-# emacsserver launch on OS X via launchd:
-ln -s ~/dotfiles/emacsserver.plist ~/Library/LaunchAgents/emacsserver.plist
+ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 ```
 
 ### 6. ZSH / Oh-my-zsh
@@ -85,33 +85,47 @@ sudo apt-get update
 sudo apt-get install emacs25
 ```
 
-### 9. JDK / Clojure
+### 9. JDK / Clojure / Scala
 
 ```
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get install oracle-java8-installer
+sudo apt-get install oracle-java8-installer scala maven
 ```
 
 __Leiningen__
 
 ```
-curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > /usr/local/bin/lein
-curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > lein
-sudo mv lein /usr/local/bin
-sudo chmod a+x /usr/local/bin/lein
+mkdir ~/.local/bin
+curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > ~/.local/bin/lein
+sudo chmod a+x ~/.local/bin/lein
 lein repl
+
+```
+
+### Spark/Hadoop
+
+```
+cd ~/Downloads
+wget http://mirror.jax.hugeserver.com/apache/hadoop/common/hadoop-2.8.1/hadoop-2.8.1.tar.gz
+tar -xzf hadoop-2.8.1.tar.gz
+sudo mv hadoop-2.8.1 /usr/local/hadoop
+wget https://d3kbcqa49mib13.cloudfront.net/spark-2.2.0-bin-hadoop2.7.tgz
+tar -xzf spark-2.2.0-bin-hadoop2.7
+sudo mv spark-2.2.0-bin-hadoop2.7 /usr/local/spark
+
+sudo apt-get install -y liblzo2-dev
+git clone git@github.com:twitter/hadoop-lzo.git
+cd hadoop-lzo
+mvn clean package
+sudo cp target/hadoop-lzo-0.4.21-SNAPSHOT.jar /usr/local/hadoop/lib/
+sudo cp target/native/Linux-amd64-64/libgplcompression.la /usr/local/hadoop/lib/native
+echo "spark.jars /usr/local/hadoop/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar" >> /usr/local/spark/conf/spark-defaults.conf
 ```
 
 ### 10. Dropbox
 
 Install with the ubuntu installer [here](https://www.dropbox.com/install?os=lnx)
-
-python-gpgme is also required for some verification stuff:
-
-```
-sudo apt-get install python-gpgme
-```
 
 ### 11. WINE / 1password
 
@@ -126,28 +140,22 @@ Somewhat miraculously got this working thanks
 to [this tutorial](https://discussions.agilebits.com/discussion/42126/making-1password-work-in-ubuntu-14-04)
 
 ```
+sudo add-apt-repository ppa:ubuntu-wine/ppa
 sudo dpkg --add-architecture i386
-wget -nc https://dl.winehq.org/wine-builds/Release.key
-sudo apt-key add Release.key
-sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
-sudo apt-get update
-sudo apt-get install --install-recommends winehq-stable
-sudo apt install ttf-mscorefonts-installer
-sudo apt-get install -y winehq-staging
+sudo apt install wine winetricks ttf-mscorefonts-installer
+# 32-bit wine
+WINEARCH=win32 WINEPREFIX=~/.wine wine wineboot
+winetricks dotnet46 corefonts
+winetricks mono28
 ```
 
 Use standard windows installer [here](https://agilebits.com/onepassword/windows)
 
-### 12. Redshift
-
-```
-sudo apt-get install redshift redshift-gtk
-```
-
 ## Misc Packages
 
 ```
-sudo apt-get install -y redshift redshift-gtk silversearcher-ag htop pv jq caffeine tmux gksu
+sudo apt-get install -y redshift redshift-gtk silversearcher-ag htop pv jq caffeine tmux gksu \
+vim psensor xclip tree ttf-ancient-fonts
 ```
 
 **Dev Packages**
@@ -155,7 +163,8 @@ sudo apt-get install -y redshift redshift-gtk silversearcher-ag htop pv jq caffe
 ```
 sudo apt-get install -y cmake cmake-curses-gui make \
     libexpat1-dev zlib1g-dev libbz2-dev libprotozero-dev libosmium-dev rapidjson-dev \
-    libpthread-stubs0-dev libsqlite3dev
+    libpthread-stubs0-dev libsqlite3-dev mongo-tools python3.6 libpython3.6-dev lzop \
+    libicu-dev npm nodejs
 ```
 
 ### Font
@@ -171,7 +180,7 @@ fc-cache -f -v
 
 ### Slack Client
 
-[ScudCloud](https://github.com/raelgc/scudcloud)
+[Official Linux Client](https://slack.com/downloads/linux)
 
 ### Gitignore
 
@@ -185,6 +194,18 @@ sudo apt update
 sudo apt install -y pop-theme gnome-tweak-tool
 # Theme: Pop-dark
 # Icons: Pop
+```
+
+### Gnome Terminal Theme
+
+https://github.com/metalelf0/gnome-terminal-colors
+
+```
+cd /tmp
+git clone git@github.com:metalelf0/gnome-terminal-colors.git
+cd gnome-terminal-colors
+chmod +x install.sh
+./install.sh
 ```
 
 ### UI Settings
@@ -227,6 +248,50 @@ sudo apt-get install -y spotify-client
 sudo add-apt-repository ppa:mozillateam/firefox-next
 sudo apt-get update
 sudo apt-get install -y firefox
+```
+
+### Key Repeat Speed
+
+### Window Tiling Hotkeys (a la Divvy)
+
+```
+sudo apt install -y compizconfig-settings-manager
+```
+
+Use Grid settings to set hotkeys for maximize and maximize <bottom, top, left, right>
+
+### Docker
+
+https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#docker-ee-customers
+
+```
+sudo apt-get remove docker docker-engine docker.io
+
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo apt-key fingerprint 0EBFCD88
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+sudo apt-get update
+
+sudo apt-get install docker-ce
+```
+
+### Drake
+
+```
+curl https://raw.githubusercontent.com/Factual/drake/master/bin/drake > ~/.local/bin/drake
+chmod +x ~/.local/bin/drake
 ```
 
 ## Setting up emacs-mac on OS X
