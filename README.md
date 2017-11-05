@@ -294,6 +294,13 @@ curl https://raw.githubusercontent.com/Factual/drake/master/bin/drake > ~/.local
 chmod +x ~/.local/bin/drake
 ```
 
+### Tmux
+
+```
+ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+ln -s ~/dotfiles/basic.tmuxtheme ~/.tmux.theme
+```
+
 ## Setting up emacs-mac on OS X
 
 This is a fork of the default emacs homebrew formula which includes some mac-specific tweaks, as well as a few patches from the emacs devel branch that puts it ahead of the default emacs formula in terms of new features.
