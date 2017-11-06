@@ -179,25 +179,16 @@
     (add-to-list 'inf-ruby-implementations '("pry" . "pry"))
     (setq inf-ruby-default-implementation "pry"))
 
-;; (add-hook 'compilation-finish-functions
-;;           'my-compilation-hook)
+(defun my-compilation-finish-hook (buf strg)
+  (switch-to-buffer-other-window "*compilation*")
+  (read-only-mode)
+  (goto-char (point-max))
+  (local-set-key (kbd "q")
+                 (lambda () (interactive) (quit-restore-window))))
+(add-hook 'compilation-finish-functions 'my-compilation-finish-hook nil nil)
 
 (require 'ruby-test-mode)
 (add-hook 'ruby-mode-hook 'ruby-test-mode)
-(add-hook 'ruby-mode-hook
-          (lambda ()
-            (add-hook 'compilation-finish-functions
-                      (lambda (buf strg)
-                        (switch-to-buffer-other-window "*compilation*")
-                        (read-only-mode)
-                        (goto-char (point-max))
-                        (local-set-key (kbd "q")
-                                       (lambda () (interactive) (quit-restore-window))))
-                      nil
-                      ;; This can be any truthy value but prevents this compilation hook
-                      ;; from bleeding over to other buffers
-                      'make-it-buffer-local)))
-
 (require 'ruby-mode)
 
 ;;;;;;;;;;;;;
@@ -491,16 +482,16 @@
 
 ;; C/CPP
 ;; http://syamajala.github.io/c-ide.html
-(require 'rtags)
-(require 'company-rtags)
+;; (require 'rtags)
+;; (require 'company-rtags)
 
-(setq rtags-completions-enabled t)
+;; (setq rtags-completions-enabled t)
 ;; (eval-after-load 'company
 ;;   '(add-to-list
 ;;     'company-backends 'company-rtags))
-(setq rtags-autostart-diagnostics t)
+;; (setq rtags-autostart-diagnostics t)
 ;; (rtags-enable-standard-keybindings)
-(setq rtags-display-result-backend 'helm)
+;; (setq rtags-display-result-backend 'helm)
 (require 'irony)
 
 (defun my-c-mode-hook ()
