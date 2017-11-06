@@ -163,8 +163,8 @@ vim psensor xclip tree ttf-ancient-fonts
 ```
 sudo apt-get install -y cmake cmake-curses-gui make \
     libexpat1-dev zlib1g-dev libbz2-dev libprotozero-dev libosmium-dev rapidjson-dev \
-    libpthread-stubs0-dev libsqlite3-dev mongo-tools python3.6 libpython3.6-dev lzop \
-    libicu-dev npm nodejs
+    libpthread-stubs0-dev libsqlite3-dev python3.6 libpython3.6-dev lzop \
+    libicu-dev npm nodejs postgis mongodb-clients libgtest-dev
 ```
 
 ### Font

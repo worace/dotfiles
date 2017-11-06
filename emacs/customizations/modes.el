@@ -259,8 +259,9 @@
 
 ;; Save Recent Files
 (require 'recentf)
-(setq recentf-max-menu-items 100)
+(setq recentf-max-menu-items 2000)
 (recentf-mode 1)
+(run-at-time nil (* 5 60) 'recentf-save-list)
 
 
 ;;Exercism
