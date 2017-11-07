@@ -103,7 +103,7 @@ alias htx='hadoop fs -text'
 alias hc='hadoop fs -cat'
 
 # Run spark docker devbox
-alias sparkdev='docker run -v ~/code:/code -ti --name dev -e "START_SCRIPT=http://resources.prod.factual.com/services/hadoop/cdh5/scripts/get_configs.sh" spark-devbox:latest /sbin/my_init -- /sbin/setuser `whoami` /bin/bash -l'
+alias sparkdev='docker run -v ~/code:/code -ti --name dev -e "START_SCRIPT=http://resources.prod.factual.com/services/hadoop/cdh5/scripts/get_configs.sh" factual/docker-cdh5-devbox /sbin/my_init -- /sbin/setuser `whoami` /bin/bash -l'
 
 if [[ -a ~/.secrets.sh ]]; then
   source ~/.secrets.sh
@@ -219,6 +219,14 @@ function scrape {
 			$1
 }
 
+function yarnlogs {
+  yarn logs -applicationId $1 > /tmp/$1.log
+}
+
+function yarnkill {
+  yarn application -kill $1
+}
+
 function countloc { find $1 -name "*" -type f | xargs wc -l | sort }
 alias rake='noglob rake'
 
@@ -250,12 +258,14 @@ PATH="/usr/local/opt/thrift@0.90/bin:$PATH"
 export HADOOP_CONF_DIR=/etc/hadoop/conf
 PATH=/usr/local/Cellar/krb5/1.14.4/bin:$PATH
 
-
 case `uname` in
   Darwin)
     export HADOOP_INSTALL=/usr/local/Cellar/hadoop/2.8.0
     export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$HADOOP_INSTALL/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar
     export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_INSTALL/lib/lzo/Mac_OS_X-x86_64-64:$HADOOP_INSTALL/lib/native"
+    export SPARK_LIBRARY_PATH=$SPARK_LIBRARY_PATH:$HADOOP_INSTALL/lib/lzo/Mac_OS_X-x86_64-64:$HADOOP_INSTALL/lib/native
+    export SPARK_CLASSPATH=$SPARK_CLASSPATH:$HADOOP_INSTALL/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar
+    export LD_LIBRARY_PATH=$HADOOP_INSTALL/lib/native/
     ;;
   Linux)
     export HADOOP_INSTALL=/usr/local/hadoop

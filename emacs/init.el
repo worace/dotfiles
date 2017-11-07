@@ -51,9 +51,11 @@
  '(markdown-command "/usr/local/bin/markdown")
  '(package-selected-packages
    (quote
-    (swift-mode flycheck-swift company-sourcekit yaml-mode web-mode virtualenvwrapper use-package toml-mode spotify solarized-theme smartparens seeing-is-believing ruby-test-mode rinari restclient request rainbow-mode rainbow-delimiters racket-mode racer origami org-present org-bullets nose neotree mocha markdown-toc magit jsx-mode json-reformat json-mode jade-mode helm-projectile helm-circe helm-ag haskell-mode haml-mode gruvbox-theme groovy-mode gist flycheck-rust exec-path-from-shell evil-surround evil-leader ensime dockerfile-mode company-rtags company-irony company-go coffee-mode cmake-mode clj-refactor chruby cargo auto-complete alchemist ag ace-window ace-jump-mode)))
+    (org-ref swift-mode flycheck-swift company-sourcekit yaml-mode web-mode virtualenvwrapper use-package toml-mode spotify solarized-theme smartparens seeing-is-believing ruby-test-mode rinari restclient request rainbow-mode rainbow-delimiters racket-mode racer origami org-present org-bullets nose neotree mocha markdown-toc magit jsx-mode json-reformat json-mode jade-mode helm-projectile helm-circe helm-ag haskell-mode haml-mode gruvbox-theme groovy-mode gist flycheck-rust exec-path-from-shell evil-surround evil-leader ensime dockerfile-mode company-rtags company-irony company-go coffee-mode cmake-mode clj-refactor chruby cargo auto-complete alchemist ag ace-window ace-jump-mode)))
  '(python-guess-indent nil)
- '(python-indent 2))
+ '(python-indent 2)
+ '(python-indent-guess-indent-offset nil)
+ '(python-indent-offset 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
