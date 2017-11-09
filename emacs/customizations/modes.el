@@ -3,6 +3,7 @@
 
 (setq-default truncate-lines 1)
 (setq-default indent-tabs-mode nil)
+(setq company-backends '())
 
 (ido-mode 1)
 (ido-everywhere 1)
@@ -170,7 +171,7 @@
 
 ;;ruby
 (require 'chruby)
-(chruby "2.3.3")
+(chruby "2.3.1")
 (require 'seeing-is-believing)
 (add-hook 'ruby-mode-hook 'seeing-is-believing)
 (require 'inf-ruby)
@@ -482,8 +483,8 @@
 
 ;; C/CPP
 ;; http://syamajala.github.io/c-ide.html
-;; (require 'rtags)
-;; (require 'company-rtags)
+(require 'rtags)
+(require 'company-rtags)
 
 ;; (setq rtags-completions-enabled t)
 ;; (eval-after-load 'company
