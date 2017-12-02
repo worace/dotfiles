@@ -300,6 +300,6 @@ fi
 alias tn="tmux new -s"
 alias tls="tmux ls"
 alias tl="tmux ls"
-alias tr="tmux a -t"
+alias ta="tmux a -t"
 
 alias i="sudo apt install"
