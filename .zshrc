@@ -10,7 +10,12 @@
 
 source $HOME/.profile
 
-EMACS_BIN_DIR=/usr/local/opt/emacs-mac/bin
+
+if [[ -d /usr/local/opt/emacs-mac/bin ]]; then
+  EMACS_BIN_DIR=/usr/local/opt/emacs-mac/bin
+else
+  EMACS_BIN_DIR=/usr/local/bin
+fi
 export BUNDLER_EDITOR="$EMACS_BIN_DIR/emacs"
 export EDITOR="$EMACS_BIN_DIR/emacsclient -t"
 
