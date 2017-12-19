@@ -17,33 +17,6 @@ if File.exists?('script/console') && File.exists?('config/boot.rb')
   puts "Rails #{Rails.version} #{RAILS_ENV} environment loaded."
 end
 
-if ENV['PWD'].match(/deals/)
-  begin
-    if Rails && Person
-      ActiveRecord::Base.logger = Logger.new(STDOUT)
-      def me
-        Person.find_by_email('horace.williams@livingsocial.com')
-      end
-      def my_fb_person
-        Person.find_by_email('horace.williams@hungrymachine.com')
-      end
-      def approve_last_purchase
-        pur = Purchase.last
-        pur.authorization_approved!
-      end
-      def decline_last_purchase
-        pur = Purchase.last
-        pur.authorization_declined!
-      end
-      def destroy_last_purchase
-        pur = Purchase.last
-        pur.destroy
-      end
-    end
-  rescue
-  end
-end
-
 def load_irbrc(path)
   return if (path == ENV["HOME"]) || (path == '/')
 

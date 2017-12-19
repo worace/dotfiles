@@ -232,13 +232,12 @@ function yarnkill {
   yarn application -kill $1
 }
 
-function countloc { find $1 -name "*" -type f | xargs wc -l | sort }
+function countloc { find $1 -name "*" -type f | xargs wc -l | sort -n }
 alias rake='noglob rake'
 
 # export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh --no-use"  # This loads nvm
 alias nvmu='source ~/.nvm/nvm.sh && nvm use'
-
 
 HISTSIZE=100000
 SAVEHIST=100000
@@ -303,3 +302,8 @@ alias tl="tmux ls"
 alias ta="tmux a -t"
 
 alias i="sudo apt install"
+
+function fetchPOI {
+  ID=$1
+  curl -s "http://marathon-services.la.prod.factual.com:31950/entities/solr/places_us/places_us_main?q=factual_id:$ID"
+}

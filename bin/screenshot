@@ -1,0 +1,7 @@
+#!/bin/bash
+
+TSTAMP=`date '+%Y-%m-%d-%H-%M-%S'`
+IMAGEPATH=~/Dropbox/Screenshots/Screenshot-$TSTAMP.png
+scrot -s $IMAGEPATH
+dropbox sharelink $IMAGEPATH | xclip -selection clipboard
+echo "Copied link to screenshot at $IMAGEPATH"
