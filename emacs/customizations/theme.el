@@ -22,6 +22,7 @@
 (setq tab-width 2
       indent-tabs-mode nil)
 
+(set-fringe-mode 0)
 (global-linum-mode)
 (defun linum-update-window-scale-fix (win)
   "fix linum for scaled text"
