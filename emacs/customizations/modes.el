@@ -65,7 +65,7 @@
 (sp-local-pair 'markdown-mode "`" nil :actions '(insert))
 
 (custom-set-variables
- '(markdown-command "/usr/local/bin/markdown"))
+ '(markdown-command (executable-find "markdown")))
 
 ;; (defun md-setup ()
 ;;   (message "MARKDOWN SETUP RUNNING")

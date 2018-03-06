@@ -8,6 +8,11 @@
 #   do stuff
 # fi
 
+# Check for TTY
+# if [[ "$(tty)" == '/dev/tty1' ]]; then
+# exec startx; exit
+# fi
+
 source $HOME/.profile
 
 
@@ -224,14 +229,6 @@ function scrape {
 			$1
 }
 
-function yarnlogs {
-  yarn logs -applicationId $1 > /tmp/$1.log
-}
-
-function yarnkill {
-  yarn application -kill $1
-}
-
 function countloc { find $1 -name "*" -type f | xargs wc -l | sort -n }
 alias rake='noglob rake'
 
@@ -281,8 +278,18 @@ case `uname` in
     HADOOP_LIBRARY_PATH=$HADOOP_INSTALL/lib/native
     export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_LIBRARY_PATH"
     export SPARK_LIBRARY_PATH=$HADOOP_LIBRARY_PATH
+    export JAVA_HOME=/usr/lib/jvm/java-8-oracle
     ;;
 esac
+
+alias yrn=$HADOOP_INSTALL/bin/yarn
+function yarnlogs {
+  yrn logs -applicationId $1 > /tmp/$1.log
+}
+
+function yarnkill {
+  yrn application -kill $1
+}
 
 # 'z' directory-switching utility
 # https://github.com/rupa/z

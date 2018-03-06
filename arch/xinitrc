@@ -1,8 +1,8 @@
-[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
-[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
-[[ -f ~/.xbindkeysrc ]] && xbindkeys
+# [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+# [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+# [[ -f ~/.xbindkeysrc ]] && xbindkeys
 
-feh --bg-scale /home/worace/dotfiles/wallpaper/goat.jpg
+feh --bg-scale ~/dotfiles/wallpaper/goat.jpg
 
 xset -b
 # xset r rate <delay ms> <speed hz>

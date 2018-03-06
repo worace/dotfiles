@@ -155,7 +155,7 @@ Use standard windows installer [here](https://agilebits.com/onepassword/windows)
 
 ```
 sudo apt-get install -y redshift redshift-gtk silversearcher-ag htop pv jq caffeine tmux gksu \
-vim psensor xclip tree ttf-ancient-fonts
+vim psensor xclip tree ttf-ancient-fonts net-tools scrot
 ```
 
 **Dev Packages**
@@ -313,3 +313,13 @@ brew install emacs-mac --with-no-title-bars --with-modern-icon
 ```
 
 https://emacs.stackexchange.com/questions/141/emacsdaemon-and-emacsclient-on-mac
+
+## GTK Theme
+
+```
+mkdir ~/.themes
+wget -O ~/Downloads/Ant.zip https://github.com/eliverlara/ant/archive/v1.1.0.zip
+unzip -d ~/.themes/Ant ~/Downloads/Ant.zip
+gsettings set org.gnome.desktop.interface gtk-theme "Ant"
+gsettings set org.gnome.desktop.wm.preferences theme "Ant"
+```
