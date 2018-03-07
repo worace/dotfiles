@@ -155,7 +155,7 @@ Use standard windows installer [here](https://agilebits.com/onepassword/windows)
 
 ```
 sudo apt-get install -y redshift redshift-gtk silversearcher-ag htop pv jq caffeine tmux gksu \
-vim psensor xclip tree ttf-ancient-fonts net-tools scrot
+                        vim psensor xclip tree ttf-ancient-fonts net-tools scrot curl
 ```
 
 **Dev Packages**
@@ -176,6 +176,8 @@ unzip 1.050R-it.zip
 mkdir ~/.fonts
 cp source-code-pro-*-it/OTF/*.otf ~/.fonts/
 fc-cache -f -v
+
+sudo apt install -y fonts-font-awesome
 ```
 
 ### Slack Client
@@ -322,4 +324,18 @@ wget -O ~/Downloads/Ant.zip https://github.com/eliverlara/ant/archive/v1.1.0.zip
 unzip -d ~/.themes/Ant ~/Downloads/Ant.zip
 gsettings set org.gnome.desktop.interface gtk-theme "Ant"
 gsettings set org.gnome.desktop.wm.preferences theme "Ant"
+```
+
+## Thrift 0.9.3
+
+```
+sudo apt-get install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
+cd /tmp
+wget https://github.com/apache/thrift/archive/0.9.3.tar.gz
+tar -xzf 0.9.3.tar.gz
+cd thrift-0.9.3
+./bootstrap.sh
+./configure
+make
+sudo make install
 ```
