@@ -543,3 +543,6 @@
 (add-to-list 'company-backends 'company-sourcekit)
 (setq sourcekit-sourcekittendaemon-executable
       "/usr/local/bin/sourcekittendaemon")
+(setq org-export-allow-bind-keywords 't)
+(setq org-html-preamble 'nil)
+(setq org-html-preamble-format 'nil)
