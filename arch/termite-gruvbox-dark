@@ -43,4 +43,4 @@ color15 = #ebdbb2
 # vim: ft=dosini cms=#%s
 
 [options]
-font = Source Code Pro 14
+font = Source Code Pro 12
