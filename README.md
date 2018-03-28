@@ -111,7 +111,7 @@ wget http://mirror.jax.hugeserver.com/apache/hadoop/common/hadoop-2.8.1/hadoop-2
 tar -xzf hadoop-2.8.1.tar.gz
 sudo mv hadoop-2.8.1 /usr/local/hadoop
 wget https://d3kbcqa49mib13.cloudfront.net/spark-2.2.0-bin-hadoop2.7.tgz
-tar -xzf spark-2.2.0-bin-hadoop2.7
+tar -xzf spark-2.2.0-bin-hadoop2.7.tgz
 sudo mv spark-2.2.0-bin-hadoop2.7 /usr/local/spark
 
 sudo apt-get install -y liblzo2-dev
@@ -121,6 +121,8 @@ mvn clean package
 sudo cp target/hadoop-lzo-0.4.21-SNAPSHOT.jar /usr/local/hadoop/lib/
 sudo cp target/native/Linux-amd64-64/libgplcompression.la /usr/local/hadoop/lib/native
 echo "spark.jars /usr/local/hadoop/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar" >> /usr/local/spark/conf/spark-defaults.conf
+
+sudo apt-get install krb5-user
 ```
 
 ### 10. Dropbox
@@ -161,6 +163,8 @@ sudo apt-get install -y redshift redshift-gtk silversearcher-ag htop pv jq caffe
 **Dev Packages**
 
 ```
+sudo add-apt-repository ppa:deadsnakes/ppa # for python3.6
+sudo apt-get update
 sudo apt-get install -y cmake cmake-curses-gui make \
     libexpat1-dev zlib1g-dev libbz2-dev libprotozero-dev libosmium-dev rapidjson-dev \
     libpthread-stubs0-dev libsqlite3-dev python3.6 libpython3.6-dev lzop \
@@ -226,7 +230,7 @@ sudo apt-get install -y nvidia-375
 ### Postgres
 
 ```
-sudo apt-get install -y postgresql libpqdev
+sudo apt-get install -y postgresql libpq-dev
 sudo systemctl enable postgresql
 sudo systemctl start postgresql
 sudo -u postgres psql
