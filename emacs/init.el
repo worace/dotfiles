@@ -51,7 +51,7 @@
  '(custom-safe-themes
    (quote
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
- '(markdown-command "/usr/local/bin/markdown")
+ '(markdown-command (executable-find "markdown"))
  '(package-selected-packages
    (quote
     (thrift org-ref swift-mode flycheck-swift company-sourcekit yaml-mode web-mode virtualenvwrapper use-package toml-mode spotify solarized-theme smartparens seeing-is-believing ruby-test-mode rinari restclient request rainbow-mode rainbow-delimiters racket-mode racer origami org-present org-bullets nose neotree mocha markdown-toc magit jsx-mode json-reformat json-mode jade-mode helm-projectile helm-circe helm-ag haskell-mode haml-mode gruvbox-theme groovy-mode gist flycheck-rust exec-path-from-shell evil-surround evil-leader ensime dockerfile-mode company-rtags company-irony company-go coffee-mode cmake-mode clj-refactor chruby cargo auto-complete alchemist ag ace-window ace-jump-mode)))
