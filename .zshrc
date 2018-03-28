@@ -15,7 +15,6 @@
 
 source $HOME/.profile
 
-
 if [[ -d /usr/local/opt/emacs-mac/bin ]]; then
   EMACS_BIN_DIR=/usr/local/opt/emacs-mac/bin
 else
@@ -270,6 +269,7 @@ case `uname` in
     ;;
   Linux)
     export HADOOP_INSTALL=/usr/local/hadoop
+    export HADOOP_HOME=$HADOOP_INSTALL
     export PATH=$PATH:$HADOOP_INSTALL/bin
     export SPARK_HOME=/usr/local/spark
     export PATH=$PATH:$SPARK_HOME/bin
@@ -279,6 +279,7 @@ case `uname` in
     export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_LIBRARY_PATH"
     export SPARK_LIBRARY_PATH=$HADOOP_LIBRARY_PATH
     export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+    export LD_LIBRARY_PATH="$HADOOP_LIBRARY_PATH"
     ;;
 esac
 
