@@ -18,6 +18,7 @@
                        [org.clojure/tools.namespace "0.2.11"]
                        ;; [org.clojure/tools.nrepl "0.2.12"]
                        [org.clojure/tools.namespace "0.2.11"]]
+        :repl-options {:init (set! *print-length* 50)}
         :injections [(require '[clojure.repl :refer [doc]])
                      (require 'pjstadig.humane-test-output)
                      (pjstadig.humane-test-output/activate!)]
