@@ -343,3 +343,70 @@ cd thrift-0.9.3
 make
 sudo make install
 ```
+
+## CDH5 Hadoop and Spark
+
+```
+cd /tmp
+
+# Vars for configuring this setup session
+export CDH_VERSION="5.13"
+export SPARK_VERSION="2.2.1"
+export SPARK_HOME=/opt/spark
+export HADOOP_CONF_DIR=/etc/hadoop/conf
+
+echo "Package: *\nPin: release o=Cloudera, l=Cloudera\nPin-Priority: 501" | sudo tee /etc/apt/preferences.d/cloudera.pref
+
+echo "deb [arch=amd64] http://archive.cloudera.com/cdh5/ubuntu/trusty/amd64/cdh trusty-cdh$CDH_VERSION contrib" | sudo tee -a /etc/apt/sources.list.d/cloudera.list
+echo "deb-src http://archive.cloudera.com/cdh5/ubuntu/trusty/amd64/cdh trusty-cdh$CDH_VERSION contrib" | sudo tee -a /etc/apt/sources.list.d/cloudera.list
+echo "deb [arch=amd64] http://archive.cloudera.com/gplextras5/ubuntu/trusty/amd64/gplextras trusty-gplextras$CDH_VERSION contrib" | sudo tee -a /etc/apt/sources.list.d/gplextras.list
+echo "deb-src http://archive.cloudera.com/gplextras5/ubuntu/trusty/amd64/gplextras trusty-gplextras$CDH_VERSION contrib" | sudo tee -a /etc/apt/sources.list.d/gplextras.list
+curl -sf https://archive.cloudera.com/cdh5/ubuntu/trusty/amd64/cdh/archive.key > ./archive.key
+
+sudo apt-key add archive.key
+sudo apt-get update
+sudo apt-get install -y hadoop-client hadoop-lzo krb5-user lsof
+
+sudo apt-get install -y build-essential automake unzip zlib1g-dev liblzo2-dev ant
+
+wget http://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.6.tgz
+tar xzf spark-$SPARK_VERSION-bin-hadoop2.6.tgz
+sudo mv spark-$SPARK_VERSION-bin-hadoop2.6 $SPARK_HOME
+
+sudo mkdir -p /etc/spark/
+sudo ln -s $SPARK_HOME/conf /etc/spark/conf
+```
+
+Add these lines to your shell or profile
+
+```
+export SPARK_HOME=/opt/spark
+export PATH=$SPARK_HOME/bin:$PATH
+export HADOOP_CONF_DIR=/etc/hadoop/conf
+```
+
+Set this as `/opt/spark/spark-defaults.conf`
+
+```
+spark.master                     yarn
+spark.submit.deployMode          cluster
+spark.driver.memory              2g
+spark.executor.memory            3g
+spark.io.compression.codec       snappy
+spark.network.timeout            600
+spark.cleaner.referenceTracking  false
+spark.yarn.max.executor.failures 1000
+spark.jars                       /usr/lib/hadoop/lib/hadoop-lzo.jar
+spark.driver.extraClassPath      /usr/lib/hadoop/lib/hadoop-lzo.jar
+spark.executor.extraClassPath    /usr/lib/hadoop/lib/hadoop-lzo.jar
+spark.driver.extraLibraryPath    /usr/lib/hadoop/lib/native
+spark.executor.extraLibraryPath  /usr/lib/hadoop/lib/native
+spark.default.parallelism        100
+spark.eventLog.enabled           true
+spark.eventLog.dir               hdfs://dev/apps/extract/spark/logs
+spark.debug.maxToStringFields    200
+spark.yarn.access.namenodes      hdfs://dev,hdfs://hbase
+spark.yarn.jars                  hdfs://dev/apps/spark/2.2.0/*
+spark.jars.repositories          http://maven.corp.factual.com/nexus/content/repositories/snapshots/,http://maven.corp.factual.com/nexus/content/repositories/releases/
+spark.shuffle.service.enabled    true
+```

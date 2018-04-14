@@ -112,7 +112,7 @@ alias htx='hadoop fs -text'
 alias hc='hadoop fs -cat'
 
 # Run spark docker devbox
-alias sparkdev='docker run -v ~/code:/code -ti --name dev -e "START_SCRIPT=http://resources.prod.factual.com/services/hadoop/cdh5/scripts/get_configs.sh" factual/docker-cdh5-devbox /sbin/my_init -- /sbin/setuser `whoami` /bin/bash -l'
+alias sparkdev='docker run --net host -v ~/code:/code -ti --rm --name dev -e "START_SCRIPT=http://resources.prod.factual.com/services/hadoop/cdh5/scripts/get_configs.sh" factual/docker-cdh5-devbox /sbin/my_init -- /sbin/setuser `whoami` /bin/bash -l'
 
 if [[ -a ~/.secrets.sh ]]; then
   source ~/.secrets.sh
@@ -256,6 +256,7 @@ PATH="/usr/local/opt/thrift@0.90/bin:$PATH"
 
 # Hadoop + Kerberos Local Setup
 export HADOOP_CONF_DIR=/etc/hadoop/conf
+export CDH_VERSION="5.13"
 PATH=/usr/local/Cellar/krb5/1.14.4/bin:$PATH
 
 case `uname` in
@@ -268,18 +269,9 @@ case `uname` in
     export LD_LIBRARY_PATH=$HADOOP_INSTALL/lib/native/
     ;;
   Linux)
-    export HADOOP_INSTALL=/usr/local/hadoop
-    export HADOOP_HOME=$HADOOP_INSTALL
-    export PATH=$PATH:$HADOOP_INSTALL/bin
-    export SPARK_HOME=/usr/local/spark
-    export PATH=$PATH:$SPARK_HOME/bin
-    export HADOOP_CLASSPATH=$HADOOP_INSTALL/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar
-    export SPARK_CLASSPATH=$HADOOP_CLASSPATH
-    HADOOP_LIBRARY_PATH=$HADOOP_INSTALL/lib/native
-    export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_LIBRARY_PATH"
-    export SPARK_LIBRARY_PATH=$HADOOP_LIBRARY_PATH
-    export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-    export LD_LIBRARY_PATH="$HADOOP_LIBRARY_PATH"
+    export HADOOP_HOME=/usr/lib/hadoop
+    export SPARK_HOME=/opt/spark
+    export PATH=$SPARK_HOME/bin:$PATH
     ;;
 esac
 
