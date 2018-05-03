@@ -351,7 +351,7 @@ cd /tmp
 
 # Vars for configuring this setup session
 export CDH_VERSION="5.13"
-export SPARK_VERSION="2.2.1"
+export SPARK_VERSION="2.2.0"
 export SPARK_HOME=/opt/spark
 export HADOOP_CONF_DIR=/etc/hadoop/conf
 
