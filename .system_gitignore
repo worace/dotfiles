@@ -55,3 +55,6 @@ build/
 # Personal note files
 scratch
 .scratch
+
+# Spark
+metastore_db/
