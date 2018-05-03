@@ -204,7 +204,7 @@ function loadChruby {
     if [[ -a $1/chruby.sh ]]; then
         source $1/chruby.sh
         source $1/auto.sh
-        chruby 2.3
+        chruby 2.4
     fi
 }
 loadChruby '/usr/local/share/chruby'
@@ -229,7 +229,6 @@ function scrape {
 }
 
 function countloc { find $1 -name "*" -type f | xargs wc -l | sort -n }
-alias rake='noglob rake'
 
 # export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh --no-use"  # This loads nvm
