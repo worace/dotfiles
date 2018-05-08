@@ -1,0 +1,9 @@
+if [ -f $HOME/.Xresources]; then
+  xrdb -merge ~/.Xresources
+fi
+
+xrandr --output DisplayPort-0 --primary --mode 3840x2160 --pos 0x0 --rotate normal --output DVI-D-0 --mode 2560x1440 --pos -3840x0 --rotate left --output HDMI-A-0 --off
+xset -b
+xset r rate 220 50
+# xrandr --dpi 144
+feh --bg-center ~/dotfiles/wallpaper/goat.jpg
