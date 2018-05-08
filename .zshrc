@@ -303,3 +303,5 @@ function fetchPOI {
   ID=$1
   curl -s "http://marathon-services.la.prod.factual.com:31950/entities/solr/places_us/places_us_main?q=factual_id:$ID"
 }
+
+alias g=geo-cli
