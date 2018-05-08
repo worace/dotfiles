@@ -171,7 +171,7 @@
 
 ;;ruby
 (require 'chruby)
-(chruby "2.3.1")
+(chruby "2.4.4")
 (require 'seeing-is-believing)
 (add-hook 'ruby-mode-hook 'seeing-is-believing)
 (require 'inf-ruby)
