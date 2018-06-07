@@ -23,6 +23,8 @@
 (defun scratch ()
   (interactive)
   (find-file "~/Dropbox/notes/scratch.org"))
+(evil-leader/set-key-for-mode 'org-mode "[" 'org-promote-subtree)
+(evil-leader/set-key-for-mode 'org-mode "]" 'org-demote-subtree)
 
 (defun worace-text-scale-change (increment direction)
   (let ((cur-height (face-attribute 'default :height)))
