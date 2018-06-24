@@ -186,7 +186,10 @@
   (goto-char (point-max))
   (local-set-key (kbd "q")
                  (lambda () (interactive) (quit-restore-window))))
-(add-hook 'compilation-finish-functions 'my-compilation-finish-hook nil nil)
+
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (add-hook 'compilation-finish-functions 'my-compilation-finish-hook nil 'make-it-local)))
 
 (require 'ruby-test-mode)
 (add-hook 'ruby-mode-hook 'ruby-test-mode)
