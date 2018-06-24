@@ -3,7 +3,6 @@
 
 (setq-default truncate-lines 1)
 (setq-default indent-tabs-mode nil)
-(setq company-backends '())
 
 (ido-mode 1)
 (ido-everywhere 1)
@@ -410,7 +409,18 @@
 
 (custom-set-variables '(coffee-tab-width 2))
 
-(add-hook 'rust-mode-hook 'cargo-minor-mode)
+(require 'rust-mode)
+(evil-leader/set-key-for-mode 'rust-mode "TAB" 'rust-format-buffer)
+
+(add-hook 'rust-mode-hook #'cargo-minor-mode)
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+(add-hook 'rust-mode-hook #'flycheck-mode)
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
 
 (setq tramp-default-method "ssh")
 
