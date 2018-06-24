@@ -441,7 +441,7 @@
     (setq circe-network-options
           `(("Mozilla"
              :nick ,irc-nick
-             :channels ("#rust" "#rust-beginners")
+             :channels ("#rust" "#rust-beginners" "#rust-geo")
              :nickserv-password ,irc-pass))))
 
 (setq sh-basic-offset 2
