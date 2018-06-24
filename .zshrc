@@ -305,3 +305,5 @@ function fetchPOI {
 }
 
 alias g=geo-cli
+
+export PATH="$HOME/.cargo/bin:$PATH"
