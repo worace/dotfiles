@@ -106,10 +106,10 @@ alias code="cd ~/code"
 alias clj="cd ~/code/clojure"
 
 # hdfs aliases
-alias hfs='hadoop fs'
-alias hls='hadoop fs -ls'
-alias htx='hadoop fs -text'
-alias hc='hadoop fs -cat'
+alias hfs='noglob hadoop fs'
+alias hls='noglob hadoop fs -ls'
+alias htx='noglob hadoop fs -text'
+alias hc='noglob hadoop fs -cat'
 
 # Run spark docker devbox
 alias sparkdev='docker run --net host -v ~/code:/code -ti --rm --name dev -e "START_SCRIPT=http://resources.prod.factual.com/services/hadoop/cdh5/scripts/get_configs.sh" factual/docker-cdh5-devbox /sbin/my_init -- /sbin/setuser `whoami` /bin/bash -l'
