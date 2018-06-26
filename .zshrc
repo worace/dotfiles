@@ -271,7 +271,7 @@ case `uname` in
     ;;
 esac
 
-alias yrn=$HADOOP_INSTALL/bin/yarn
+alias yrn=/usr/lib/hadoop-yarn/bin/yarn
 function yarnlogs {
   yrn logs -applicationId $1 > /tmp/$1.log
 }
