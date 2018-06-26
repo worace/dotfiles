@@ -63,6 +63,10 @@
 
 (evil-define-key 'normal origami-mode-map (kbd "zo") 'origami-toggle-node)
 
+(if (eq system-type 'gnu/linux)
+    (setq  x-meta-keysym 'super
+           x-super-keysym 'meta))
+
 (setq mac-command-modifier 'super)
 (setq mac-option-modifier 'meta)
 (global-set-key (kbd "s--") 'worace-text-scale-decrease)
