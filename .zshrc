@@ -112,7 +112,7 @@ alias htx='noglob hadoop fs -text'
 alias hc='noglob hadoop fs -cat'
 
 # Run spark docker devbox
-alias sparkdev='docker run --net host -v ~/code:/code -ti --rm --name dev -e "START_SCRIPT=http://resources.prod.factual.com/services/hadoop/cdh5/scripts/get_configs.sh" factual/docker-cdh5-devbox /sbin/my_init -- /sbin/setuser `whoami` /bin/bash -l'
+alias sparkdev='docker run -v ~/.docker_bash_history:/root/.bash_history -v ~/code:/code -ti --rm --name dev -e "START_SCRIPT=http://resources.prod.factual.com/services/hadoop/cdh5/scripts/get_configs.sh" factual/docker-cdh5-devbox /sbin/my_init -- /sbin/setuser `whoami` /bin/bash -l'
 
 if [[ -a ~/.secrets.sh ]]; then
   source ~/.secrets.sh
