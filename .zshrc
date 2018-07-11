@@ -305,6 +305,8 @@ function fetchPOI {
   curl -s "http://marathon-services.la.prod.factual.com:31950/entities/solr/places_us/places_us_main?q=factual_id:$ID"
 }
 
-alias g=geo-cli
+alias jq="noglob jq"
 
 export PATH="$HOME/.cargo/bin:$PATH"
+alias ldappw="op get item \"LDAP Factual\" | jq -cr .details.fields[0].value | copy"
+alias jqc="jq -cr ."
