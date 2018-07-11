@@ -6,6 +6,7 @@
      {:coordinates (str "[" package-name "\"" version-str "\"" "]")}))
   (hotload-dep "selmer" "1.10.7"))
 
+
 {:user {:plugins [[lein-exec "0.3.7"]
                   [lein-try "0.4.3"]
                   [lein-open "0.1.0"]
@@ -22,4 +23,5 @@
         :injections [(require '[clojure.repl :refer [doc]])
                      (require 'pjstadig.humane-test-output)
                      (pjstadig.humane-test-output/activate!)]
-        :jvm-opts ["-XX:-OmitStackTraceInFastThrow"]}}
+        :jvm-opts ["-XX:-OmitStackTraceInFastThrow"]
+        :signing {:gpg-key "F7B92822"}}}
