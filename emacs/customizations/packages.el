@@ -87,7 +87,6 @@
 (when (boundp 'package-pinned-packages)
   (setq package-pinned-packages
 	'((cider              . "melpa-stable")
-          (circe              . "melpa-stable")
           (yaml-mode          . "melpa-stable")
 	  (clj-refactor       . "melpa-stable")
           (rtags              . "melpa-stable"))))
