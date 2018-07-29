@@ -306,6 +306,7 @@ function fetchPOI {
 }
 
 alias jq="noglob jq"
+alias curl="noglob curl"
 
 export PATH="$HOME/.cargo/bin:$PATH"
 alias ldappw="op get item \"LDAP Factual\" | jq -cr .details.fields[0].value | copy"
