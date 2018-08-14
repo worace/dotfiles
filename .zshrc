@@ -306,9 +306,11 @@ function fetchPOI {
   curl -s "http://marathon-services.la.prod.factual.com:31950/entities/solr/places_us/places_us_main?q=factual_id:$ID"
 }
 
-alias jq="noglob jq"
+alias jq="noglob jq -cr"
 alias curl="noglob curl"
 
 export PATH="$HOME/.cargo/bin:$PATH"
 alias ldappw="op get item \"LDAP Factual\" | jq -cr .details.fields[0].value | copy"
 alias jqc="jq -cr ."
+alias jqp="jq"
+alias rake="noglob rake"
