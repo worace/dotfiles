@@ -264,6 +264,7 @@ case `uname` in
     export HADOOP_INSTALL=/usr/local/Cellar/hadoop/2.8.0
     export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$HADOOP_INSTALL/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar
     export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_INSTALL/lib/lzo/Mac_OS_X-x86_64-64:$HADOOP_INSTALL/lib/native"
+    export SPARK_CONF_DIR=/etc/spark/conf
     ;;
   Linux)
     export HADOOP_HOME=/usr/lib/hadoop
