@@ -230,8 +230,9 @@ function scrape {
 
 function countloc { find $1 -name "*" -type f | xargs wc -l | sort -n }
 
-# export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh --no-use"  # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 alias nvmu='source ~/.nvm/nvm.sh && nvm use'
 
 HISTSIZE=100000
@@ -245,6 +246,7 @@ HISTFILE="$HOME/.zsh_history"
 # setopt hist_verify
 # setopt inc_append_history
 setopt share_history
+setopt interactivecomments
 
 alias rl="source ~/.zshrc"
 
@@ -312,5 +314,6 @@ alias curl="noglob curl"
 export PATH="$HOME/.cargo/bin:$PATH"
 alias ldappw="op get item \"LDAP Factual\" | jq -cr .details.fields[0].value | copy"
 alias jqc="jq -cr ."
-alias jqp="jq"
+alias jqcp="paste | jqc | copy"
+alias jqp="\jq "
 alias rake="noglob rake"
