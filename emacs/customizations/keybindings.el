@@ -11,7 +11,7 @@
 (evil-leader/set-key "w" 'ace-window)
 (evil-leader/set-key "asw" 'ace-swap-window)
 (evil-leader/set-key "ct" 'toggle-theme)
-(evil-leader/set-key "f" 'helm-projectile-ag)
+(evil-leader/set-key "f" 'helm-projectile-rg)
 (evil-leader/set-key "q" 'evil-quit)
 (evil-leader/set-key "k" 'kill-this-buffer)
 (evil-leader/set-key "mp" 'spotify-playpause)

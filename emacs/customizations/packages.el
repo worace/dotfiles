@@ -18,7 +18,6 @@
                           chruby
                           cider
                           circe
-                          clj-refactor
                           clojure-mode
                           cmake-mode
                           coffee-mode
@@ -46,6 +45,7 @@
                           helm-ag
                           helm-circe
                           helm-projectile
+                          helm-rg
                           inf-ruby
                           irony
                           jade-mode
@@ -69,6 +69,7 @@
                           rainbow-mode
                           restclient
                           request
+                          rg
                           rinari
                           rtags
                           ruby-test-mode
