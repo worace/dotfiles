@@ -10,7 +10,7 @@
 {:user {:plugins [[lein-exec "0.3.7"]
                   [lein-try "0.4.3"]
                   [lein-open "0.1.0"]
-                  [cider/cider-nrepl "0.16.0"]
+                  [cider/cider-nrepl "0.17.0"]
                   [lein-create-template "0.1.1"]
                   [org.clojure/tools.namespace "0.2.11"]
                   [com.jakemccrary/lein-test-refresh "0.21.1" :exclusions [org.clojure/tools.namespace]]]
