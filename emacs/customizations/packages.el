@@ -80,6 +80,7 @@
                           spotify
                           swift-mode
                           toml-mode
+                          thrift-mode
                           use-package
                           virtualenvwrapper
                           web-mode
