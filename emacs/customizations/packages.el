@@ -41,6 +41,7 @@
                           gruvbox-theme
                           haml-mode
                           haskell-mode
+                          handlebars-mode
                           helm
                           helm-ag
                           helm-circe
