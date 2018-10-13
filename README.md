@@ -48,6 +48,9 @@ ln -s ~/dotfiles/.gemrc ~/.gemrc
 ln -s ~/dotfiles/emacs ~/.emacs.d
 ln -s ~/dotfiles/.system_gitignore ~/.gitignore
 ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+ln -s ~/dotfiles/basic.tmuxtheme ~/.tmux.theme
+mkdir -p ~/.config/termite
+ln -s ~/dotfiles/termite-gruvbox-dark ~/.config/termite/config
 ```
 
 ### 6. ZSH / Oh-my-zsh
@@ -129,6 +132,13 @@ sudo apt-get install krb5-user
 
 Install with the ubuntu installer [here](https://www.dropbox.com/install?os=lnx)
 
+Configure max open file handles:
+
+```
+sudo sysctl fs.inotify.max_user_instances=256
+sudo sysctl fs.inotify.max_user_watches=1048576
+```
+
 ### 11. WINE / 1password
 
 #### Command Line Client
@@ -157,7 +167,7 @@ Use standard windows installer [here](https://agilebits.com/onepassword/windows)
 
 ```
 sudo apt-get install -y redshift redshift-gtk silversearcher-ag htop pv jq caffeine tmux gksu \
-                        vim psensor xclip tree ttf-ancient-fonts net-tools scrot curl
+                        vim psensor xclip tree ttf-ancient-fonts net-tools scrot curl rofi gdal-bin
 ```
 
 **Dev Packages**
@@ -293,18 +303,27 @@ sudo apt-get update
 sudo apt-get install docker-ce
 ```
 
+#### Docker Compose
+
+```
+sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+#### Docker Group Configuration
+
+```
+sudo groupadd docker
+sudo usermod -aG docker $USER
+# Log out or restart for this to take effect
+```
+
+
 ### Drake
 
 ```
 curl https://raw.githubusercontent.com/Factual/drake/master/bin/drake > ~/.local/bin/drake
 chmod +x ~/.local/bin/drake
-```
-
-### Tmux
-
-```
-ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
-ln -s ~/dotfiles/basic.tmuxtheme ~/.tmux.theme
 ```
 
 ## Setting up emacs-mac on OS X
@@ -409,4 +428,45 @@ spark.yarn.access.namenodes      hdfs://dev,hdfs://hbase
 spark.yarn.jars                  hdfs://dev/apps/spark/2.2.0/*
 spark.jars.repositories          http://maven.corp.factual.com/nexus/content/repositories/snapshots/,http://maven.corp.factual.com/nexus/content/repositories/releases/
 spark.shuffle.service.enabled    true
+```
+
+### Termite Terminal
+
+Follow script [here](https://github.com/Corwind/termite-install/blob/master/termite-install.sh)
+
+Theme from [here](https://github.com/morhetz/gruvbox-contrib/blob/master/termite/gruvbox-dark)
+
+### I3 Gaps
+
+[Source](https://github.com/Airblader/i3/wiki/Compiling-&-Installing)
+
+```
+cd /tmp
+git clone https://www.github.com/Airblader/i3 i3-gaps
+cd i3-gaps
+
+# Install Deps
+sudo apt-get install -y libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev \
+                        libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev \
+                        libxkbcommon-x11-dev autoconf libxcb-xrm0 libxcb-xrm-dev automake
+
+# compile & install
+autoreconf --force --install
+rm -rf build/
+mkdir -p build && cd build/
+
+../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
+make
+sudo make install
+```
+
+### Redshift
+
+If you get an error like `Unable to connect to GeoClue. Unable to get location from provider`, add this to the bottom of `/etc/geoclue/geoclue.conf`:
+
+```
+[redshift]
+allowed=true
+system=false
+users=
 ```
