@@ -167,7 +167,7 @@ Use standard windows installer [here](https://agilebits.com/onepassword/windows)
 
 ```
 sudo apt-get install -y redshift redshift-gtk silversearcher-ag htop pv jq caffeine tmux gksu \
-                        vim psensor xclip tree ttf-ancient-fonts net-tools scrot curl rofi gdal-bin
+                        vim psensor xclip tree ttf-ancient-fonts net-tools scrot curl rofi gdal-bin whois
 ```
 
 **Dev Packages**

@@ -41,7 +41,6 @@
                           gruvbox-theme
                           haml-mode
                           haskell-mode
-                          handlebars-mode
                           helm
                           helm-ag
                           helm-circe
@@ -81,7 +80,7 @@
                           spotify
                           swift-mode
                           toml-mode
-                          thrift-mode
+                          thrift
                           use-package
                           virtualenvwrapper
                           web-mode
