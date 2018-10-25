@@ -334,4 +334,4 @@ alias jqcp="paste | jqc | copy"
 alias jqp="\jq "
 alias rake="noglob rake"
 
-export SBT_OPTS="-Xmx2G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M"
+export SBT_OPTS="-Xmx8G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M"
