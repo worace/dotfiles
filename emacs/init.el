@@ -54,7 +54,7 @@
  '(markdown-command (executable-find "markdown"))
  '(package-selected-packages
    (quote
-    (handlebars-mode thrift org-ref swift-mode flycheck-swift company-sourcekit yaml-mode web-mode virtualenvwrapper use-package toml-mode spotify solarized-theme smartparens seeing-is-believing ruby-test-mode rinari restclient request rainbow-mode rainbow-delimiters racket-mode racer origami org-present org-bullets nose neotree mocha markdown-toc magit jsx-mode json-reformat json-mode jade-mode helm-projectile helm- helm-ag haskell-mode haml-mode gruvbox-theme groovy-mode gist flycheck-rust exec-path-from-shell evil-surround evil-leader ensime dockerfile-mode company-rtags company-irony company-go coffee-mode cmake-mode clj-refactor chruby cargo auto-complete alchemist ag ace-window ace-jump-mode)))
+    (company-lsp lsp-vue lsp-mode tide vue-mode handlebars-mode thrift org-ref swift-mode flycheck-swift company-sourcekit yaml-mode web-mode virtualenvwrapper use-package toml-mode spotify solarized-theme smartparens seeing-is-believing ruby-test-mode rinari restclient request rainbow-mode rainbow-delimiters racket-mode racer origami org-present org-bullets nose neotree mocha markdown-toc magit jsx-mode json-reformat json-mode jade-mode helm-projectile helm- helm-ag haskell-mode haml-mode gruvbox-theme groovy-mode gist flycheck-rust exec-path-from-shell evil-surround evil-leader ensime dockerfile-mode company-rtags company-irony company-go coffee-mode cmake-mode clj-refactor chruby cargo auto-complete alchemist ag ace-window ace-jump-mode)))
  '(python-guess-indent nil)
  '(python-indent 2)
  '(python-indent-guess-indent-offset nil)
