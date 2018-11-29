@@ -5,6 +5,7 @@
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable-milkbox" . "http://melpa-stable.milkbox.net/packages/") t)
+;;(add-to-list 'package-archives '("melpa" . "https://raw.githubusercontent.com/d12frosted/elpa-mirror/master/melpa/") t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;; Define list of packages to install
@@ -23,6 +24,7 @@
                           coffee-mode
                           company-go
                           company-irony
+                          company-lsp
                           company-rtags
                           company-sourcekit
                           dockerfile-mode
@@ -53,6 +55,9 @@
                           json-reformat
                           jsx-mode
                           js2-mode
+                          lsp-mode
+                          lsp-ui
+                          lsp-vue
                           magit
                           markdown-mode
                           markdown-toc
@@ -81,8 +86,10 @@
                           swift-mode
                           toml-mode
                           thrift
+                          tide
                           use-package
                           virtualenvwrapper
+                          vue-mode
                           web-mode
                           yaml-mode))
 
