@@ -50,6 +50,7 @@ case `uname` in
   Darwin)
     #increase keyrepeat speed beyond os x allowed maximum
     eval "defaults write NSGlobalDomain KeyRepeat -int 1"
+    alias vsc=/usr/local/bin/code
     em () {
         if [ "$#" -ne 0 ];
         then
