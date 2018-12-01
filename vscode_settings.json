@@ -1,33 +1,35 @@
 // Place your settings in this file to overwrite the default settings
 {
-    "workbench.editor.showTabs": false,
-    "vim.easymotion": true,
-    "vim.easymotionMarkerFontFamily": "Source Code Pro",
-    "editor.minimap.enabled": false,
-    "vim.useSystemClipboard": true,
-    "vim.leader": "<space>",
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "<leader>",
-                "b"
-            ],
-            "commands": [
-                "workbench.action.openNextRecentlyUsedEditorInGroup"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "s"
-            ],
-            "commands": [
-                "workbench.action.files.save"
-            ]
-        }
-    ],
-    "workbench.activityBar.visible": false,
-    "workbench.statusBar.visible": false,
-    "workbench.startupEditor": "newUntitledFile"
+  "editor.fontFamily": "'Source Code Pro', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+  "workbench.colorTheme": "Gruvbox Dark (Hard)",
+  "window.zoomLevel": 1
+  "workbench.editor.showTabs": false,
+  "vim.easymotion": true,
+  "vim.easymotionMarkerFontFamily": "Source Code Pro",
+  "editor.minimap.enabled": false,
+  "vim.useSystemClipboard": true,
+  "vim.leader": "<space>",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": [
+        "<leader>",
+        "b"
+      ],
+      "commands": [
+        "workbench.action.openNextRecentlyUsedEditorInGroup"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "s"
+      ],
+      "commands": [
+        "workbench.action.files.save"
+      ]
+    }
+  ],
+  "workbench.activityBar.visible": false,
+  "workbench.statusBar.visible": true,
+  "workbench.startupEditor": "newUntitledFile"
 }
-// { "key": "ctrl+tab",              "command": "workbench.action.openNextRecentlyUsedEditorInGroup" },
