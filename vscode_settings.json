@@ -1,8 +1,9 @@
 // Place your settings in this file to overwrite the default settings
 {
   "editor.fontFamily": "'Source Code Pro', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+  "files.insertFinalNewline": true,
   "workbench.colorTheme": "Gruvbox Dark (Hard)",
-  "window.zoomLevel": 1
+  "window.zoomLevel": 1,
   "workbench.editor.showTabs": false,
   "vim.easymotion": true,
   "vim.easymotionMarkerFontFamily": "Source Code Pro",
