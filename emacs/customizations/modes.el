@@ -586,6 +586,9 @@
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
+(add-hook 'mmm-mode-hook
+          (lambda ()
+            (set-face-background 'mmm-default-submode-face nil)))
 (require 'vue-mode)
   (add-to-list 'vue-mode-hook #'smartparens-mode)
 
