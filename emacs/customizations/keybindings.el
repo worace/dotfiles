@@ -115,6 +115,9 @@
 (evil-leader/set-key-for-mode 'emacs-lisp-mode "eb" 'eval-buffer)
 (evil-leader/set-key-for-mode 'emacs-lisp-mode "er" 'eval-region)
 
+;;Elixir
+(evil-leader/set-key-for-mode 'alchemist-mode "]" 'alchemist-mix-test-at-point)
+
 ;; Git commands
 (evil-leader/set-key "gs" 'magit-status)
 (evil-leader/set-key "gc" 'magit-commit)

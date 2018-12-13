@@ -236,6 +236,13 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 alias nvmu='source ~/.nvm/nvm.sh && nvm use'
 
+# Elixir
+export ERL_AFLAGS="-kernel shell_history enabled"
+alias mc="iex -S mix"
+alias mps="mix phx.server"
+alias mdg="mix deps.get"
+alias mt="mix test"
+
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE="$HOME/.zsh_history"
