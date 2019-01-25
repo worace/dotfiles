@@ -240,6 +240,7 @@ alias nvmu='source ~/.nvm/nvm.sh && nvm use'
 export ERL_AFLAGS="-kernel shell_history enabled"
 alias mc="iex -S mix"
 alias mps="mix phx.server"
+alias mpr="mix phx.routes"
 alias mdg="mix deps.get"
 alias mt="mix test"
 alias mpr="mix phx.routes"
