@@ -493,6 +493,8 @@
 
 (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
 (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
+(evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
+(evil-leader/set-key-for-mode 'elixir-mode "]" 'alchemist-mix-test-at-point)
 
 (sp-with-modes '(elixir-mode)
   (sp-local-pair "fn" "end"
@@ -583,6 +585,7 @@
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
   (auto-complete-mode 0)
+  (define-key tide-mode-map (kbd "TAB") #'company-complete-common-or-cycle)
   ;; company is an optional dependency. You have to
   ;; install it separately via package-install
   ;; `M-x package-install [ret] company`
