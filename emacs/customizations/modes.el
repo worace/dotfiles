@@ -243,11 +243,17 @@
 (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.eex\\'" . web-mode))
+;; Support ERB/EEX tags in SmartParens
+;; https://emacs.stackexchange.com/questions/15188/smartparens-and-web-mode-conflict-to-add-extra-angular-bracket
+;; (sp-pair "%" "%" :wrap "C-%")
+(sp-pair "<" ">" :wrap "C->")
 
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
+  (emmet-mode)
   (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-enable-auto-pairing t)
+  (setq web-mode-enable-auto-pairing nil)
   (setq web-mode-enable-auto-closing t)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2))
@@ -600,7 +606,9 @@
           (lambda ()
             (set-face-background 'mmm-default-submode-face nil)))
 (require 'vue-mode)
-  (add-to-list 'vue-mode-hook #'smartparens-mode)
+(require 'prettier-js)
+(add-to-list 'vue-mode-hook #'smartparens-mode)
+(add-to-list 'vue-mode-hook #'prettier-js-mode)
 
 (require 'lsp-mode)
 (require 'lsp-vue)
