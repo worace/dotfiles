@@ -242,6 +242,7 @@ alias mc="iex -S mix"
 alias mps="mix phx.server"
 alias mdg="mix deps.get"
 alias mt="mix test"
+alias mpr="mix phx.routes"
 
 HISTSIZE=100000
 SAVEHIST=100000
@@ -329,3 +330,5 @@ alias jqc="jq -cr ."
 alias jqcp="paste | jqc | copy"
 alias jqp="\jq "
 alias rake="noglob rake"
+
+export SBT_OPTS="-Xmx2G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M"

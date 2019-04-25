@@ -487,6 +487,10 @@
 (add-hook 'alchemist-iex-mode-hook
           (lambda ()
             (setq show-trailing-whitespace nil)))
+(add-hook 'alchemist-test-report-mode-hook
+          (lambda ()
+            (setq truncate-lines t)))
+
 (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
 (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
 

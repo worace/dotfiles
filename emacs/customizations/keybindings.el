@@ -117,6 +117,7 @@
 
 ;;Elixir
 (evil-leader/set-key-for-mode 'alchemist-mode "]" 'alchemist-mix-test-at-point)
+(evil-leader/set-key-for-mode 'alchemist-mode "\\" 'alchemist-mix-test-this-buffer)
 
 ;; Git commands
 (evil-leader/set-key "gs" 'magit-status)
