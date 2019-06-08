@@ -622,3 +622,12 @@
 
 (require 'company-lsp)
   (push 'company-lsp company-backends)
+
+(setq ensime-eldoc-hints 'type)
+(add-hook 'scala-mode-hook
+          (lambda ()
+            (setq-local eldoc-documentation-function
+                        (lambda ()
+                          (when (ensime-connected-p)
+                            (ensime-type-at-point)
+                            (eldoc-mode))))))

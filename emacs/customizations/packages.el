@@ -67,6 +67,7 @@
                           org-present
                           origami
                           neotree
+                          play-routes-mode
                           projectile
                           racer
                           racket-mode
