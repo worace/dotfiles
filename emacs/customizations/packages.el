@@ -39,6 +39,7 @@
                           flycheck-swift
                           gist
                           go-mode
+                          graphql-mode
                           groovy-mode
                           gruvbox-theme
                           haml-mode
