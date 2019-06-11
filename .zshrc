@@ -51,6 +51,8 @@ case `uname` in
     #increase keyrepeat speed beyond os x allowed maximum
     eval "defaults write NSGlobalDomain KeyRepeat -int 1"
     alias vsc=/usr/local/bin/code
+    alias paste=pbpaste
+    alias copy=pbcopy
     em () {
         if [ "$#" -ne 0 ];
         then
