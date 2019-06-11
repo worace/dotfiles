@@ -627,6 +627,7 @@
   (push 'company-lsp company-backends)
 
 (setq ensime-eldoc-hints 'type)
+(setq ensime-startup-notification nil)
 (add-hook 'scala-mode-hook
           (lambda ()
             (setq-local eldoc-documentation-function
