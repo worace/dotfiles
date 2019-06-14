@@ -1,3 +1,4 @@
+# zmodload zsh/zprof
 # Check if Command is available:
 # if ! type "$foobar_command_name" > /dev/null; then
     # do stuff
@@ -86,7 +87,7 @@ alias gpom="git pull origin master"
 alias gpod="git pull origin develop"
 alias hb="hub browse"
 
-alias be="bundle exec"
+alias be="noglob bundle exec"
 alias bl="bundle --local"
 
 alias la="ls -lah"
@@ -115,7 +116,7 @@ alias htx='noglob hadoop fs -text'
 alias hc='noglob hadoop fs -cat'
 
 # Run spark docker devbox
-alias sparkdev='docker run -v ~/.docker_bash_history:/root/.bash_history -v ~/code:/code -ti --rm --name dev -e "START_SCRIPT=http://resources.prod.factual.com/services/hadoop/cdh5/scripts/get_configs.sh" factual/docker-cdh5-devbox /sbin/my_init -- /sbin/setuser `whoami` /bin/bash -l'
+alias sparkdev='docker run -v ~/.docker_bash_history:/root/.bash_history -v ~/code:/code -ti --rm --name dev -e "START_SCRIPT=http://resources.prod.factual.com/services/hadoop/cdh5/scripts/get_configs.sh" factual/docker-cdh5-devbox /sbin/my_init -- /sbin/setuser $(whoami) /bin/bash -l'
 
 if [[ -a ~/.secrets.sh ]]; then
   source ~/.secrets.sh
@@ -233,10 +234,10 @@ function scrape {
 
 function countloc { find $1 -name "*" -type f | xargs wc -l | sort -n }
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-alias nvmu='source ~/.nvm/nvm.sh && nvm use'
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# alias nvmu='source ~/.nvm/nvm.sh && nvm use'
 
 # Elixir
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -333,5 +334,10 @@ alias jqc="jq -cr ."
 alias jqcp="paste | jqc | copy"
 alias jqp="\jq "
 alias rake="noglob rake"
+alias countries="ruby -e 'require \"factual_countries\"; FactualCountries.all.keys.each { |c| puts c }'"
 
-export SBT_OPTS="-Xmx8G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M"
+export SBT_OPTS="-Xmx32G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M"
+# zprof
+
+# added by travis gem
+[ -f /home/horace/.travis/travis.sh ] && source /home/horace/.travis/travis.sh

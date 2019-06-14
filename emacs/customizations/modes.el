@@ -290,6 +290,7 @@
 ;; (setq org-hide-emphasis-markers t)
 ;; Have org treat code blocks like their native lang
 (setq org-src-fontify-natively t)
+(setq inhibit-compacting-font-caches t)
 (setq org-src-tab-acts-natively t)
 ;; No line numbers in org (looks weird with the different sized headers)
 ;; (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
@@ -635,3 +636,4 @@
                           (when (ensime-connected-p)
                             (ensime-type-at-point)
                             (eldoc-mode))))))
+(add-hook 'scala-mode-hook (lambda () (auto-complete-mode -1)))

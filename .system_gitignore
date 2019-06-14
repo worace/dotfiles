@@ -58,3 +58,7 @@ scratch
 
 # Spark
 metastore_db/
+
+# Emacs Ensime
+ensime.sbt
+.ensime-server.conf
