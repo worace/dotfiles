@@ -69,6 +69,7 @@
                           origami
                           neotree
                           play-routes-mode
+                          protobuf-mode
                           projectile
                           racer
                           racket-mode
