@@ -241,6 +241,7 @@ function countloc { find $1 -name "*" -type f | xargs wc -l | sort -n }
 
 # Elixir
 export ERL_AFLAGS="-kernel shell_history enabled"
+export PATH="$PATH:$HOME/.mix/escripts"
 alias mc="iex -S mix"
 alias mps="mix phx.server"
 alias mpr="mix phx.routes"
