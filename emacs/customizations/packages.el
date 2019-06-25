@@ -69,6 +69,7 @@
                           origami
                           neotree
                           play-routes-mode
+                          prettier-js
                           protobuf-mode
                           projectile
                           racer
