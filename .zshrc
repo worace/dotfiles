@@ -326,6 +326,10 @@ function fetchPOI {
   curl -s "http://marathon-services.la.prod.factual.com:31950/entities/solr/places_us/places_us_main?q=factual_id:$ID"
 }
 
+function throughput {
+  tail -f $1 | pv -lrtab > /dev/null
+}
+
 alias jq="noglob jq -cr"
 alias curl="noglob curl"
 
