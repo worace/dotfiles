@@ -1,0 +1,109 @@
+[colors]
+background = #282828
+foreground = #a89984
+fg-1 = #ffaf5f
+fg-2 = #ffd494
+primary = #ffb52a
+secondary = #e60053
+underline = #fb4934
+alert = #bd2c40
+
+[font]
+size = 18
+
+[bar/main]
+; monitor = ${env:MONITOR:HDMI-0}
+height = 64
+bottom = false
+top = true
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+padding-left = 1
+padding-right = 1
+padding-top = 1
+padding-bottom = 1
+
+module-margin = 1
+
+font-0 = "Source Code Pro:size=24;2"
+font-1 = FontAwesome:size=24;2
+font-2 = "Avenir:size=24:weight=bold;2"
+; font-3 = "Material Design Icons:size=13;2"
+
+modules-left = i3
+modules-center = date
+modules-right = cpu
+
+tray-position = right
+tray-detached = false
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = true
+index-sort = true
+enable-click = true
+enable-scroll = false
+wrapping-scroll = false
+reverse-scroll = false
+strip-wsnumbers = true
+
+format = <label-mode><label-state>
+
+label-mode-padding = 1
+label-mode-underline = ${colors.underline}
+
+label-focused = %name%
+label-focused-foreground = #f6eedb
+label-focused-underline = ${colors.underline}
+label-focused-padding = 1
+
+label-unfocused = %name%
+label-unfocused-padding = 1
+
+label-visible = %name%
+label-visible-underline = #555555
+label-visible-padding = 1
+
+label-urgent = %name%
+label-urgent-foreground = #000000
+label-urgent-background = ${colors.underline}
+label-urgent-padding = 1
+
+[module/cpu]
+format-label = internal/cpu
+
+format = <label>
+
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+
+type = internal/cpu
+interval = 2
+label = %{F${colors.foreground} %percentage% %{F-}%
+padding = 2
+label-background = ${colors.background}
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = %B %d %Y,
+time = %H:%M
+
+label = %date% %time%
+
+[settings]
+screenchange-reload = true
