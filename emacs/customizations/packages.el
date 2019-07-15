@@ -59,7 +59,6 @@
                           js2-mode
                           lsp-mode
                           lsp-ui
-                          lsp-vue
                           magit
                           markdown-mode
                           markdown-toc

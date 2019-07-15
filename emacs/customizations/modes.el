@@ -619,8 +619,6 @@
 (add-to-list 'vue-mode-hook #'prettier-js-mode)
 
 (require 'lsp-mode)
-(require 'lsp-vue)
-(add-hook 'vue-mode-hook #'lsp-vue-mmm-enable)
 (require 'lsp-ui)
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 
