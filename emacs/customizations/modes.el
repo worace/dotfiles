@@ -247,7 +247,7 @@
 ;; Support ERB/EEX tags in SmartParens
 ;; https://emacs.stackexchange.com/questions/15188/smartparens-and-web-mode-conflict-to-add-extra-angular-bracket
 ;; (sp-pair "%" "%" :wrap "C-%")
-(sp-pair "<" ">" :wrap "C->")
+;; (sp-pair "<" ">" :wrap "C->")
 
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
