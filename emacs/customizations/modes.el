@@ -491,6 +491,8 @@
 (add-hook 'alchemist-test-report-mode-hook
           (lambda ()
             (setq truncate-lines t)))
+(add-hook 'elixir-mode-hook
+          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
 
 (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
 (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
