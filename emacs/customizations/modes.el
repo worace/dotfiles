@@ -181,6 +181,8 @@
 (when (executable-find "pry")
     (add-to-list 'inf-ruby-implementations '("pry" . "pry"))
     (setq inf-ruby-default-implementation "pry"))
+(setq ruby-deep-arglist nil)
+(setq ruby-deep-indent-paren nil)
 
 (defun my-compilation-finish-hook (buf strg)
   (switch-to-buffer-other-window "*compilation*")

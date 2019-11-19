@@ -22,7 +22,7 @@ else
   EMACS_BIN_DIR=/usr/local/bin
 fi
 export BUNDLER_EDITOR="$EMACS_BIN_DIR/emacs"
-export EDITOR="$EMACS_BIN_DIR/emacsclient -t"
+export EDITOR="$EMACS_BIN_DIR/emacs"
 
 if [[ -a ~/dotfiles/antigen.zsh ]]; then
     source ~/dotfiles/antigen.zsh
@@ -346,3 +346,8 @@ export SBT_OPTS="-Xmx32G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -
 
 # added by travis gem
 [ -f /home/horace/.travis/travis.sh ] && source /home/horace/.travis/travis.sh
+
+function dockerprune {
+  docker image prune -f
+  docker container prune -f
+}
