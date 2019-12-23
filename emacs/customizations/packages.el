@@ -30,7 +30,6 @@
                           dockerfile-mode
                           elixir-mode
                           emmet-mode
-                          ensime
                           evil
                           evil-leader
                           evil-surround
