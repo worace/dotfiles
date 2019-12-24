@@ -1,12 +1,17 @@
 ;; Set up emacs package system and add a few extra
 ;; Repositories
 (load "package")
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa-stable-milkbox" . "http://melpa-stable.milkbox.net/packages/") t)
-;;(add-to-list 'package-archives '("melpa" . "https://raw.githubusercontent.com/d12frosted/elpa-mirror/master/melpa/") t)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+;;(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")))
+
+;; ("melpa" . "https://melpa.org/packages/")
+;;(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+;;(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+;;(add-to-list 'package-archives '("melpa-stable-milkbox" . "https://melpa-stable.milkbox.net/packages/") t)
+;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;; Define list of packages to install
 (defvar worace/packages '(;;elm-mode

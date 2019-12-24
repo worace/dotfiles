@@ -30,6 +30,9 @@
 (setq exec-path-from-shell-check-startup-files nil)
 (exec-path-from-shell-initialize)
 
+(setq use-package-always-defer t
+      use-package-always-ensure t)
+
 ;; store all backup and autosave files in the tmp dir
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -54,7 +57,7 @@
  '(markdown-command (executable-find "markdown"))
  '(package-selected-packages
    (quote
-    (enh-ruby-mode terraform-mode lsp-java yaml-mode web-mode vue-mode virtualenvwrapper use-package toml-mode tide thrift swift-mode spotify solarized-theme smartparens seeing-is-believing ruby-test-mode ripgrep rinari rg restclient rainbow-mode rainbow-delimiters racket-mode racer protobuf-mode prettier-js play-routes-mode paredit origami org-present org-bullets nose neotree multiple-cursors mocha markdown-toc magit lsp-vue lsp-ui jsx-mode json-mode jade-mode hydra helm-rg helm-projectile helm-circe helm-ag haskell-mode haml-mode gruvbox-theme groovy-mode graphql-mode gist flycheck-swift flycheck-rust exec-path-from-shell evil-surround evil-leader ensime emmet-mode edn dockerfile-mode csv-mode company-sourcekit company-rtags company-lsp company-irony company-go coffee-mode cmake-mode cider chruby cargo auto-complete alchemist ag ace-window ace-jump-mode)))
+    (sbt-mode scala-mode enh-ruby-mode terraform-mode lsp-java yaml-mode web-mode vue-mode virtualenvwrapper use-package toml-mode tide thrift swift-mode spotify solarized-theme smartparens seeing-is-believing ruby-test-mode ripgrep rinari rg restclient rainbow-mode rainbow-delimiters racket-mode racer protobuf-mode prettier-js play-routes-mode paredit origami org-present org-bullets nose neotree multiple-cursors mocha markdown-toc magit jsx-mode json-mode jade-mode hydra helm-rg helm-projectile helm-circe helm-ag haskell-mode haml-mode gruvbox-theme groovy-mode graphql-mode gist flycheck-swift flycheck-rust exec-path-from-shell evil-surround evil-leader ensime emmet-mode edn dockerfile-mode csv-mode company-sourcekit company-rtags company-lsp company-irony company-go coffee-mode cmake-mode cider chruby cargo auto-complete alchemist ag ace-window ace-jump-mode)))
  '(python-guess-indent nil)
  '(python-indent 2)
  '(python-indent-guess-indent-offset nil)

@@ -1,3 +1,4 @@
+(require 'use-package)
 (if (file-exists-p "~/.secrets.el")
     (load "~/.secrets.el"))
 
@@ -5,10 +6,9 @@
 (setq-default indent-tabs-mode nil)
 
 (ido-mode 1)
-(ido-everywhere 1)
 
 ;;Projectile
-(setq projectile-git-submodule-command "echo ''")
+(setq projectile-git-submodule-command nil)
 
 (global-linum-mode 1)
 
@@ -622,9 +622,32 @@
 (add-to-list 'vue-mode-hook #'smartparens-mode)
 (add-to-list 'vue-mode-hook #'prettier-js-mode)
 
-(require 'lsp-mode)
-(require 'lsp-ui)
-(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+(setq lsp-enable-snippet nil)
 
-(require 'company-lsp)
-  (push 'company-lsp company-backends)
+(use-package lsp-ui)
+(use-package company-lsp)
+
+(use-package lsp-mode
+  :config (setq lsp-prefer-flymake nil))
+
+;; Scala + sbt with Metals
+
+(use-package scala-mode
+  :mode "\\.s\\(cala\\|bt\\)$")
+
+(use-package sbt-mode
+  :commands sbt-start sbt-command
+  :config
+  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
+  ;; allows using SPACE when in the minibuffer
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map)
+   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+   (setq sbt:program-options '("-Dsbt.supershell=false")))
+
+(add-hook 'scala-mode-hook
+          (lambda () (flycheck-mode)))
+
+(use-package company-lsp)
