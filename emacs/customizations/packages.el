@@ -59,7 +59,7 @@
                           jade-mode
                           json-mode
                           json-reformat
-                          jsx-mode
+                          ;;jsx-mode
                           js2-mode
                           lsp-mode
                           lsp-ui
@@ -67,7 +67,7 @@
                           markdown-mode
                           markdown-toc
                           mocha
-                          nose
+                          ;;nose
                           org-bullets
                           org-present
                           origami
@@ -87,6 +87,8 @@
                           rtags
                           ruby-test-mode
                           rust-mode
+                          sbt-mode
+                          scala-mode
                           seeing-is-believing
                           smartparens
                           solarized-theme

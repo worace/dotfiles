@@ -232,9 +232,6 @@
 (setq venv-location "~/.virtualenvs")
 
 
-(require 'nose)
-(add-hook 'python-mode-hook (lambda () (nose-mode t)))
-
 (require 'flycheck)
 (add-hook 'python-mode-hook 'flycheck-mode)
 

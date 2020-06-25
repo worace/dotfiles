@@ -14,7 +14,7 @@
 # exec startx; exit
 # fi
 
-source $HOME/.profile
+# source $HOME/.profile
 
 if [[ -d /usr/local/opt/emacs-mac/bin ]]; then
   EMACS_BIN_DIR=/usr/local/opt/emacs-mac/bin
@@ -122,6 +122,10 @@ if [[ -a ~/.secrets.sh ]]; then
   source ~/.secrets.sh
 fi
 
+if [[ -a ~/.localrc ]]; then
+  source ~/.localrc
+fi
+
 if [[ -a ~/.factual.sh ]]; then
   source ~/.factual.sh
 fi
@@ -208,11 +212,13 @@ function loadChruby {
     if [[ -a $1/chruby.sh ]]; then
         source $1/chruby.sh
         source $1/auto.sh
-        chruby 2.4
+        chruby 2.6
     fi
 }
+
 loadChruby '/usr/local/share/chruby'
 loadChruby '/usr/share/chruby'
+loadChruby '/usr/local/opt/chruby/share/chruby/auto.sh'
 
 if type ruby > /dev/null; then
   # For adding system-ruby gem dir to path
