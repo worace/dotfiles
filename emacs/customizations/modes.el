@@ -632,6 +632,8 @@
 (use-package scala-mode
   :mode "\\.s\\(cala\\|bt\\)$")
 
+(setq lsp-ui-doc-enable nil)
+
 (use-package sbt-mode
   :commands sbt-start sbt-command
   :config
