@@ -54,6 +54,9 @@ case `uname` in
     alias vsc=/usr/local/bin/code
     alias paste=pbpaste
     alias copy=pbcopy
+    function alert {
+      terminal-notifier -message $1
+    }
     em () {
         if [ "$#" -ne 0 ];
         then
@@ -67,6 +70,10 @@ case `uname` in
     alias copy="xclip -selection clipboard"
     alias paste="xclip -o -selection clipboard"
     em () { emacs $* & disown }
+    export TERM=xterm-color
+    function alert {
+      notify-send $1
+    }
     ;;
 esac
 
@@ -132,10 +139,6 @@ fi
 
 function killgrep {
   kill $(ps aux | grep $1 | grep -v "grep" | awk '{print $2}')
-}
-
-function alert {
-  terminal-notifier -message $1
 }
 
 function pgrep {
@@ -346,6 +349,7 @@ alias jqcp="paste | jqc | copy"
 alias jqp="\jq "
 alias rake="noglob rake"
 alias countries="ruby -e 'require \"factual_countries\"; FactualCountries.all.keys.each { |c| puts c }'"
+alias count="sort | uniq -c | sort -nr"
 
 export SBT_OPTS="-Xmx32G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M"
 # zprof
