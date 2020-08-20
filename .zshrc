@@ -304,7 +304,7 @@ case `uname` in
 esac
 
 function yarnlogs {
-  yrn logs -applicationId $1 > /tmp/$1.log
+  /usr/lib/hadoop-yarn/bin/yarn logs -applicationId $1 > /tmp/$1.log
 }
 
 function yarnkill {
