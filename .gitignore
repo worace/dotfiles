@@ -6,5 +6,6 @@ emacs/rake.cache
 emacs/network-security.data
 emacs/projectile-bookmarks.eld
 emacs/projectile.cache
+emacs/transient
 .lein/repl-history
 .lein/self-installs
