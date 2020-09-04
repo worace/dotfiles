@@ -62,3 +62,4 @@ metastore_db/
 # Emacs Ensime
 ensime.sbt
 .ensime-server.conf
+rename.sh
