@@ -1,4 +1,5 @@
 (require 'use-package)
+
 (if (file-exists-p "~/.secrets.el")
     (load "~/.secrets.el"))
 
@@ -11,14 +12,16 @@
 (setq projectile-git-submodule-command nil)
 
 (global-linum-mode 1)
+(use-package ace-jump-mode :ensure t)
+(use-package ace-window :ensure t)
 
-;; Enable helm autofilter/complete interface
-(require 'helm-config)
-;; Use helm-M-x as default finder in M-x
-(global-set-key (kbd "M-x") 'helm-M-x)
-;; Additionally, enable helm for file-finding
-;; And some other standard uses
-(helm-mode 1)
+(use-package helm
+  :ensure t
+  :bind (("M-x" . helm-M-x)
+         ("C-x b" . helm-buffers-list))
+  :config (helm-mode 1))
+
+
 
 ;; Set up evil leader
 ;; Make sure to enable this before evil-mode
