@@ -64,3 +64,16 @@
       kept-new-versions 6
       kept-old-versions 2
       version-control t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(clojure-mode yaml-mode web-mode vue-mode virtualenvwrapper use-package toml-mode tide thrift swift-mode spotify solarized-theme smartparens seeing-is-believing scala-mode sbt-mode ruby-test-mode rinari rg restclient rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode racer protobuf-mode prettier-js play-routes-mode origami org-present org-bullets nose neotree mocha markdown-toc magit lsp-ui json-mode jade-mode helm-rg helm-projectile helm-circe helm-ag haskell-mode handlebars-mode haml-mode gruvbox-theme groovy-mode graphql-mode gist flycheck-swift flycheck-rust exec-path-from-shell evil-surround evil-leader emmet-mode dockerfile-mode company-sourcekit company-rtags company-lsp company-irony company-go coffee-mode cmake-mode cider chruby cargo auto-complete alchemist ag ace-window ace-jump-mode)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 0.95)))))

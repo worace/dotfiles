@@ -1,5 +1,3 @@
-(require 'use-package)
-
 (if (file-exists-p "~/.secrets.el")
     (load "~/.secrets.el"))
 
@@ -10,6 +8,7 @@
 (setq company-tooltip-align-annotations t)
 (setq sh-basic-offset 2
       sh-indentation 2)
+
 ;;Hub Github Addon
 ;;Currently just installed locally
 (require 'hub)
@@ -20,16 +19,18 @@
 (recentf-mode 1)
 (run-at-time nil (* 5 60) 'recentf-save-list)
 
-
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; Elisp
-;; (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
-(evil-leader/set-key-for-mode 'emacs-lisp-mode "eb" 'eval-buffer)
-(evil-leader/set-key-for-mode 'emacs-lisp-mode "er" 'eval-region)
-(setq max-lisp-eval-depth 10000)
-(setq max-specpdl-size 32000)
+(use-package emacs-lisp
+  :ensure nil
+  :mode (".el$" . emacs-lisp-mode)
+  :config
+  (evil-leader/set-key-for-mode 'emacs-lisp-mode "eb" 'eval-buffer)
+  (evil-leader/set-key-for-mode 'emacs-lisp-mode "er" 'eval-region)
+  (setq max-lisp-eval-depth 10000)
+  (setq max-specpdl-size 32000))
 
 ;; Postgres / SQL Mode
 ;; sql-connection-alist defined in ~/.secrets.el
@@ -75,10 +76,13 @@
   :config
   (setq projectile-git-submodule-command nil))
 
-
 (use-package clojure-mode
-  :hook ((clojure-mode . #'rainbow-delimiters-mode)
-         (clojure-mode . #'smartparens-strict-mode))
+  :mode (("\\.clj\\'" . clojure-mode)
+         ("\\.cljc\\'" . clojure-mode)
+         ("\\.cljs\\'" . clojure-mode)
+         ("\\.edn\\'" . clojure-mode))
+  :init
+  (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   :config
   (setq cljr-inject-dependencies-at-jack-in nil)
   (setq cider-show-error-buffer nil)
