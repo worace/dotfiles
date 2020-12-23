@@ -18,7 +18,6 @@
                           cargo
                           chruby
                           cider
-                          circe
                           clojure-mode
                           cmake-mode
                           coffee-mode
@@ -40,7 +39,6 @@
                           haml-mode
                           haskell-mode
                           helm
-                          helm-circe
                           helm-projectile
                           helm-rg
                           inf-ruby

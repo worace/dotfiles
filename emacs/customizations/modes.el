@@ -422,25 +422,6 @@
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
 
-(setq tramp-default-method "ssh")
-
-(require 'circe)
-(evil-set-initial-state 'circe-mode 'emacs)
-
-(add-to-list 'circe-networks '("Mozilla"  :host "irc.mozilla.org"  :port (6667 . 6697)))
-
-(add-hook 'circe-mode-hook
-          (lambda ()
-            (setq show-trailing-whitespace nil)))
-
-;; irc-nick, irc-pass loaded from ~/.secrets.el
-(if (boundp 'irc-nick)
-    (setq circe-network-options
-          `(("Mozilla"
-             :nick ,irc-nick
-             :channels ("#rust" "#rust-beginners" "#rust-geo")
-             :nickserv-password ,irc-pass))))
-
 (setq sh-basic-offset 2
       sh-indentation 2)
 
