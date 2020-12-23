@@ -524,24 +524,24 @@
 ;; (setq rtags-autostart-diagnostics t)
 ;; (rtags-enable-standard-keybindings)
 ;; (setq rtags-display-result-backend 'helm)
-(require 'irony)
+;; (require 'irony)
 
-(defun my-c-mode-hook ()
-  (irony-mode)
-  (company-mode)
-  (flycheck-mode)
-  (setq tab-width 2)
-  (setq c-basic-offset 2)
-  (setq flycheck-clang-include-path (list "/usr/local/include"))
-  (company-irony-setup-begin-commands)
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
+;; (defun my-c-mode-hook ()
+;;   (irony-mode)
+;;   (company-mode)
+;;   (flycheck-mode)
+;;   (setq tab-width 2)
+;;   (setq c-basic-offset 2)
+;;   (setq flycheck-clang-include-path (list "/usr/local/include"))
+;;   (company-irony-setup-begin-commands)
+;;   (define-key irony-mode-map [remap completion-at-point]
+;;     'irony-completion-at-point-async)
+;;   (define-key irony-mode-map [remap complete-symbol]
+;;     'irony-completion-at-point-async))
 
-(add-hook 'c++-mode-hook 'my-c-mode-hook)
-(add-hook 'c-mode-hook 'my-c-mode-hook)
-(add-hook 'objc-mode-hook 'my-c-mode-hook)
+;; (add-hook 'c++-mode-hook 'my-c-mode-hook)
+;; (add-hook 'c-mode-hook 'my-c-mode-hook)
+;; (add-hook 'objc-mode-hook 'my-c-mode-hook)
 
 (setq company-backends (delete 'company-semantic company-backends))
 (eval-after-load 'company
@@ -620,6 +620,7 @@
 (add-to-list 'vue-mode-hook #'prettier-js-mode)
 
 (setq lsp-enable-snippet nil)
+(setq lsp-ui-doc-position 'top)
 
 (use-package lsp-ui)
 (use-package company-lsp)

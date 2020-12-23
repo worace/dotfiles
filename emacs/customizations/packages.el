@@ -2,20 +2,16 @@
 ;; Repositories
 (load "package")
 
-;;(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
 			 ("melpa" . "https://melpa.org/packages/")
-			 ("melpa-stable" . "https://stable.melpa.org/packages/")))
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
+       ))
 
-;; ("melpa" . "https://melpa.org/packages/")
-;;(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
-;;(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-;;(add-to-list 'package-archives '("melpa-stable-milkbox" . "https://melpa-stable.milkbox.net/packages/") t)
-;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(use-package dash)
 
 ;; Define list of packages to install
-(defvar worace/packages '(;;elm-mode
-                          ace-jump-mode
+(defvar worace/packages '(ace-jump-mode
                           ace-window
                           alchemist
                           ag
@@ -28,10 +24,11 @@
                           cmake-mode
                           coffee-mode
                           company-go
-                          company-irony
                           company-lsp
                           company-rtags
                           company-sourcekit
+                          dash
+                          dash-functional
                           dockerfile-mode
                           elixir-mode
                           emmet-mode
@@ -55,7 +52,6 @@
                           helm-projectile
                           helm-rg
                           inf-ruby
-                          irony
                           jade-mode
                           json-mode
                           json-reformat
