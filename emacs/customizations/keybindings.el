@@ -1,31 +1,11 @@
-(evil-define-key 'normal global-map "G" 'end-of-buffer)
-(evil-leader/set-key "<SPC>" 'ace-jump-char-mode)
-(evil-leader/set-key "b" 'helm-buffers-list)
-(evil-leader/set-key "t" 'helm-projectile-find-file-dwim)
-(evil-leader/set-key "r" 'helm-recentf)
-(evil-leader/set-key "x" 'helm-M-x)
-(evil-leader/set-key "s" 'save-buffer)
-(evil-leader/set-key "/" 'comment-or-uncomment-region)
-(evil-leader/set-key "-" 'worace-text-scale-decrease)
-(evil-leader/set-key "=" 'worace-text-scale-increase)
-(evil-leader/set-key "w" 'ace-window)
-(evil-leader/set-key "asw" 'ace-swap-window)
-(evil-leader/set-key "ct" 'toggle-theme)
-(evil-leader/set-key "f" 'helm-projectile-rg)
-(evil-leader/set-key "q" 'evil-quit)
-(evil-leader/set-key "k" 'kill-this-buffer)
-(evil-leader/set-key "mp" 'spotify-playpause)
-(evil-leader/set-key "mb" 'spotify-previous)
-(evil-leader/set-key "mf" 'spotify-next)
-(evil-leader/set-key "l" 'helm-projectile-switch-project)
-(evil-leader/set-key "d" 'dired)
 
 (defun scratch ()
   (interactive)
   (find-file "~/Dropbox/notes/scratch.org"))
-(evil-leader/set-key-for-mode 'org-mode "[" 'org-promote-subtree)
-(evil-leader/set-key-for-mode 'org-mode "]" 'org-demote-subtree)
 
+
+(evil-leader/set-key "-" 'worace-text-scale-decrease)
+(evil-leader/set-key "=" 'worace-text-scale-increase)
 (defun worace-text-scale-change (increment direction)
   (let ((cur-height (face-attribute 'default :height)))
     (set-face-attribute 'default
@@ -41,28 +21,6 @@
   (interactive)
   (worace-text-scale-change 20 '-))
 
-;; try to stop me from constantly opening the stupid evil mode keymap help window...
-(define-key evil-normal-state-map (kbd "C-w C-h") 'evil-window-left)
-
-;; TODO Dired Bindings:
-;; dired-kill-subdir
-;; Configure Dired list output:
-;; (setq dired-listing-switches "...." --group-directories-first)
-;; Don't prompt before copying/deleting dir recursively:
-;; (setq dired-recursive-copies 'always)
-;; (setq dired-recursive-deletes 'always)
-;; Move to trash rather than rm -rf:
-;; (setq delete-by-moving-to-trash t)
-;; Dired-Jump: C-x C-j -- open dired in directory of current file
-;; Investigate:
-;; https://github.com/Fuco1/dired-hacks
-
-(evil-leader/set-key "zf" 'origami-toggle-node)
-(evil-leader/set-key "za" 'origami-close-all-nodes)
-(evil-leader/set-key "zo" 'origami-open-all-nodes)
-
-(evil-define-key 'normal origami-mode-map (kbd "zo") 'origami-toggle-node)
-
 (if (eq system-type 'gnu/linux)
     (setq  x-meta-keysym 'super
            x-super-keysym 'meta))
@@ -77,43 +35,6 @@
   (interactive)
   (seeing-is-believing-mark-current-line-for-xmpfilter)
   (seeing-is-believing-run-as-xmpfilter))
-
-;; Ruby
-(evil-leader/set-key-for-mode 'ruby-mode "eb" 'seeing-is-believing-run)
-(evil-leader/set-key-for-mode 'ruby-mode "ec" 'seeing-is-believing-clear)
-(evil-leader/set-key-for-mode 'ruby-mode "er" 'seeing-is-believing-run-as-xmpfilter)
-(evil-leader/set-key-for-mode 'ruby-mode "et" 'seeing-is-believing-mark-current-line-for-xmpfilter)
-(evil-leader/set-key-for-mode 'ruby-mode "el" 'seeing-is-believing-evaluate-current-line)
-(evil-leader/set-key-for-mode 'ruby-mode "\\" 'ruby-test-run)
-(evil-leader/set-key-for-mode 'ruby-mode "]" 'ruby-test-run-at-point)
-
-;; Javascript
-(evil-leader/set-key-for-mode 'js2-mode "\\" 'mocha-test-file)
-(evil-leader/set-key-for-mode 'js2-mode "]" 'mocha-test-at-point)
-
-;; Python
-(evil-leader/set-key-for-mode 'python-mode "\\" 'nosetests-module)
-
-;;Clojure
-(evil-leader/set-key-for-mode 'clojure-mode "eb" 'cider-eval-buffer)
-(evil-leader/set-key-for-mode 'clojure-mode "er" 'cider-eval-region)
-(evil-leader/set-key-for-mode 'clojure-mode "ep" 'cider-eval-sexp-at-point)
-(evil-leader/set-key-for-mode 'clojure-mode "ee" 'cider-eval-defun-at-point)
-(evil-leader/set-key-for-mode 'clojure-mode "et" 'cider-test-run-test)
-(evil-leader/set-key-for-mode 'clojure-mode "ps" 'sp-forward-slurp-sexp)
-(evil-leader/set-key-for-mode 'clojure-mode "pb" 'sp-forward-barf-sexp)
-(evil-leader/set-key-for-mode 'clojure-mode "pp" 'sp-splice-sexp-killing-around)
-(evil-leader/set-key-for-mode 'cider-repl-mode "ps" 'sp-forward-slurp-sexp)
-(evil-leader/set-key-for-mode 'cider-repl-mode "pb" 'sp-forward-barf-sexp)
-(evil-leader/set-key-for-mode 'cider-repl-mode "pp" 'sp-splice-sexp-killing-around)
-(evil-leader/set-key-for-mode 'cider-repl-mode "k" 'cider-repl-clear-buffer)
-
-(evil-leader/set-key-for-mode 'clojurescript-mode "ps" 'sp-forward-slurp-sexp)
-(evil-leader/set-key-for-mode 'clojurescript-mode "pb" 'sp-forward-barf-sexp)
-
-;;Emacs Lisp
-(evil-leader/set-key-for-mode 'emacs-lisp-mode "eb" 'eval-buffer)
-(evil-leader/set-key-for-mode 'emacs-lisp-mode "er" 'eval-region)
 
 ;;Elixir
 (evil-leader/set-key-for-mode 'alchemist-mode "]" 'alchemist-mix-test-at-point)

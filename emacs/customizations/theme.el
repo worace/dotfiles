@@ -10,6 +10,7 @@
             'light)
         (load-theme 'gruvbox-dark-medium)
       (load-theme 'solarized-light)))
+(evil-leader/set-key "ct" 'toggle-theme)
 
 ;; Typography
 (set-face-attribute 'default nil

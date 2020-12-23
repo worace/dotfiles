@@ -20,9 +20,16 @@
 (recentf-mode 1)
 (run-at-time nil (* 5 60) 'recentf-save-list)
 
-;; elisp
-(add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode))
-(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+;; Elisp
+;; (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+(evil-leader/set-key-for-mode 'emacs-lisp-mode "eb" 'eval-buffer)
+(evil-leader/set-key-for-mode 'emacs-lisp-mode "er" 'eval-region)
+(setq max-lisp-eval-depth 10000)
+(setq max-specpdl-size 32000)
 
 ;; Postgres / SQL Mode
 ;; sql-connection-alist defined in ~/.secrets.el
@@ -43,8 +50,13 @@
   :config
   (custom-set-faces
    '(aw-leading-char-face
-     ((t (:inherit ace-jump-face-foreground :height 0.95))))))
-(use-package ace-window)
+     ((t (:inherit ace-jump-face-foreground :height 0.95)))))
+  (evil-leader/set-key "<SPC>" 'ace-jump-char-mode))
+
+(use-package ace-window
+  :config
+  (evil-leader/set-key "w" 'ace-window)
+  (evil-leader/set-key "asw" 'ace-swap-window))
 
 (use-package auto-complete
   :config
@@ -53,14 +65,16 @@
 (use-package helm
   :bind (("M-x" . helm-M-x)
          ("C-x b" . helm-buffers-list))
-  :config (helm-mode 1))
+  :config (helm-mode 1)
+  (evil-leader/set-key "b" 'helm-buffers-list)
+  (evil-leader/set-key "t" 'helm-projectile-find-file-dwim)
+  (evil-leader/set-key "r" 'helm-recentf)
+  (evil-leader/set-key "x" 'helm-M-x))
 
 (use-package projectile
   :config
   (setq projectile-git-submodule-command nil))
 
-
-(use-package rainbow-delimiters)
 
 (use-package clojure-mode
   :hook ((clojure-mode . #'rainbow-delimiters-mode)
@@ -70,12 +84,27 @@
   (setq cider-show-error-buffer nil)
   (setq cider-use-fringe-indicators nil)
   (setq cider-repl-history-size 1000)
-  (setq cider-repl-history-file "~/.ciderhistory"))
+  (setq cider-repl-history-file "~/.ciderhistory")
+  (evil-leader/set-key-for-mode 'clojure-mode "eb" 'cider-eval-buffer)
+  (evil-leader/set-key-for-mode 'clojure-mode "er" 'cider-eval-region)
+  (evil-leader/set-key-for-mode 'clojure-mode "ep" 'cider-eval-sexp-at-point)
+  (evil-leader/set-key-for-mode 'clojure-mode "ee" 'cider-eval-defun-at-point)
+  (evil-leader/set-key-for-mode 'clojure-mode "et" 'cider-test-run-test)
+  (evil-leader/set-key-for-mode 'clojure-mode "ps" 'sp-forward-slurp-sexp)
+  (evil-leader/set-key-for-mode 'clojure-mode "pb" 'sp-forward-barf-sexp)
+  (evil-leader/set-key-for-mode 'clojure-mode "pp" 'sp-splice-sexp-killing-around)
+  (evil-leader/set-key-for-mode 'clojurescript-mode "ps" 'sp-forward-slurp-sexp)
+  (evil-leader/set-key-for-mode 'clojurescript-mode "pb" 'sp-forward-barf-sexp))
 
 (use-package cider
   :hook (cider-repl-mode . (lambda ()
                              (setq show-trailing-whitespace nil)
-                             (setq truncate-lines nil))))
+                             (setq truncate-lines nil)))
+  :config
+  (evil-leader/set-key-for-mode 'cider-repl-mode "ps" 'sp-forward-slurp-sexp)
+  (evil-leader/set-key-for-mode 'cider-repl-mode "pb" 'sp-forward-barf-sexp)
+  (evil-leader/set-key-for-mode 'cider-repl-mode "pp" 'sp-splice-sexp-killing-around)
+  (evil-leader/set-key-for-mode 'cider-repl-mode "k" 'cider-repl-clear-buffer))
 
 (use-package smartparens
   :config
@@ -140,9 +169,15 @@
   :config
   (chruby "2.4.4")
   )
+
 (use-package seeing-is-believing
   :hook ((ruby-mode . #'seeing-is-believing))
-  )
+  :config
+  (evil-leader/set-key-for-mode 'ruby-mode "eb" 'seeing-is-believing-run)
+  (evil-leader/set-key-for-mode 'ruby-mode "ec" 'seeing-is-believing-clear)
+  (evil-leader/set-key-for-mode 'ruby-mode "er" 'seeing-is-believing-run-as-xmpfilter)
+  (evil-leader/set-key-for-mode 'ruby-mode "et" 'seeing-is-believing-mark-current-line-for-xmpfilter)
+  (evil-leader/set-key-for-mode 'ruby-mode "el" 'seeing-is-believing-evaluate-current-line))
 
 (use-package inf-ruby
   :hook ((ruby-mode . #'inf-ruby-minor-mode))
@@ -167,7 +202,10 @@
                  (lambda () (interactive) (quit-restore-window))))
 
 (use-package ruby-test-mode
-  :hook ((ruby-mode . #'ruby-test-mode)))
+  :hook ((ruby-mode . #'ruby-test-mode))
+  :config
+  (evil-leader/set-key-for-mode 'ruby-mode "\\" 'ruby-test-run)
+  (evil-leader/set-key-for-mode 'ruby-mode "]" 'ruby-test-run-at-point))
 
 ;;;;;;;;;;;;;
 ;; Python ;;;
@@ -248,6 +286,8 @@
   (evil-leader/set-key-for-mode 'org-mode "i s" 'org-edit-src-code)
   (evil-leader/set-key-for-mode 'org-mode "i l" 'org-insert-link)
   (evil-leader/set-key-for-mode 'org-mode "i i" 'org-insert-list-item)
+  (evil-leader/set-key-for-mode 'org-mode "[" 'org-promote-subtree)
+  (evil-leader/set-key-for-mode 'org-mode "]" 'org-demote-subtree)
   ;; use pretty unicode bullets for lists
   (font-lock-add-keywords 'org-mode
                           '(("^ +\\([-*]\\) "
@@ -303,20 +343,23 @@
   (evil-leader/set-key-for-mode 'rust-mode "TAB" 'rust-format-buffer))
 
 
-(use-package racer
-  :hook ((racer-mode . #'eldoc-mode)
-         (racer-mode . #'company-mode)))
+;; (use-package racer
+;;   :defer t
+;;   :after rust-mode
+;;   :hook
+;;   (racer-mode . #'eldoc-mode)
+;;   (racer-mode . #'company-mode))
 
 
-(use-package alchemist
-  :hook ((alchemist-iex-mode . show-trailing-whitespace)
-         (alchemist-test-report-mode . truncate-lines)
-         (before-save . 'elixir-format))
-  :config
-  (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
-  (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
-  (evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
-  (evil-leader/set-key-for-mode 'elixir-mode "]" 'alchemist-mix-test-at-point))
+;; (use-package alchemist
+;;   :hook ((alchemist-iex-mode . show-trailing-whitespace)
+;;          (alchemist-test-report-mode . truncate-lines)
+;;          (before-save . 'elixir-format))
+;;   :config
+;;   (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
+;;   (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
+;;   (evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
+;;   (evil-leader/set-key-for-mode 'elixir-mode "]" 'alchemist-mix-test-at-point))
 
 (use-package elixir-mode
   :config
@@ -345,10 +388,10 @@
   (setq typescript-indent-level 2)
   )
 
-(use-package tide
-  :hook ((typescript-mode . #'setup-tide-mode)
-         (before-save . #'tide-format-before-save)
-         (web-mode . #'tide-web-mode-setup)))
+;; (use-package tide
+;;   :hook ((typescript-mode . #'setup-tide-mode)
+;;          (before-save . #'tide-format-before-save)
+;;          (web-mode . #'tide-web-mode-setup)))
 
 (defun setup-tide-mode ()
   (tide-setup)
@@ -398,7 +441,9 @@
 (use-package dockerfile-mode)
 (use-package graphql-mode)
 (use-package groovy-mode)
-(use-package helm-projectile)
+(use-package helm-projectile
+  :config
+  (evil-leader/set-key "f" 'helm-projectile-rg))
 (use-package helm-rg)
 (use-package json-reformat)
 (use-package markdown-toc)
@@ -409,7 +454,11 @@
 (use-package restclient)
 (use-package rg)
 (use-package solarized-theme)
-(use-package spotify)
+(use-package spotify
+  :config
+  (evil-leader/set-key "mp" 'spotify-playpause)
+  (evil-leader/set-key "mb" 'spotify-previous)
+  (evil-leader/set-key "mf" 'spotify-next))
 (use-package toml-mode)
 (use-package thrift)
 (use-package yaml-mode)
@@ -417,3 +466,5 @@
   :config
   (setq exec-path-from-shell-check-startup-files nil)
   (exec-path-from-shell-initialize))
+(use-package dash)
+(use-package dash-functional)
