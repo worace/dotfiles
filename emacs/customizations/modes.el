@@ -324,7 +324,7 @@
   (interactive
    (let ((src-code-types
           '("emacs-lisp" "python" "C" "sh" "shell" "html" "java" "js" "json" "clojure" "C++" "css"
-            "octave" "sass" "scala" "sql" "awk" "haskell" "lisp"
+            "sass" "scala" "sql" "awk" "haskell" "lisp"
             "org" "racket" "ruby" "scheme")))
      (list (ido-completing-read "Source code type: " src-code-types))))
   (progn
@@ -424,15 +424,6 @@
 
 (setq sh-basic-offset 2
       sh-indentation 2)
-
-;; Octave Setup
-(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
-(evil-leader/set-key-for-mode 'octave-mode "e b" 'octave-send-buffer)
-(evil-leader/set-key-for-mode 'octave-mode "e r" 'octave-send-region)
-(evil-leader/set-key-for-mode 'inferior-octave-mode "k" 'comint-clear-buffer)
-(defun inferior-octave-setup ()
-  (setq show-trailing-whitespace nil))
-(add-hook 'inferior-octave-mode-hook #'inferior-octave-setup)
 
 (custom-set-faces
  '(aw-leading-char-face
