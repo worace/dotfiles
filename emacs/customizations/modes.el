@@ -477,24 +477,27 @@
 (flycheck-add-mode 'typescript-tslint 'web-mode)
 
 (require 'prettier-js)
+(use-package prettier-js
+  :ensure t)
 
-(setq lsp-enable-snippet nil)
-(setq lsp-ui-doc-position 'top)
-
-(use-package lsp-ui)
-(use-package company-lsp)
+(use-package lsp-ui :ensure t)
+(use-package company-lsp :ensure t)
 
 (use-package lsp-mode
+  :ensure t
   :config (setq lsp-prefer-flymake nil))
 
 ;; Scala + sbt with Metals
-
 (use-package scala-mode
+  :ensure t
   :mode "\\.s\\(cala\\|bt\\)$")
 
 (setq lsp-ui-doc-enable nil)
+(setq lsp-enable-snippet nil)
+(setq lsp-ui-doc-position 'top)
 
 (use-package sbt-mode
+  :ensure t
   :commands sbt-start sbt-command
   :config
   ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
@@ -506,7 +509,5 @@
    ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
    (setq sbt:program-options '("-Dsbt.supershell=false")))
 
-(add-hook 'scala-mode-hook
-          (lambda () (flycheck-mode)))
-
-(use-package company-lsp)
+(use-package company-lsp
+  :ensure t)
