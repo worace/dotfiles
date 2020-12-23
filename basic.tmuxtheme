@@ -168,5 +168,5 @@ set -g message-command-style bg=default
 set -g message-command-style fg=default
 
 # Mode
-set -g mode-style bg=red
-set -g mode-style fg=default
+# set -g mode-style bg=red
+# set -g mode-style fg=default
