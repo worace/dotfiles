@@ -20,8 +20,6 @@
 ;; And some other standard uses
 (helm-mode 1)
 
-(setq helm-ag-use-agignore t)
-
 ;; Set up evil leader
 ;; Make sure to enable this before evil-mode
 (global-evil-leader-mode)
@@ -35,15 +33,14 @@
 (with-eval-after-load 'evil
   (defalias #'forward-evil-word #'forward-evil-symbol))
 
-;; Disable Evil for certain modes
-(add-to-list 'evil-emacs-state-modes 'eshell-mode)
-
 ;; Was losing evil gg in dired mode for some reason
 ;; probably using dired wrong but this fixes it...
 (evil-define-key 'normal dired-mode-map "gg" 'beginning-of-buffer)
 
 ;; rainbow delims!
 (rainbow-delimiters-mode)
+(use-package rainbow-delimiters
+  :ensure t)
 
 ;; Clojure Setup
 (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
@@ -267,13 +264,6 @@
 (run-at-time nil (* 5 60) 'recentf-save-list)
 
 
-;;Exercism
-
-(if (file-accessible-directory-p "~/.exercism.json")
-    (progn
-      (require 'request) ;; needed for exercism
-      (require 'exercism)))
-
 (add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode))
 ;; Text Mode (Org, Markdown, etc)
 (defun worace-text-mode-hook ()
@@ -468,20 +458,6 @@
    ((t (:inherit ace-jump-face-foreground :height 0.95)))))
 
 
-(setq racket-racket-program "/Applications/Racket v6.8/bin/racket")
-(setq racket-raco-program "/Applications/Racket v6.8/bin/raco")
-(setq org-babel-racket-command "/Applications/Racket v6.8/bin/racket")
-(evil-leader/set-key-for-mode 'racket-mode "e b" 'racket-run)
-(evil-leader/set-key-for-mode 'racket-mode "e r" 'racket-send-region)
-(evil-leader/set-key-for-mode 'racket-repl-mode "k" 'comint-clear-buffer)
-(evil-leader/set-key-for-mode 'racket-mode "ps" 'sp-forward-slurp-sexp)
-(evil-leader/set-key-for-mode 'racket-mode "pb" 'sp-forward-barf-sexp)
-(evil-leader/set-key-for-mode 'racket-mode "pp" 'sp-splice-sexp-killing-around)
-(defun racket-repl-setup ()
-  (setq show-trailing-whitespace nil)
-  (setq truncate-lines nil))
-(add-hook 'racket-repl-mode-hook #'racket-repl-setup)
-
 
 ;; Elixir
 (add-hook 'alchemist-iex-mode-hook
@@ -507,73 +483,11 @@
          :post-handlers '(sp-ruby-def-post-handler)
          :actions '(insert navigate)))
 
-(add-hook 'java-mode-hook (lambda ()
-                            (setq c-basic-offset 2)
-                            (setq truncate-lines t)))
-
-
-;; C/CPP
-;; http://syamajala.github.io/c-ide.html
-(require 'rtags)
-(require 'company-rtags)
-
-;; (setq rtags-completions-enabled t)
-;; (eval-after-load 'company
-;;   '(add-to-list
-;;     'company-backends 'company-rtags))
-;; (setq rtags-autostart-diagnostics t)
-;; (rtags-enable-standard-keybindings)
-;; (setq rtags-display-result-backend 'helm)
-;; (require 'irony)
-
-;; (defun my-c-mode-hook ()
-;;   (irony-mode)
-;;   (company-mode)
-;;   (flycheck-mode)
-;;   (setq tab-width 2)
-;;   (setq c-basic-offset 2)
-;;   (setq flycheck-clang-include-path (list "/usr/local/include"))
-;;   (company-irony-setup-begin-commands)
-;;   (define-key irony-mode-map [remap completion-at-point]
-;;     'irony-completion-at-point-async)
-;;   (define-key irony-mode-map [remap complete-symbol]
-;;     'irony-completion-at-point-async))
-
-;; (add-hook 'c++-mode-hook 'my-c-mode-hook)
-;; (add-hook 'c-mode-hook 'my-c-mode-hook)
-;; (add-hook 'objc-mode-hook 'my-c-mode-hook)
-
-(setq company-backends (delete 'company-semantic company-backends))
-(eval-after-load 'company
-  '(add-to-list
-    'company-backends 'company-irony))
-(setq company-idle-delay 0)
-(define-key c-mode-map [(tab)] 'company-complete)
-(define-key c++-mode-map [(tab)] 'company-complete)
-(define-key objc-mode-map [(tab)] 'company-complete)
-
-;; Golang
-(defun worace-go-mode-hook ()
-  (set (make-local-variable 'company-backends) '(company-go))
-  (company-mode)
-  (auto-complete-mode -1)
-  (flycheck-mode))
-(add-hook 'go-mode-hook 'worace-go-mode-hook)
-
 ;; Company Mode
 (setq company-tooltip-limit 20)                      ; bigger popup window
 (setq company-idle-delay .2)                         ; decrease delay before autocompletion popup shows
 (setq company-echo-delay 0)                          ; remove annoying blinking
 (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-
-;; Swift / XCode
-(eval-after-load 'flycheck '(flycheck-swift-setup))
-(setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
-(setq flycheck-swift-target "arm64-apple-ios10")
-(require 'company-sourcekit)
-(add-to-list 'company-backends 'company-sourcekit)
-(setq sourcekit-sourcekittendaemon-executable
-      "/usr/local/bin/sourcekittendaemon")
 
 (setq org-export-allow-bind-keywords 't)
 (setq org-html-preamble 'nil)
@@ -611,13 +525,7 @@
 ;; enable typescript-tslint checker
 (flycheck-add-mode 'typescript-tslint 'web-mode)
 
-(add-hook 'mmm-mode-hook
-          (lambda ()
-            (set-face-background 'mmm-default-submode-face nil)))
-(require 'vue-mode)
 (require 'prettier-js)
-(add-to-list 'vue-mode-hook #'smartparens-mode)
-(add-to-list 'vue-mode-hook #'prettier-js-mode)
 
 (setq lsp-enable-snippet nil)
 (setq lsp-ui-doc-position 'top)

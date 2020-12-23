@@ -14,7 +14,6 @@
 (defvar worace/packages '(ace-jump-mode
                           ace-window
                           alchemist
-                          ag
                           auto-complete
                           cargo
                           chruby
@@ -23,10 +22,6 @@
                           clojure-mode
                           cmake-mode
                           coffee-mode
-                          company-go
-                          company-lsp
-                          company-rtags
-                          company-sourcekit
                           dash
                           dash-functional
                           dockerfile-mode
@@ -38,16 +33,13 @@
                           exec-path-from-shell
                           flycheck
                           flycheck-rust
-                          flycheck-swift
                           gist
-                          go-mode
                           graphql-mode
                           groovy-mode
                           gruvbox-theme
                           haml-mode
                           haskell-mode
                           helm
-                          helm-ag
                           helm-circe
                           helm-projectile
                           helm-rg
@@ -73,14 +65,12 @@
                           protobuf-mode
                           projectile
                           racer
-                          racket-mode
                           rainbow-delimiters
                           rainbow-mode
                           restclient
                           request
                           rg
                           rinari
-                          rtags
                           ruby-test-mode
                           rust-mode
                           sbt-mode
@@ -89,13 +79,11 @@
                           smartparens
                           solarized-theme
                           spotify
-                          swift-mode
                           toml-mode
                           thrift
                           tide
                           use-package
                           virtualenvwrapper
-                          vue-mode
                           web-mode
                           yaml-mode))
 
@@ -103,8 +91,7 @@
   (setq package-pinned-packages
 	'((cider              . "melpa-stable")
           (yaml-mode          . "melpa-stable")
-	  (clj-refactor       . "melpa-stable")
-          (rtags              . "melpa-stable"))))
+	  (clj-refactor       . "melpa-stable"))))
 
 
 ;; Require the common-lisp emacs extension; will use this
