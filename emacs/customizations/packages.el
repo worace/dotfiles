@@ -10,51 +10,12 @@
 (use-package dash)
 
 ;; Define list of packages to install
-(defvar worace/packages '(auto-complete
-                          cargo
-                          cider
-                          clojure-mode
-                          cmake-mode
-                          coffee-mode
-                          dash
+(defvar worace/packages '(dash
                           dash-functional
-                          dockerfile-mode
-                          elixir-mode
-                          emmet-mode
                           evil
                           evil-leader
                           evil-surround
-                          exec-path-from-shell
-                          gist
-                          graphql-mode
-                          groovy-mode
-                          gruvbox-theme
-                          haml-mode
-                          helm-projectile
-                          helm-rg
-                          jade-mode
-                          json-mode
-                          json-reformat
-                          markdown-toc
-                          mocha
-                          ;;nose
-                          org-bullets
-                          neotree
-                          play-routes-mode
-                          prettier-js
-                          protobuf-mode
-                          rainbow-mode
-                          restclient
-                          request
-                          rg
-                          solarized-theme
-                          spotify
-                          toml-mode
-                          thrift
-                          use-package
-                          virtualenvwrapper
-                          web-mode
-                          yaml-mode))
+                          ))
 
 (when (boundp 'package-pinned-packages)
   (setq package-pinned-packages

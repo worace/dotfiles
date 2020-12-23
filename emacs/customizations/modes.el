@@ -7,7 +7,6 @@
 (setq-default indent-tabs-mode nil)
 (global-linum-mode 1)
 (ido-mode 1)
-(global-auto-complete-mode)
 (setq company-tooltip-align-annotations t)
 (setq sh-basic-offset 2
       sh-indentation 2)
@@ -46,6 +45,10 @@
    '(aw-leading-char-face
      ((t (:inherit ace-jump-face-foreground :height 0.95))))))
 (use-package ace-window :ensure t)
+
+(use-package auto-complete
+  :config
+  (global-auto-complete-mode))
 
 (use-package helm
   :ensure t
@@ -373,7 +376,6 @@
   (when (string-equal "tsx" (file-name-extension buffer-file-name))
     (setup-tide-mode)))
 
-(use-package yaml-mode :ensure t)
 (use-package prettier-js
   :ensure t)
 
@@ -448,3 +450,25 @@
 (evil-leader/set-key-for-mode 'org-mode "i i" 'org-insert-list-item)
 
 (evil-leader/set-key-for-mode 'rust-mode "TAB" 'rust-format-buffer)
+
+
+(use-package cargo :ensure t)
+(use-package dockerfile-mode :ensure t)
+(use-package exec-path-from-shell :ensure t)
+(use-package graphql-mode :ensure t)
+(use-package groovy-mode :ensure t)
+(use-package helm-projectile :ensure t)
+(use-package helm-rg :ensure t)
+(use-package json-reformat :ensure t)
+(use-package markdown-toc :ensure t)
+(use-package json-mode :ensure t)
+(use-package play-routes-mode :ensure t)
+(use-package protobuf-mode :ensure t)
+(use-package rainbow-mode :ensure t)
+(use-package restclient :ensure t)
+(use-package rg :ensure t)
+(use-package solarized-theme :ensure t)
+(use-package spotify :ensure t)
+(use-package toml-mode :ensure t)
+(use-package thrift :ensure t)
+(use-package yaml-mode :ensure t)

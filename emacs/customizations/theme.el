@@ -1,5 +1,9 @@
 ;; Set Color Scheme
-(load-theme 'gruvbox t)
+(use-package gruvbox-theme
+  :ensure t
+  :config
+  (load-theme 'gruvbox t))
+
 
 (defun toggle-theme ()
     (interactive)
