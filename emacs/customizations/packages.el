@@ -12,7 +12,6 @@
 ;; Define list of packages to install
 (defvar worace/packages '(auto-complete
                           cargo
-                          chruby
                           cider
                           clojure-mode
                           cmake-mode
@@ -26,50 +25,32 @@
                           evil-leader
                           evil-surround
                           exec-path-from-shell
-                          flycheck
-                          flycheck-rust
                           gist
                           graphql-mode
                           groovy-mode
                           gruvbox-theme
                           haml-mode
-                          haskell-mode
                           helm-projectile
                           helm-rg
-                          inf-ruby
                           jade-mode
                           json-mode
                           json-reformat
-                          ;;jsx-mode
-                          js2-mode
-                          magit
-                          markdown-mode
                           markdown-toc
                           mocha
                           ;;nose
                           org-bullets
-                          org-present
-                          origami
                           neotree
                           play-routes-mode
                           prettier-js
                           protobuf-mode
-                          projectile
-                          racer
                           rainbow-mode
                           restclient
                           request
                           rg
-                          rinari
-                          ruby-test-mode
-                          rust-mode
-                          seeing-is-believing
-                          smartparens
                           solarized-theme
                           spotify
                           toml-mode
                           thrift
-                          tide
                           use-package
                           virtualenvwrapper
                           web-mode
