@@ -11,3 +11,4 @@ ac-comphist.dat
 /places
 *.elc
 /tramp
+.lsp-session-v1
