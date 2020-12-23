@@ -9,11 +9,6 @@
 (setq user-full-name "Horace Williams")
 (setq user-mail-address "horace.d.williams@gmail.com")
 
-;; (setenv "PATH"
-;;         (concat (getenv "PATH")
-;;                 ":/usr/local/bin:$HOME/.cargo/bin"))
-;; (setq exec-path (append exec-path '("/usr/local/bin" "$HOME/.cargo/bin")))
-
 
 ;; raise GC threshold to 100 MB
 (setq gc-cons-threshold 100000000)
