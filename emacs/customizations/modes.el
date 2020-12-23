@@ -234,28 +234,19 @@
 
 
 (require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.eex\\'" . web-mode))
+(use-package web-mode
+  :ensure t
+  :mode (".erb$" ".scss$" ".css$" ".html?$" ".hbs$" ".eex$")
+  :config (setq web-mode-markup-indent-offset 2
+                web-mode-enable-auto-pairing nil
+                web-mode-enable-auto-closing t
+                web-mode-css-indent-offset 2
+                web-mode-code-indent-offset 2))
+
 ;; Support ERB/EEX tags in SmartParens
 ;; https://emacs.stackexchange.com/questions/15188/smartparens-and-web-mode-conflict-to-add-extra-angular-bracket
 ;; (sp-pair "%" "%" :wrap "C-%")
 ;; (sp-pair "<" ">" :wrap "C->")
-
-(defun my-web-mode-hook ()
-  "Hooks for Web mode."
-  (emmet-mode)
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-enable-auto-pairing nil)
-  (setq web-mode-enable-auto-closing t)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2))
-
-(add-hook 'web-mode-hook  'my-web-mode-hook)
-
 
 ;; Save Recent Files
 (require 'recentf)
