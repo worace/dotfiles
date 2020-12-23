@@ -62,24 +62,3 @@
     (yaml-mode          . "melpa-stable")
     (helm-config          . "melpa-stable")
     (clj-refactor       . "melpa-stable"))))
-
-
-;; Require the common-lisp emacs extension; will use this
-;; To use some CL-style macros in following config functions
-(require 'cl)
-
-;; Check if all our packages are installed; if we find one missing,
-;; return nil
-(defun worace/all-packages-installed ()
-  (loop for pkg in worace/packages
-	when (not (package-installed-p pkg)) do (return nil)
-	finally (return t)))
-
-;; If there are packages missing, install them
-;; This will run every time on boot
-(unless (worace/all-packages-installed)
-  (message "%s" "Refreshing package database...")
-  (package-refresh-contents)
-  (dolist (pkg worace/packages)
-    (when (not (package-installed-p pkg))
-      (package-install pkg))))
