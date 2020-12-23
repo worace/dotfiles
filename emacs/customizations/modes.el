@@ -164,9 +164,6 @@
 ;; Magit allow longer commit lines than the default
 (setq git-commit-summary-max-length 70)
 
-;;Emacs Livedown
-;;Installed manually from here https://github.com/shime/emacs-livedown
-(require 'livedown)
 
 ;; Haskell
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
