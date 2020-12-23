@@ -12,7 +12,7 @@ alert = #bd2c40
 size = 18
 
 [bar/main]
-; monitor = ${env:MONITOR:HDMI-0}
+monitor = ${env:MONITOR:DP-2}
 height = 64
 bottom = false
 top = true
