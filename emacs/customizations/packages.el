@@ -2,19 +2,15 @@
 ;; Repositories
 (load "package")
 
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-			 ("melpa" . "https://melpa.org/packages/")
-			 ("melpa-stable" . "https://stable.melpa.org/packages/")
-       ))
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+;; 			 ("melpa" . "https://melpa.org/packages/")
+;; 			 ("melpa-stable" . "https://stable.melpa.org/packages/")))
 
 (use-package dash)
 
 ;; Define list of packages to install
-(defvar worace/packages '(ace-jump-mode
-                          ace-window
-                          alchemist
-                          auto-complete
+(defvar worace/packages '(auto-complete
                           cargo
                           chruby
                           cider
@@ -38,7 +34,6 @@
                           gruvbox-theme
                           haml-mode
                           haskell-mode
-                          helm
                           helm-projectile
                           helm-rg
                           inf-ruby
@@ -47,8 +42,6 @@
                           json-reformat
                           ;;jsx-mode
                           js2-mode
-                          lsp-mode
-                          lsp-ui
                           magit
                           markdown-mode
                           markdown-toc
@@ -63,7 +56,6 @@
                           protobuf-mode
                           projectile
                           racer
-                          rainbow-delimiters
                           rainbow-mode
                           restclient
                           request
@@ -71,8 +63,6 @@
                           rinari
                           ruby-test-mode
                           rust-mode
-                          sbt-mode
-                          scala-mode
                           seeing-is-believing
                           smartparens
                           solarized-theme
@@ -88,8 +78,9 @@
 (when (boundp 'package-pinned-packages)
   (setq package-pinned-packages
 	'((cider              . "melpa-stable")
-          (yaml-mode          . "melpa-stable")
-	  (clj-refactor       . "melpa-stable"))))
+    (yaml-mode          . "melpa-stable")
+    (helm-config          . "melpa-stable")
+    (clj-refactor       . "melpa-stable"))))
 
 
 ;; Require the common-lisp emacs extension; will use this
