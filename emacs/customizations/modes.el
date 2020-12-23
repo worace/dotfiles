@@ -273,16 +273,26 @@
 (add-hook 'text-mode-hook 'worace-text-mode-hook)
 
 
-;; OOOOOORG
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-;; Don't show // around italics
-;; (setq org-hide-emphasis-markers t)
-;; Have org treat code blocks like their native lang
-(setq org-src-fontify-natively t)
-(setq inhibit-compacting-font-caches t)
-(setq org-src-tab-acts-natively t)
-;; No line numbers in org (looks weird with the different sized headers)
-;; (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
+(defun worace-org-mode-setup ()
+  ;; keybinding for inserting code blocks
+  (local-set-key (kbd "C-c s i") 'org-insert-src-block)
+  (local-set-key (kbd "C-c s e") 'org-insert-example-block)
+  (let* ((variable-tuple (cond ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
+                               (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+         (base-font-color     (face-foreground 'default nil 'default))
+         (headline           `(:inherit default :foreground ,base-font-color)))))
+
+(use-package org
+  :mode ("\\.org$" . org-mode)
+  :ensure t
+  :hook ((org-mode . worace-org-mode-setup)
+         (org-mode . (lambda () (linum-mode 0))))
+  :config (setq org-src-fontify-natively t
+                inhibit-compacting-font-caches t
+                org-startup-folded t
+                org-src-tab-acts-natively t
+                org-src-preserve-indentation nil
+                org-edit-src-content-indentation 0))
 
 ;; use pretty unicode bullets for lists
 (font-lock-add-keywords 'org-mode
@@ -306,8 +316,6 @@
 
 
 (add-hook 'org-mode-hook (lambda () (org-indent-mode 1)))
-(setq org-src-preserve-indentation nil
-      org-edit-src-content-indentation 0)
 
 (defun org-insert-example-block ()
   (interactive)
@@ -334,29 +342,6 @@
     (insert "#+END_SRC\n")
     (previous-line 2)
     (org-edit-src-code)))
-
-(defun worace-org-mode-setup ()
-  ;; keybinding for inserting code blocks
-  (local-set-key (kbd "C-c s i") 'org-insert-src-block)
-  (local-set-key (kbd "C-c s e") 'org-insert-example-block)
-  (let* ((variable-tuple (cond ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
-                               (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-         (base-font-color     (face-foreground 'default nil 'default))
-         (headline           `(:inherit default :foreground ,base-font-color)))
-
-    ;; (custom-theme-set-faces 'user
-    ;;                         `(org-level-8 ((t (,@headline ,@variable-tuple))))
-    ;;                         `(org-level-7 ((t (,@headline ,@variable-tuple))))
-    ;;                         `(org-level-6 ((t (,@headline ,@variable-tuple))))
-    ;;                         `(org-level-5 ((t (,@headline ,@variable-tuple))))
-    ;;                         `(org-level-4 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
-    ;;                         `(org-level-3 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
-    ;;                         `(org-level-2 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
-    ;;                         `(org-level-1 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
-    ;;                         `(org-document-title ((t (,@headline ,@variable-tuple :color "#bdbdb3" :underline nil)))))
-    ))
-
-(add-hook 'org-mode-hook 'worace-org-mode-setup)
 
 ;;Evil Bindings
 (evil-leader/set-key-for-mode 'org-mode "o" 'org-open-at-point)
