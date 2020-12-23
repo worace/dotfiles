@@ -1,13 +1,13 @@
-;; Set user info
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
+;; Package bootstrapping
+(require 'package)
 (package-initialize)
-
-(setq user-full-name "Horace Williams")
-(setq user-mail-address "horace.d.williams@gmail.com")
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+(require 'use-package-ensure)
+(setq use-package-always-defer t
+      use-package-always-ensure t)
 
 
 ;; raise GC threshold to 100 MB
@@ -20,13 +20,6 @@
 (load "theme.el")
 (load "modes.el")
 (load "keybindings.el")
-(load "drakefile-mode.el")
-
-(setq exec-path-from-shell-check-startup-files nil)
-(exec-path-from-shell-initialize)
-
-(setq use-package-always-defer t
-      use-package-always-ensure t)
 
 ;; store all backup and autosave files in the tmp dir
 (setq backup-directory-alist
@@ -34,12 +27,12 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 (setq create-lockfiles nil)
-
 (setq backup-by-copying t)
 (setq delete-old-versions t
       kept-new-versions 6
       kept-old-versions 2
       version-control t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

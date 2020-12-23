@@ -39,34 +39,30 @@
   (setq evil-cross-lines t))
 (add-hook 'text-mode-hook 'worace-text-mode-hook)
 
-(use-package ace-jump-mode :ensure t
+(use-package ace-jump-mode
   :config
   (custom-set-faces
    '(aw-leading-char-face
      ((t (:inherit ace-jump-face-foreground :height 0.95))))))
-(use-package ace-window :ensure t)
+(use-package ace-window)
 
 (use-package auto-complete
   :config
   (global-auto-complete-mode))
 
 (use-package helm
-  :ensure t
   :bind (("M-x" . helm-M-x)
          ("C-x b" . helm-buffers-list))
   :config (helm-mode 1))
 
 (use-package projectile
-  :ensure t
   :config
   (setq projectile-git-submodule-command nil))
 
 
-(use-package rainbow-delimiters
-  :ensure t)
+(use-package rainbow-delimiters)
 
 (use-package clojure-mode
-  :ensure t
   :hook ((clojure-mode . #'rainbow-delimiters-mode)
          (clojure-mode . #'smartparens-strict-mode))
   :config
@@ -77,18 +73,15 @@
   (setq cider-repl-history-file "~/.ciderhistory"))
 
 (use-package cider
-  :ensure t
   :hook (cider-repl-mode . (lambda ()
                              (setq show-trailing-whitespace nil)
                              (setq truncate-lines nil))))
 
 (use-package smartparens
-  :ensure t
   :config
   (smartparens-global-mode t))
 
 (use-package markdown-mode
-  :ensure t
   :mode (".text$" ".markdown$" ".md$")
   :config
   (sp-local-pair 'markdown-mode "`" nil :actions '(insert))
@@ -121,7 +114,6 @@
                   "before" "after" "afterEach")))
 
 ;; (use-package js2-jsx-mode
-;;   :ensure t
 ;;   :mode (".jsx$" ".js$"))
 
 (defun use-eslint-from-node-modules ()
@@ -141,22 +133,18 @@
       (setq-local flycheck-javascript-eslint-executable eslint))))
 
 (use-package magit
-  :ensure t
   :config
   (setq git-commit-summary-max-length 70))
 
 (use-package chruby
-  :ensure t
   :config
   (chruby "2.4.4")
   )
 (use-package seeing-is-believing
-  :ensure t
   :hook ((ruby-mode . #'seeing-is-believing))
   )
 
 (use-package inf-ruby
-  :ensure t
   :hook ((ruby-mode . #'inf-ruby-minor-mode))
   :config
   (when (executable-find "pry")
@@ -179,7 +167,6 @@
                  (lambda () (interactive) (quit-restore-window))))
 
 (use-package ruby-test-mode
-  :ensure t
   :hook ((ruby-mode . #'ruby-test-mode)))
 
 ;;;;;;;;;;;;;
@@ -213,15 +200,12 @@
     (comint-truncate-buffer)))
 
 (use-package virtualenvwrapper
-  :ensure t
   :config
   (setq venv-location "~/.virtualenvs"))
 
-(use-package flycheck
-  :ensure t)
+(use-package flycheck)
 
 (use-package web-mode
-  :ensure t
   :mode (".erb$" ".scss$" ".css$" ".html?$" ".hbs$" ".eex$" ".tsx$")
   :config (setq web-mode-markup-indent-offset 2
                 web-mode-enable-auto-pairing nil
@@ -246,7 +230,6 @@
 
 (use-package org
   :mode ("\\.org$" . org-mode)
-  :ensure t
   :hook ((org-mode . worace-org-mode-setup)
          (org-mode . (lambda () (linum-mode 0)))
          (org-mode . (lambda () (org-indent-mode 1)))
@@ -267,7 +250,6 @@
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
 
 (use-package org-bullets
-  :ensure t
   :init
   ;; org-bullets-bullet-list
   ;; default: "◉ ○ ✸ ✿"
@@ -306,10 +288,8 @@
     (previous-line 2)
     (org-edit-src-code)))
 
-(use-package flycheck-rust
-  :ensure t)
+(use-package flycheck-rust)
 (use-package rust-mode
-  :ensure t
   :hook ((rust-mode . #'cargo-minor-mode)
          (rust-mode . #'racer-mode)
          (rust-mode . #'flycheck-mode)
@@ -318,19 +298,16 @@
   (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common))
 
 (use-package racer
-  :ensure t
   :hook ((racer-mode . #'eldoc-mode)
          (racer-mode . #'company-mode)))
 
 
 (use-package alchemist
-  :ensure t
   :hook ((alchemist-iex-mode . show-trailing-whitespace)
          (alchemist-test-report-mode . truncate-lines)
          (before-save . 'elixir-format)))
 
 (use-package elixir-mode
-  :ensure t
   :config
   (sp-with-modes '(elixir-mode)
     (sp-local-pair "fn" "end"
@@ -351,13 +328,11 @@
   )
 
 (use-package typescript-mode
-  :ensure t
   :config
   (setq typescript-indent-level 2)
   (flycheck-add-mode 'typescript-tslint 'web-mode))
 
 (use-package tide
-  :ensure t
   :hook ((typescript-mode . #'setup-tide-mode)
          (before-save . #'tide-format-before-save)
          (web-mode . #'tide-web-mode-setup)))
@@ -376,29 +351,24 @@
   (when (string-equal "tsx" (file-name-extension buffer-file-name))
     (setup-tide-mode)))
 
-(use-package prettier-js
-  :ensure t)
+(use-package prettier-js)
 
-(use-package lsp-ui :ensure t
+(use-package lsp-ui
   :config
   (setq lsp-ui-doc-enable nil)
   (setq lsp-ui-doc-position 'top))
 
-(use-package company-lsp :ensure t)
+(use-package company-lsp)
 
 (use-package lsp-mode
-  :ensure t
   :config
   (setq lsp-prefer-flymake nil)
   (setq lsp-enable-snippet nil))
 
 ;; Scala + sbt with Metals
-(use-package scala-mode
-  :ensure t
-  :mode "\\.s\\(cala\\|bt\\)$")
+(use-package scala-mode :mode "\\.s\\(cala\\|bt\\)$")
 
 (use-package sbt-mode
-  :ensure t
   :commands sbt-start sbt-command
   :config
   ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
@@ -410,8 +380,7 @@
    ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
    (setq sbt:program-options '("-Dsbt.supershell=false")))
 
-(use-package company-lsp
-  :ensure t)
+(use-package company-lsp)
 
 ;;;;;;;;;;;
 ;; Evil stuff
@@ -451,24 +420,27 @@
 
 (evil-leader/set-key-for-mode 'rust-mode "TAB" 'rust-format-buffer)
 
+(use-package cargo)
+(use-package dockerfile-mode)
+(use-package graphql-mode)
+(use-package groovy-mode)
+(use-package helm-projectile)
+(use-package helm-rg)
+(use-package json-reformat)
+(use-package markdown-toc)
+(use-package json-mode)
+(use-package play-routes-mode)
+(use-package protobuf-mode)
+(use-package rainbow-mode)
+(use-package restclient)
+(use-package rg)
+(use-package solarized-theme)
+(use-package spotify)
+(use-package toml-mode)
+(use-package thrift)
+(use-package yaml-mode)
 
-(use-package cargo :ensure t)
-(use-package dockerfile-mode :ensure t)
-(use-package exec-path-from-shell :ensure t)
-(use-package graphql-mode :ensure t)
-(use-package groovy-mode :ensure t)
-(use-package helm-projectile :ensure t)
-(use-package helm-rg :ensure t)
-(use-package json-reformat :ensure t)
-(use-package markdown-toc :ensure t)
-(use-package json-mode :ensure t)
-(use-package play-routes-mode :ensure t)
-(use-package protobuf-mode :ensure t)
-(use-package rainbow-mode :ensure t)
-(use-package restclient :ensure t)
-(use-package rg :ensure t)
-(use-package solarized-theme :ensure t)
-(use-package spotify :ensure t)
-(use-package toml-mode :ensure t)
-(use-package thrift :ensure t)
-(use-package yaml-mode :ensure t)
+(use-package exec-path-from-shell
+  :config
+  (setq exec-path-from-shell-check-startup-files nil)
+  (exec-path-from-shell-initialize))
