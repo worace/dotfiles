@@ -31,7 +31,6 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
-
 (require 'cl-lib)
 (require 'gh-pulls)
 (require 'magit)

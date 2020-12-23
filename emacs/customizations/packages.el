@@ -8,9 +8,6 @@
 ;; Define list of packages to install
 (defvar worace/packages '(dash
                           dash-functional
-                          evil
-                          evil-leader
-                          evil-surround
                           ))
 
 (when (boundp 'package-pinned-packages)

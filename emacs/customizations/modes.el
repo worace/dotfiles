@@ -244,6 +244,10 @@
         org-export-allow-bind-keywords t
         org-html-preamble nil
         org-html-preamble-format nil)
+  (evil-leader/set-key-for-mode 'org-mode "o" 'org-open-at-point)
+  (evil-leader/set-key-for-mode 'org-mode "i s" 'org-edit-src-code)
+  (evil-leader/set-key-for-mode 'org-mode "i l" 'org-insert-link)
+  (evil-leader/set-key-for-mode 'org-mode "i i" 'org-insert-list-item)
   ;; use pretty unicode bullets for lists
   (font-lock-add-keywords 'org-mode
                           '(("^ +\\([-*]\\) "
@@ -295,7 +299,9 @@
          (rust-mode . #'flycheck-mode)
          (flycheck-mode . #'flycheck-rust-setup))
   :config
-  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common))
+  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+  (evil-leader/set-key-for-mode 'rust-mode "TAB" 'rust-format-buffer))
+
 
 (use-package racer
   :hook ((racer-mode . #'eldoc-mode)
@@ -305,7 +311,12 @@
 (use-package alchemist
   :hook ((alchemist-iex-mode . show-trailing-whitespace)
          (alchemist-test-report-mode . truncate-lines)
-         (before-save . 'elixir-format)))
+         (before-save . 'elixir-format))
+  :config
+  (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
+  (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
+  (evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
+  (evil-leader/set-key-for-mode 'elixir-mode "]" 'alchemist-mix-test-at-point))
 
 (use-package elixir-mode
   :config
@@ -328,9 +339,11 @@
   )
 
 (use-package typescript-mode
+  :hook ((web-mode-hook . (lambda ()
+                            (flycheck-add-mode 'typescript-tslint 'web-mode))))
   :config
   (setq typescript-indent-level 2)
-  (flycheck-add-mode 'typescript-tslint 'web-mode))
+  )
 
 (use-package tide
   :hook ((typescript-mode . #'setup-tide-mode)
@@ -380,47 +393,8 @@
    ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
    (setq sbt:program-options '("-Dsbt.supershell=false")))
 
-(use-package company-lsp)
-
-;;;;;;;;;;;
-;; Evil stuff
-
-;; Set up evil leader
-;; Make sure to enable this before evil-mode
-(global-evil-leader-mode)
-(evil-leader/set-leader "<SPC>")
-
-;; Evil (vim) Mode
-(require 'evil)
-(evil-mode 1)
-;; Make evil treat language-dependent "symbols" as full words
-;; e.g. move past underscores for ruby as part of same word
-(with-eval-after-load 'evil
-  (defalias #'forward-evil-word #'forward-evil-symbol))
-
-;; Evil Bindings
-(evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
-(evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
-(evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
-(evil-leader/set-key-for-mode 'elixir-mode "]" 'alchemist-mix-test-at-point)
-(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-(define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-(define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-;; Was losing evil gg in dired mode for some reason
-;; probably using dired wrong but this fixes it...
-(evil-define-key 'normal dired-mode-map "gg" 'beginning-of-buffer)
-(global-evil-surround-mode 1)
-
-;;Evil Bindings
-(evil-leader/set-key-for-mode 'org-mode "o" 'org-open-at-point)
-(evil-leader/set-key-for-mode 'org-mode "i s" 'org-edit-src-code)
-(evil-leader/set-key-for-mode 'org-mode "i l" 'org-insert-link)
-(evil-leader/set-key-for-mode 'org-mode "i i" 'org-insert-list-item)
-
-(evil-leader/set-key-for-mode 'rust-mode "TAB" 'rust-format-buffer)
-
 (use-package cargo)
+(use-package company-lsp)
 (use-package dockerfile-mode)
 (use-package graphql-mode)
 (use-package groovy-mode)
@@ -439,7 +413,6 @@
 (use-package toml-mode)
 (use-package thrift)
 (use-package yaml-mode)
-
 (use-package exec-path-from-shell
   :config
   (setq exec-path-from-shell-check-startup-files nil)
