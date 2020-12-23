@@ -409,17 +409,13 @@
    ((t (:inherit ace-jump-face-foreground :height 0.95)))))
 
 
+(use-package alchemist
+  :ensure t
+  :hook ((alchemist-iex-mode . show-trailing-whitespace)
+         (alchemist-test-report-mode . truncate-lines)
+         (before-save . 'elixir-format)))
 
 ;; Elixir
-(add-hook 'alchemist-iex-mode-hook
-          (lambda ()
-            (setq show-trailing-whitespace nil)))
-(add-hook 'alchemist-test-report-mode-hook
-          (lambda ()
-            (setq truncate-lines t)))
-(add-hook 'elixir-mode-hook
-          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
-
 (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
 (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
 (evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
