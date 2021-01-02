@@ -333,7 +333,6 @@
   (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
   (evil-leader/set-key-for-mode 'rust-mode "TAB" 'rust-format-buffer))
 
-
 ;; (use-package racer
 ;;   :defer t
 ;;   :after rust-mode
@@ -362,15 +361,6 @@
                    :when '(("SPC" "RET"))
                    :post-handlers '(sp-ruby-def-post-handler)
                    :actions '(insert navigate))))
-
-(use-package company
-  :config
-  (setq company-tooltip-limit 20)                      ; bigger popup window
-  (setq company-idle-delay .2)                         ; decrease delay before autocompletion popup shows
-  (setq company-echo-delay 0)                          ; remove annoying blinking
-  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-  (setq company-tooltip-align-annotations t)
-  )
 
 (use-package web-mode
   :mode ("\\.erb\\'" "\\.scss$" "\\.css$" "\\.html?$" "\\.hbs$" "\\.eex$" "\\.tsx\\'" "\\.jsx$")
@@ -419,35 +409,7 @@
 
 (use-package prettier-js)
 
-(use-package lsp-ui
-  :config
-  (setq lsp-ui-doc-enable nil)
-  (setq lsp-ui-doc-position 'top))
-
-(use-package company-lsp)
-
-(use-package lsp-mode
-  :config
-  (setq lsp-prefer-flymake nil)
-  (setq lsp-enable-snippet nil))
-
-;; Scala + sbt with Metals
-(use-package scala-mode :mode "\\.s\\(cala\\|bt\\)$")
-
-(use-package sbt-mode
-  :commands sbt-start sbt-command
-  :config
-  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
-  ;; allows using SPACE when in the minibuffer
-  (substitute-key-definition
-   'minibuffer-complete-word
-   'self-insert-command
-   minibuffer-local-completion-map)
-   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-   (setq sbt:program-options '("-Dsbt.supershell=false")))
-
 (use-package cargo)
-(use-package company-lsp)
 (use-package dockerfile-mode)
 (use-package graphql-mode)
 (use-package groovy-mode)
@@ -458,7 +420,6 @@
 (use-package json-reformat)
 (use-package markdown-toc)
 (use-package json-mode)
-(use-package play-routes-mode)
 (use-package protobuf-mode)
 (use-package rainbow-mode)
 (use-package restclient)
@@ -478,3 +439,47 @@
   (exec-path-from-shell-initialize))
 (use-package dash)
 (use-package dash-functional)
+
+
+;; Scala / Metals / LSP
+
+(use-package lsp-ui
+  :config
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-ui-doc-position 'top))
+
+(use-package company-lsp)
+
+(use-package lsp-mode
+  :config
+  (setq lsp-prefer-flymake nil)
+  (setq lsp-enable-snippet nil))
+
+Scala + sbt with Metals
+(use-package scala-mode
+  :mode "\\.s\\(cala\\|bt\\)$"
+  :interpreter ("scala" . scala-mode))
+
+(use-package sbt-mode
+  :commands sbt-start sbt-command
+  :config
+  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
+  ;; allows using SPACE when in the minibuffer
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map)
+   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+   (setq sbt:program-options '("-Dsbt.supershell=false")))
+
+(use-package lsp-metals
+  :config (setq lsp-metals-treeview-show-when-views-received t))
+
+(use-package company
+  :config
+  (setq company-tooltip-limit 20)                      ; bigger popup window
+  (setq company-idle-delay .2)                         ; decrease delay before autocompletion popup shows
+  (setq company-echo-delay 0)                          ; remove annoying blinking
+  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+  (setq company-tooltip-align-annotations t))
+(use-package play-routes-mode)
