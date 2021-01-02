@@ -68,7 +68,8 @@
 (use-package helm
   :bind (("M-x" . helm-M-x)
          ("C-x b" . helm-buffers-list))
-  :config (helm-mode 1)
+  :init
+  (helm-mode 1)
   (evil-leader/set-key "b" 'helm-buffers-list)
   (evil-leader/set-key "t" 'helm-projectile-find-file-dwim)
   (evil-leader/set-key "r" 'helm-recentf)
@@ -219,11 +220,6 @@
 (use-package python
   :mode ("\\.py\\'" . python-mode)
   :interpreter ("python" . python-mode)
-  :hook ((python-mode . #'flycheck-mode)
-         (inferior-python-mode . (lambda ()
-                                   (disable-trailing-whitespace)
-                                   (local-set-key (kbd "C-c C-k")
-                                                  'python-shell-clear-output))))
   :config
   (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args "--simple-prompt -i"
@@ -324,32 +320,35 @@
     (org-edit-src-code)))
 
 (use-package flycheck-rust)
-(use-package rust-mode
-  :hook ((rust-mode . #'cargo-minor-mode)
-         (rust-mode . #'racer-mode)
-         (rust-mode . #'flycheck-mode)
-         (flycheck-mode . #'flycheck-rust-setup))
+;; TODO - Something about this breaks Scala / LSP setup
+;; (use-package rust-mode
+  ;; :hook ((rust-mode . #'cargo-minor-mode)
+  ;;        (rust-mode . #'racer-mode)
+  ;;        (rust-mode . #'flycheck-mode)
+  ;;        ;; (flycheck-mode . #'flycheck-rust-setup)
+  ;;        )
+  ;; :config
+  ;; (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+  ;; (evil-leader/set-key-for-mode 'rust-mode "TAB" 'rust-format-buffer)
+  ;; )
+
+;; ;; (use-package racer
+;; ;;   :defer t
+;; ;;   :after rust-mode
+;; ;;   :hook
+;; ;;   (racer-mode . #'eldoc-mode)
+;; ;;   (racer-mode . #'company-mode))
+
+
+(use-package alchemist
+  :hook ((alchemist-iex-mode . show-trailing-whitespace)
+         (alchemist-test-report-mode . truncate-lines)
+         (before-save . 'elixir-format))
   :config
-  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-  (evil-leader/set-key-for-mode 'rust-mode "TAB" 'rust-format-buffer))
-
-;; (use-package racer
-;;   :defer t
-;;   :after rust-mode
-;;   :hook
-;;   (racer-mode . #'eldoc-mode)
-;;   (racer-mode . #'company-mode))
-
-
-;; (use-package alchemist
-;;   :hook ((alchemist-iex-mode . show-trailing-whitespace)
-;;          (alchemist-test-report-mode . truncate-lines)
-;;          (before-save . 'elixir-format))
-;;   :config
-;;   (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
-;;   (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
-;;   (evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
-;;   (evil-leader/set-key-for-mode 'elixir-mode "]" 'alchemist-mix-test-at-point))
+  (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
+  (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
+  (evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
+  (evil-leader/set-key-for-mode 'elixir-mode "]" 'alchemist-mix-test-at-point))
 
 (use-package elixir-mode
   :config
@@ -375,10 +374,10 @@
   (when (string-equal "tsx" (file-name-extension buffer-file-name))
     (setup-tide-mode)))
 
-;; Support ERB/EEX tags in SmartParens
-;; https://emacs.stackexchange.com/questions/15188/smartparens-and-web-mode-conflict-to-add-extra-angular-bracket
-;; (sp-pair "%" "%" :wrap "C-%")
-;; (sp-pair "<" ">" :wrap "C->")
+;; ;; Support ERB/EEX tags in SmartParens
+;; ;; https://emacs.stackexchange.com/questions/15188/smartparens-and-web-mode-conflict-to-add-extra-angular-bracket
+;; ;; (sp-pair "%" "%" :wrap "C-%")
+;; ;; (sp-pair "<" ">" :wrap "C->")
 
 (use-package typescript-mode
   :hook ((web-mode-hook . (lambda ()
@@ -448,14 +447,11 @@
   (setq lsp-ui-doc-enable nil)
   (setq lsp-ui-doc-position 'top))
 
-(use-package company-lsp)
-
 (use-package lsp-mode
   :config
   (setq lsp-prefer-flymake nil)
   (setq lsp-enable-snippet nil))
 
-Scala + sbt with Metals
 (use-package scala-mode
   :mode "\\.s\\(cala\\|bt\\)$"
   :interpreter ("scala" . scala-mode))
@@ -472,14 +468,14 @@ Scala + sbt with Metals
    ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
    (setq sbt:program-options '("-Dsbt.supershell=false")))
 
-(use-package lsp-metals
-  :config (setq lsp-metals-treeview-show-when-views-received t))
-
+(use-package lsp-metals)
+(use-package company-lsp)
 (use-package company
   :config
   (setq company-tooltip-limit 20)                      ; bigger popup window
   (setq company-idle-delay .2)                         ; decrease delay before autocompletion popup shows
   (setq company-echo-delay 0)                          ; remove annoying blinking
   (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-  (setq company-tooltip-align-annotations t))
+  (setq company-tooltip-align-annotations t)
+  :hook (company-mode . (lambda () (message (auto-complete-mode 0)))))
 (use-package play-routes-mode)
