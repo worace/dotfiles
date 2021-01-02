@@ -1,6 +1,8 @@
 (if (file-exists-p "~/.secrets.el")
     (load "~/.secrets.el"))
 
+;; (setq max-lisp-eval-depth 1000)
+;; (setq max-specpdl-size 32000)
 (setq-default truncate-lines 1)
 (setq-default indent-tabs-mode nil)
 (global-linum-mode 1)
@@ -171,8 +173,7 @@
 
 (use-package chruby
   :config
-  (chruby "2.4.4")
-  )
+  (chruby "2.4.4"))
 
 (use-package seeing-is-believing
   :hook ((ruby-mode . #'seeing-is-believing))
@@ -247,20 +248,6 @@
 
 (use-package flycheck)
 
-(use-package web-mode
-  :mode (".erb$" ".scss$" ".css$" ".html?$" ".hbs$" ".eex$" ".tsx$")
-  :config (setq web-mode-markup-indent-offset 2
-                web-mode-enable-auto-pairing nil
-                web-mode-enable-auto-closing t
-                web-mode-css-indent-offset 2
-                web-mode-code-indent-offset 2))
-
-;; Support ERB/EEX tags in SmartParens
-;; https://emacs.stackexchange.com/questions/15188/smartparens-and-web-mode-conflict-to-add-extra-angular-bracket
-;; (sp-pair "%" "%" :wrap "C-%")
-;; (sp-pair "<" ">" :wrap "C->")
-
-
 (defun worace-org-mode-setup ()
   ;; keybinding for inserting code blocks
   (local-set-key (kbd "C-c s i") 'org-insert-src-block)
@@ -271,7 +258,7 @@
          (headline           `(:inherit default :foreground ,base-font-color)))))
 
 (use-package org
-  :mode ("\\.org$" . org-mode)
+  :mode ("\\.org\\'" . org-mode)
   :hook ((org-mode . worace-org-mode-setup)
          (org-mode . (lambda () (linum-mode 0)))
          (org-mode . (lambda () (org-indent-mode 1)))
@@ -416,8 +403,7 @@
   :after (typescript-mode company flycheck)
   :hook ((typescript-mode . #'setup-tide-mode)
          (before-save . #'tide-format-before-save)
-         (web-mode . tide-web-mode-setup)
-         ))
+         (web-mode . tide-web-mode-setup)))
 
 (defun setup-tide-mode ()
   (interactive)
