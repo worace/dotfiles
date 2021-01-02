@@ -385,31 +385,51 @@
   (setq company-tooltip-align-annotations t)
   )
 
+(use-package web-mode
+  :mode ("\\.erb\\'" "\\.scss$" "\\.css$" "\\.html?$" "\\.hbs$" "\\.eex$" "\\.tsx\\'" "\\.jsx$")
+  :config (setq web-mode-markup-indent-offset 2
+                web-mode-enable-auto-pairing nil
+                web-mode-enable-auto-closing t
+                web-mode-css-indent-offset 2
+                web-mode-code-indent-offset 2))
+
+(defun tide-web-mode-setup ()
+  (message "Run tide web mode")
+  (when (string-equal "tsx" (file-name-extension buffer-file-name))
+    (setup-tide-mode)))
+
+;; Support ERB/EEX tags in SmartParens
+;; https://emacs.stackexchange.com/questions/15188/smartparens-and-web-mode-conflict-to-add-extra-angular-bracket
+;; (sp-pair "%" "%" :wrap "C-%")
+;; (sp-pair "<" ">" :wrap "C->")
+
 (use-package typescript-mode
   :hook ((web-mode-hook . (lambda ()
                             (flycheck-add-mode 'typescript-tslint 'web-mode))))
+  :mode "\\.ts\\'"
   :config
-  (setq typescript-indent-level 2)
-  )
+  (setq typescript-indent-level 2))
 
-;; (use-package tide
-;;   :hook ((typescript-mode . #'setup-tide-mode)
-;;          (before-save . #'tide-format-before-save)
-;;          (web-mode . #'tide-web-mode-setup)))
+(use-package tide
+  :mode (("\\.ts\\'" . tide-mode))
+  :diminish tide-mode
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . #'setup-tide-mode)
+         (before-save . #'tide-format-before-save)
+         (web-mode . tide-web-mode-setup)
+         ))
 
 (defun setup-tide-mode ()
+  (interactive)
+  (message "setting up tide mode")
   (tide-setup)
-  (flycheck-mode 1)
+  ;; (flycheck-mode 1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode 1)
   (tide-hl-identifier-mode 1)
   (auto-complete-mode 0)
   (define-key tide-mode-map (kbd "TAB") #'company-complete-common-or-cycle)
   (company-mode 1))
-
-(defun tide-web-mode-setup ()
-  (when (string-equal "tsx" (file-name-extension buffer-file-name))
-    (setup-tide-mode)))
 
 (use-package prettier-js)
 
