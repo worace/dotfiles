@@ -7,6 +7,7 @@ emacs/network-security.data
 emacs/projectile-bookmarks.eld
 emacs/projectile.cache
 emacs/transient
+emacs/.dap-breakpoints
 .lein/repl-history
 .lein/self-installs
 .lein/credentials.clj
