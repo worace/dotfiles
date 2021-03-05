@@ -362,7 +362,7 @@
                    :actions '(insert navigate))))
 
 (use-package web-mode
-  :mode ("\\.erb\\'" "\\.scss$" "\\.css$" "\\.html?$" "\\.hbs$" "\\.eex$" "\\.tsx\\'" "\\.jsx$")
+  :mode ("\\.erb$" "\\.scss$" "\\.css$" "\\.html?$" "\\.hbs$" "\\.eex$" "\\.tsx$" "\\.jsx$")
   :config (setq web-mode-markup-indent-offset 2
                 web-mode-enable-auto-pairing nil
                 web-mode-enable-auto-closing t
@@ -382,17 +382,25 @@
 (use-package typescript-mode
   :hook ((web-mode-hook . (lambda ()
                             (flycheck-add-mode 'typescript-tslint 'web-mode))))
-  :mode "\\.ts\\'"
+  :mode ".ts$"
   :config
   (setq typescript-indent-level 2))
 
+;; (use-package tide
+;;   :mode (("\\.ts\\'" . tide-mode))
+;;   :diminish tide-mode
+;;   :after (typescript-mode company flycheck)
+;;   :hook ((typescript-mode . #'setup-tide-mode)
+;;          (before-save . #'tide-format-before-save)
+;;          (web-mode . tide-web-mode-setup)))
+
 (use-package tide
-  :mode (("\\.ts\\'" . tide-mode))
-  :diminish tide-mode
+  :ensure t
   :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . #'setup-tide-mode)
-         (before-save . #'tide-format-before-save)
-         (web-mode . tide-web-mode-setup)))
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (web-mode . tide-web-mode-setup)
+         (before-save . tide-format-before-save)))
 
 (defun setup-tide-mode ()
   (interactive)
@@ -404,7 +412,7 @@
   (tide-hl-identifier-mode 1)
   (auto-complete-mode 0)
   (define-key tide-mode-map (kbd "TAB") #'company-complete-common-or-cycle)
-  (company-mode 1))
+  (company-mode +1))
 
 (use-package prettier-js)
 
