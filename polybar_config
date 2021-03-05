@@ -38,7 +38,7 @@ font-2 = "Avenir:size=24:weight=bold;2"
 
 modules-left = i3
 modules-center = date
-modules-right = cpu
+modules-right = polypomo cpu
 
 tray-position = right
 tray-detached = false
@@ -107,3 +107,21 @@ label = %date% %time%
 
 [settings]
 screenchange-reload = true
+
+; Polybar Pomodoro Plugin
+; https://github.com/unode/polypomo
+
+; and add a polypomo module
+[module/polypomo]
+type = custom/script
+
+; ${env:HOME:/home/horace}
+exec = /home/horace/dotfiles/bin/polypomo
+tail = true
+
+label = %output%
+click-left = /home/horace/dotfiles/bin/polypomo toggle
+click-right = /home/horace/dotfiles/bin/polypomo end
+click-middle = /home/horace/dotfiles/bin/polypomo lock
+scroll-up = /home/horace/dotfiles/bin/polypomo time +60
+scroll-down = /home/horace/dotfiles/bin/polypomo time -60
