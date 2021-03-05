@@ -199,3 +199,14 @@
 
 ;; Markdown
 (evil-leader/set-key-for-mode 'markdown-mode "o" 'markdown-follow-link-at-point)
+
+(defun edit-files ()
+  "Open a a bunch of files, given a text file containing a list of file names"
+  (interactive)
+  (setq my_filelist (completing-read "my_filelist: " nil nil nil))
+  (with-temp-buffer
+    (insert-file-contents my_filelist)
+    (goto-char (point-min))
+    (while (not (eobp))
+      (find-file-noselect (replace-regexp-in-string "\n$" "" (thing-at-point 'line t)))
+      (forward-line))))
