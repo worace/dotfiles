@@ -9,3 +9,5 @@ emacs/projectile.cache
 emacs/transient
 .lein/repl-history
 .lein/self-installs
+.lein/credentials.clj
+emacs/.lsp*
