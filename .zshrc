@@ -351,7 +351,7 @@ alias rake="noglob rake"
 alias countries="ruby -e 'require \"factual_countries\"; FactualCountries.all.keys.each { |c| puts c }'"
 alias count="sort | uniq -c | sort -nr"
 
-export SBT_OPTS="-Xmx32G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M"
+export SBT_OPTS="-Xmx32G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M -XX:ReservedCodeCacheSize=512M"
 # zprof
 
 # added by travis gem
