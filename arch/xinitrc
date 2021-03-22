@@ -2,7 +2,7 @@
 # [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 # [[ -f ~/.xbindkeysrc ]] && xbindkeys
 
-feh --bg-scale ~/dotfiles/wallpaper/goat.jpg
+feh --bg-center ~/dotfiles/wallpaper/goat.jpg
 
 xset -b
 # xset r rate <delay ms> <speed hz>
