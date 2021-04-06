@@ -116,12 +116,12 @@ screenchange-reload = true
 type = custom/script
 
 ; ${env:HOME:/home/horace}
-exec = /home/horace/dotfiles/bin/polypomo
+exec = ~/dotfiles/bin/polypomo
 tail = true
 
 label = %output%
-click-left = /home/horace/dotfiles/bin/polypomo toggle
-click-right = /home/horace/dotfiles/bin/polypomo end
-click-middle = /home/horace/dotfiles/bin/polypomo lock
-scroll-up = /home/horace/dotfiles/bin/polypomo time +60
-scroll-down = /home/horace/dotfiles/bin/polypomo time -60
+click-left = ~/dotfiles/bin/polypomo toggle
+click-right = ~/dotfiles/bin/polypomo end
+click-middle = ~/dotfiles/bin/polypomo lock
+scroll-up = ~/dotfiles/bin/polypomo time +60
+scroll-down = ~/dotfiles/bin/polypomo time -60

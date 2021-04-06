@@ -368,3 +368,7 @@ export PATH="$HOME/.pyenv/versions/3.7.2/bin:$PATH"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 # export PATH="$PATH:$HOME/.rvm/bin"
+
+function okiedokie {
+  mpg123 $HOME/data/okiedokie.mp3 2> /dev/null
+}
