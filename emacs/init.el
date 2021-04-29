@@ -1,4 +1,6 @@
 ;; Package bootstrapping
+(add-to-list 'load-path "~/.emacs.d/customizations/")
+(load "packages.el")
 (require 'package)
 (package-initialize)
 (unless (package-installed-p 'use-package)
@@ -43,12 +45,10 @@
 ;; raise GC threshold to 100 MB
 (setq gc-cons-threshold 100000000)
 
-(add-to-list 'load-path "~/.emacs.d/customizations/")
 (add-to-list 'load-path "~/.emacs.d/customizations/vendor")
 (load "theme.el")
 (load "ui.el")
 
-(load "packages.el")
 (load "modes.el")
 (load "keybindings.el")
 
