@@ -15,7 +15,7 @@
 ;; Typography
 (set-face-attribute 'default nil
 		    :family "Source Code Pro"
-		    :height 120
+        :height 120
 		    :weight 'normal
 		    :width 'normal)
 
