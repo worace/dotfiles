@@ -1,3 +1,8 @@
+* Ubuntu Install
+sudo add-apt-repository ppa:kelleyk/emacs
+sudo apt update
+sudo apt install emacs27
+
 * Emacs Config
 
 [[http://aaronbedra.com/emacs.d/][Useful tutorial for safe keeping]]

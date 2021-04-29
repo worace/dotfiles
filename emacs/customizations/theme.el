@@ -1,17 +1,21 @@
 ;; Set Color Scheme
-(load-theme 'gruvbox t)
+(use-package gruvbox-theme
+  :defer nil
+  :config
+  (load-theme 'gruvbox t))
 
 (defun toggle-theme ()
     (interactive)
     (if (eq (frame-parameter (next-frame) 'background-mode)
-	    'light)
-        (load-theme 'solarized-dark)
+            'light)
+        (load-theme 'gruvbox-dark-medium)
       (load-theme 'solarized-light)))
+(evil-leader/set-key "ct" 'toggle-theme)
 
 ;; Typography
 (set-face-attribute 'default nil
 		    :family "Source Code Pro"
-		    :height 160
+		    :height 120
 		    :weight 'normal
 		    :width 'normal)
 
@@ -31,8 +35,7 @@
 				      (expt text-scale-mode-step
 					    text-scale-mode-amount) 1)
 				  (if (car (window-margins))
-				      (car (window-margins)) 1)
-				  ))))
+				      (car (window-margins)) 1)))))
 (advice-add 'linum-update-window :after 'linum-update-window-scale-fix)
 
 (setq-default show-trailing-whitespace t)

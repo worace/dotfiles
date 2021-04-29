@@ -1,124 +1,156 @@
-(require 'use-package)
 (if (file-exists-p "~/.secrets.el")
     (load "~/.secrets.el"))
 
+;; (setq max-lisp-eval-depth 1000)
+;; (setq max-specpdl-size 32000)
 (setq-default truncate-lines 1)
 (setq-default indent-tabs-mode nil)
-
-(ido-mode 1)
-
-;;Projectile
-(setq projectile-git-submodule-command nil)
-
 (global-linum-mode 1)
+(ido-mode 1)
+(setq company-tooltip-align-annotations t)
+(setq sh-basic-offset 2
+      sh-indentation 2)
 
-;; Enable helm autofilter/complete interface
-(require 'helm-config)
-;; Use helm-M-x as default finder in M-x
-(global-set-key (kbd "M-x") 'helm-M-x)
-;; Additionally, enable helm for file-finding
-;; And some other standard uses
-(helm-mode 1)
+;;Hub Github Addon
+;;Currently just installed locally
+(require 'hub)
 
-(setq helm-ag-use-agignore t)
+;; Save Recent Files
+(require 'recentf)
+(setq recentf-max-menu-items 2000)
+(recentf-mode 1)
+(run-at-time nil (* 5 60) 'recentf-save-list)
 
-;; Set up evil leader
-;; Make sure to enable this before evil-mode
-(global-evil-leader-mode)
-(evil-leader/set-leader "<SPC>")
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
-;; Evil (vim) Mode
-(require 'evil)
-(evil-mode 1)
-;; Make evil treat language-dependent "symbols" as full words
-;; e.g. move past underscores for ruby as part of same word
-(with-eval-after-load 'evil
-  (defalias #'forward-evil-word #'forward-evil-symbol))
+;; Elisp
+(use-package emacs-lisp
+  :ensure nil
+  :mode (".el$" . emacs-lisp-mode)
+  :config
+  (evil-leader/set-key-for-mode 'emacs-lisp-mode "eb" 'eval-buffer)
+  (evil-leader/set-key-for-mode 'emacs-lisp-mode "er" 'eval-region)
+  (setq max-lisp-eval-depth 10000)
+  (setq max-specpdl-size 32000))
 
-;; Disable Evil for certain modes
-(add-to-list 'evil-emacs-state-modes 'eshell-mode)
-
-;; Was losing evil gg in dired mode for some reason
-;; probably using dired wrong but this fixes it...
-(evil-define-key 'normal dired-mode-map "gg" 'beginning-of-buffer)
-
-;; rainbow delims!
-(rainbow-delimiters-mode)
-
-;; Clojure Setup
-(add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
-(require 'smartparens-config)
-(smartparens-global-mode t)
-(add-hook 'clojure-mode-hook #'smartparens-strict-mode)
-(setq cljr-inject-dependencies-at-jack-in nil)
-(setq cider-show-error-buffer nil)
-(setq cider-use-fringe-indicators nil)
-(setq cider-repl-history-size 1000)
-(setq cider-repl-history-file "~/.ciderhistory")
-(defun cider-setup ()
-  (setq show-trailing-whitespace nil)
-  (setq truncate-lines nil))
-(add-hook 'cider-repl-mode-hook #'cider-setup)
-
-;; Markdown Setup
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(sp-local-pair 'markdown-mode "`" nil :actions '(insert))
-
-(custom-set-variables
- '(markdown-command (executable-find "markdown")))
-
-;; (defun md-setup ()
-;;   (message "MARKDOWN SETUP RUNNING")
-;;   (setq evil-cross-lines t)
-;;   (visual-line-mode)
-;;   (toggle-word-wrap))
-
-(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-(define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-(define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-
-(global-auto-complete-mode)
-(global-evil-surround-mode 1)
-
-;; Javascript mode
-(setq js-indent-level 2)
-(setq jsx-indent-level 2)
-(setq-default js2-global-externs
-              '("module" "require" "sinon" "assert" "refute" "setTimeout"
-                "clearTimeout" "setInterval" "clearInterval" "location"
-                "__dirname" "console" "JSON" "describe" "it" "beforeEach"
-                "before" "after" "afterEach"))
-
-(setq js2-bounce-indent-p t
-      js2-include-node-externs t
-      js2-include-browser-externs t
-      js2-basic-offset 2
-      js2-mode-show-parse-errors nil
-      js2-mode-show-strict-warnings nil
-      js2-strict-trailing-comma-warning nil
-      js2-strict-missing-semi-warning nil
-      js2-strict-inconsistent-return-warning nil)
-
-(setq js2-bounce-indent-p t)
-(setq js2-basic-offset 2)
-(setq js2-include-node-externs t)
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
-(autoload 'jsx-mode "jsx-mode" "JSX mode" t)
-
-(add-hook 'js2-jsx-mode-hook
+;; Postgres / SQL Mode
+;; sql-connection-alist defined in ~/.secrets.el
+(add-hook 'sql-interactive-mode-hook
           (lambda ()
-            (setq truncate-lines t)
-            (toggle-truncate-lines nil)))
+            (toggle-truncate-lines t)
+            (disable-trailing-whitespace)))
 
-(setq-default flycheck-eslintrc "~/.eslintrc.json")
-;; (setq flycheck-disabled-checkers
-;;       (append flycheck-disabled-checkers
-;;               '(javascript-jshint)))
-;; (setq flycheck-checkers '(javascript-eslint))
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode))
+;; Text Mode (Org, Markdown, etc)
+(defun worace-text-mode-hook ()
+  (turn-on-visual-line-mode)
+  (toggle-word-wrap 1)
+  (setq evil-cross-lines t))
+(add-hook 'text-mode-hook 'worace-text-mode-hook)
+
+(use-package ace-jump-mode
+  :config
+  (custom-set-faces
+   '(aw-leading-char-face
+     ((t (:inherit ace-jump-face-foreground :height 0.95)))))
+  (evil-leader/set-key "<SPC>" 'ace-jump-char-mode))
+
+(use-package ace-window
+  :config
+  (evil-leader/set-key "w" 'ace-window)
+  (evil-leader/set-key "asw" 'ace-swap-window))
+
+(use-package auto-complete
+  :config
+  (global-auto-complete-mode))
+
+(use-package helm
+  :bind (("M-x" . helm-M-x)
+         ("C-x b" . helm-buffers-list))
+  :init
+  (helm-mode 1)
+  (evil-leader/set-key "b" 'helm-buffers-list)
+  (evil-leader/set-key "t" 'helm-projectile-find-file-dwim)
+  (evil-leader/set-key "r" 'helm-recentf)
+  (evil-leader/set-key "x" 'helm-M-x))
+
+(use-package projectile
+  :config
+  (setq projectile-git-submodule-command nil))
+
+(use-package clojure-mode
+  :mode (("\\.clj\\'" . clojure-mode)
+         ("\\.cljc\\'" . clojure-mode)
+         ("\\.cljs\\'" . clojure-mode)
+         ("\\.edn\\'" . clojure-mode))
+  :init
+  (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
+  :config
+  (setq cljr-inject-dependencies-at-jack-in nil)
+  (setq cider-show-error-buffer nil)
+  (setq cider-use-fringe-indicators nil)
+  (setq cider-repl-history-size 1000)
+  (setq cider-repl-history-file "~/.ciderhistory")
+  (evil-leader/set-key-for-mode 'clojure-mode "eb" 'cider-eval-buffer)
+  (evil-leader/set-key-for-mode 'clojure-mode "er" 'cider-eval-region)
+  (evil-leader/set-key-for-mode 'clojure-mode "ep" 'cider-eval-sexp-at-point)
+  (evil-leader/set-key-for-mode 'clojure-mode "ee" 'cider-eval-defun-at-point)
+  (evil-leader/set-key-for-mode 'clojure-mode "et" 'cider-test-run-test)
+  (evil-leader/set-key-for-mode 'clojure-mode "ps" 'sp-forward-slurp-sexp)
+  (evil-leader/set-key-for-mode 'clojure-mode "pb" 'sp-forward-barf-sexp)
+  (evil-leader/set-key-for-mode 'clojure-mode "pp" 'sp-splice-sexp-killing-around)
+  (evil-leader/set-key-for-mode 'clojurescript-mode "ps" 'sp-forward-slurp-sexp)
+  (evil-leader/set-key-for-mode 'clojurescript-mode "pb" 'sp-forward-barf-sexp))
+
+(use-package cider
+  :hook (cider-repl-mode . (lambda ()
+                             (setq show-trailing-whitespace nil)
+                             (setq truncate-lines nil)))
+  :config
+  (evil-leader/set-key-for-mode 'cider-repl-mode "ps" 'sp-forward-slurp-sexp)
+  (evil-leader/set-key-for-mode 'cider-repl-mode "pb" 'sp-forward-barf-sexp)
+  (evil-leader/set-key-for-mode 'cider-repl-mode "pp" 'sp-splice-sexp-killing-around)
+  (evil-leader/set-key-for-mode 'cider-repl-mode "k" 'cider-repl-clear-buffer))
+
+(use-package smartparens
+  :config
+  (smartparens-global-mode t))
+
+(use-package markdown-mode
+  :mode (".text$" ".markdown$" ".md$")
+  :config
+  (sp-local-pair 'markdown-mode "`" nil :actions '(insert))
+  (custom-set-variables
+   '(markdown-command (executable-find "markdown"))))
+
+(use-package js2-mode
+  :hook ((js2-mode . (lambda ()
+                       (toggle-truncate-lines nil)
+                       (flycheck-mode t)
+                       (when (executable-find "eslint")
+                         (flycheck-select-checker 'javascript-eslint)
+                         (use-eslint-from-node-modules)))))
+  :config
+  (setq js2-bounce-indent-p t
+        js2-include-node-externs t
+        js2-include-browser-externs t
+        js2-basic-offset 2
+        js2-mode-show-parse-errors nil
+        js2-mode-show-strict-warnings nil
+        js2-strict-trailing-comma-warning nil
+        js2-strict-missing-semi-warning nil
+        js2-strict-inconsistent-return-warning nil
+        jsx-indent-level 2
+        js-indent-level 2)
+  (setq-default js2-global-externs
+                '("module" "require" "sinon" "assert" "refute" "setTimeout"
+                  "clearTimeout" "setInterval" "clearInterval" "location"
+                  "__dirname" "console" "JSON" "describe" "it" "beforeEach"
+                  "before" "after" "afterEach")))
+
+;; (use-package js2-jsx-mode
+;;   :mode (".jsx$" ".js$"))
 
 (defun use-eslint-from-node-modules ()
   (let* ((root (locate-dominating-file
@@ -136,53 +168,37 @@
     (when (and eslint (file-executable-p eslint))
       (setq-local flycheck-javascript-eslint-executable eslint))))
 
-(add-hook 'js2-mode-hook
-          (lambda ()
-            (toggle-truncate-lines nil)
-            (flycheck-mode t)
-            (when (executable-find "eslint")
-              (flycheck-select-checker 'javascript-eslint)
-              (use-eslint-from-node-modules))))
+(use-package magit
+  :config
+  (setq git-commit-summary-max-length 70))
 
-(if (executable-find "nvm")
- (progn
-  (require 'nvm)
-  (defun do-nvm-use (version)
-   (interactive "sVersion: ")
-   (nvm-use version)
-   (exec-path-from-shell-copy-env "PATH"))
-  (nvm-use "6.5.0")))
+(use-package chruby
+  :config
+  (chruby "2.4.4"))
 
+(use-package seeing-is-believing
+  :hook ((ruby-mode . #'seeing-is-believing))
+  :config
+  (evil-leader/set-key-for-mode 'ruby-mode "eb" 'seeing-is-believing-run)
+  (evil-leader/set-key-for-mode 'ruby-mode "ec" 'seeing-is-believing-clear)
+  (evil-leader/set-key-for-mode 'ruby-mode "er" 'seeing-is-believing-run-as-xmpfilter)
+  (evil-leader/set-key-for-mode 'ruby-mode "et" 'seeing-is-believing-mark-current-line-for-xmpfilter)
+  (evil-leader/set-key-for-mode 'ruby-mode "el" 'seeing-is-believing-evaluate-current-line))
 
-(defun node-repl () (interactive)
-       (pop-to-buffer (make-comint "node-repl" "node" nil "--interactive")))
-
-;;Hub Github Addon
-;;Currently just installed locally
-(require 'hub)
-
-;; Magit allow longer commit lines than the default
-(setq git-commit-summary-max-length 70)
-
-;;Emacs Livedown
-;;Installed manually from here https://github.com/shime/emacs-livedown
-(require 'livedown)
-
-;; Haskell
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-
-;;ruby
-(require 'chruby)
-(chruby "2.4.4")
-(require 'seeing-is-believing)
-(add-hook 'ruby-mode-hook 'seeing-is-believing)
-(require 'inf-ruby)
-(add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
-(when (executable-find "pry")
+(use-package inf-ruby
+  :hook ((ruby-mode . #'inf-ruby-minor-mode))
+  :config
+  (when (executable-find "pry")
     (add-to-list 'inf-ruby-implementations '("pry" . "pry"))
-    (setq inf-ruby-default-implementation "pry"))
-(setq ruby-deep-arglist nil)
-(setq ruby-deep-indent-paren nil)
+    (setq inf-ruby-default-implementation "pry")))
+
+(use-package ruby-mode
+  :hook ((ruby-mode . (lambda ()
+                        (add-hook 'compilation-finish-functions 'my-compilation-finish-hook nil 'make-it-local)
+                        )))
+  :config
+  (setq ruby-deep-arglist nil)
+  (setq ruby-deep-indent-paren nil))
 
 (defun my-compilation-finish-hook (buf strg)
   (switch-to-buffer-other-window "*compilation*")
@@ -191,117 +207,80 @@
   (local-set-key (kbd "q")
                  (lambda () (interactive) (quit-restore-window))))
 
-(add-hook 'ruby-mode-hook
-          (lambda ()
-            (add-hook 'compilation-finish-functions 'my-compilation-finish-hook nil 'make-it-local)))
-
-(require 'ruby-test-mode)
-(add-hook 'ruby-mode-hook 'ruby-test-mode)
-(require 'ruby-mode)
+(use-package ruby-test-mode
+  :hook ((ruby-mode . #'ruby-test-mode))
+  :config
+  (evil-leader/set-key-for-mode 'ruby-mode "\\" 'ruby-test-run)
+  (evil-leader/set-key-for-mode 'ruby-mode "]" 'ruby-test-run-at-point))
 
 ;;;;;;;;;;;;;
 ;; Python ;;;
 ;;;;;;;;;;;;;
+
+(use-package python
+  :mode ("\\.py\\'" . python-mode)
+  :interpreter ("python" . python-mode)
+  :config
+  (setq python-shell-interpreter "ipython"
+        python-shell-interpreter-args "--simple-prompt -i"
+        py-shell-name "ipython"
+        py-which-bufname "IPython"
+        py-shell-switch-buffers-on-execute-p t
+        py-switch-buffers-on-execute-p t
+        py-smart-indentation t
+        )
+  (custom-set-variables
+   '(python-guess-indent nil)
+   '(python-indent 2)))
 
 (defun python-shell-clear-output ()
   (interactive)
   (let ((comint-buffer-maximum-size 0))
     (comint-truncate-buffer)))
 
-(add-hook 'inferior-python-mode-hook
-          (lambda ()
-            (disable-trailing-whitespace)
-            (local-set-key (kbd "C-c C-k")
-                           'python-shell-clear-output)))
+(use-package virtualenvwrapper
+  :config
+  (setq venv-location "~/.virtualenvs"))
 
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "--simple-prompt -i")
+(use-package flycheck)
 
-(setq-default py-shell-name "ipython")
-(setq-default py-which-bufname "IPython")
-(setq py-shell-switch-buffers-on-execute-p t)
-(setq py-switch-buffers-on-execute-p t)
-(setq py-smart-indentation t)
+(defun worace-org-mode-setup ()
+  ;; keybinding for inserting code blocks
+  (local-set-key (kbd "C-c s i") 'org-insert-src-block)
+  (local-set-key (kbd "C-c s e") 'org-insert-example-block)
+  (let* ((variable-tuple (cond ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
+                               (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+         (base-font-color     (face-foreground 'default nil 'default))
+         (headline           `(:inherit default :foreground ,base-font-color)))))
 
-(custom-set-variables
- '(python-guess-indent nil)
- '(python-indent 2))
+(use-package org
+  :mode ("\\.org\\'" . org-mode)
+  :hook ((org-mode . worace-org-mode-setup)
+         (org-mode . (lambda () (linum-mode 0)))
+         (org-mode . (lambda () (org-indent-mode 1)))
+         (org-mode . org-bullets-mode))
+  :config
+  (setq org-src-fontify-natively t
+        inhibit-compacting-font-caches t
+        org-startup-folded t
+        org-src-tab-acts-natively t
+        org-src-preserve-indentation nil
+        org-edit-src-content-indentation 0
+        org-export-allow-bind-keywords t
+        org-html-preamble nil
+        org-html-preamble-format nil)
+  (evil-leader/set-key-for-mode 'org-mode "o" 'org-open-at-point)
+  (evil-leader/set-key-for-mode 'org-mode "i s" 'org-edit-src-code)
+  (evil-leader/set-key-for-mode 'org-mode "i l" 'org-insert-link)
+  (evil-leader/set-key-for-mode 'org-mode "i i" 'org-insert-list-item)
+  (evil-leader/set-key-for-mode 'org-mode "[" 'org-promote-subtree)
+  (evil-leader/set-key-for-mode 'org-mode "]" 'org-demote-subtree)
+  ;; use pretty unicode bullets for lists
+  (font-lock-add-keywords 'org-mode
+                          '(("^ +\\([-*]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
 
-
-(require 'virtualenvwrapper)
-(setq venv-location "~/.virtualenvs")
-
-
-(require 'flycheck)
-(add-hook 'python-mode-hook 'flycheck-mode)
-
-
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.eex\\'" . web-mode))
-;; Support ERB/EEX tags in SmartParens
-;; https://emacs.stackexchange.com/questions/15188/smartparens-and-web-mode-conflict-to-add-extra-angular-bracket
-;; (sp-pair "%" "%" :wrap "C-%")
-;; (sp-pair "<" ">" :wrap "C->")
-
-(defun my-web-mode-hook ()
-  "Hooks for Web mode."
-  (emmet-mode)
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-enable-auto-pairing nil)
-  (setq web-mode-enable-auto-closing t)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2))
-
-(add-hook 'web-mode-hook  'my-web-mode-hook)
-
-
-;; Save Recent Files
-(require 'recentf)
-(setq recentf-max-menu-items 2000)
-(recentf-mode 1)
-(run-at-time nil (* 5 60) 'recentf-save-list)
-
-
-;;Exercism
-
-(if (file-accessible-directory-p "~/.exercism.json")
-    (progn
-      (require 'request) ;; needed for exercism
-      (require 'exercism)))
-
-(add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode))
-;; Text Mode (Org, Markdown, etc)
-(defun worace-text-mode-hook ()
-  (turn-on-visual-line-mode)
-  (toggle-word-wrap 1)
-  (setq evil-cross-lines t))
-(add-hook 'text-mode-hook 'worace-text-mode-hook)
-
-
-;; OOOOOORG
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-;; Don't show // around italics
-;; (setq org-hide-emphasis-markers t)
-;; Have org treat code blocks like their native lang
-(setq org-src-fontify-natively t)
-(setq inhibit-compacting-font-caches t)
-(setq org-src-tab-acts-natively t)
-;; No line numbers in org (looks weird with the different sized headers)
-;; (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
-
-;; use pretty unicode bullets for lists
-(font-lock-add-keywords 'org-mode
-                        '(("^ +\\([-*]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-;; (require 'org-bullets)
-;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (use-package org-bullets
-  :ensure t
   :init
   ;; org-bullets-bullet-list
   ;; default: "◉ ○ ✸ ✿"
@@ -313,11 +292,6 @@
   (setq org-ellipsis "…")
   :config
   (add-hook 'org-mode-hook #'org-bullets-mode))
-
-
-(add-hook 'org-mode-hook (lambda () (org-indent-mode 1)))
-(setq org-src-preserve-indentation nil
-      org-edit-src-content-indentation 0)
 
 (defun org-insert-example-block ()
   (interactive)
@@ -334,7 +308,7 @@
   (interactive
    (let ((src-code-types
           '("emacs-lisp" "python" "C" "sh" "shell" "html" "java" "js" "json" "clojure" "C++" "css"
-            "octave" "sass" "scala" "sql" "awk" "haskell" "lisp"
+            "sass" "scala" "sql" "awk" "haskell" "lisp"
             "org" "racket" "ruby" "scheme")))
      (list (ido-completing-read "Source code type: " src-code-types))))
   (progn
@@ -345,295 +319,150 @@
     (previous-line 2)
     (org-edit-src-code)))
 
-(defun worace-org-mode-setup ()
-  ;; keybinding for inserting code blocks
-  (local-set-key (kbd "C-c s i") 'org-insert-src-block)
-  (local-set-key (kbd "C-c s e") 'org-insert-example-block)
-  (let* ((variable-tuple (cond ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
-                               (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-         (base-font-color     (face-foreground 'default nil 'default))
-         (headline           `(:inherit default :foreground ,base-font-color)))
+(use-package flycheck-rust)
+;; TODO - Something about this breaks Scala / LSP setup
+;; (use-package rust-mode
+  ;; :hook ((rust-mode . #'cargo-minor-mode)
+  ;;        (rust-mode . #'racer-mode)
+  ;;        (rust-mode . #'flycheck-mode)
+  ;;        ;; (flycheck-mode . #'flycheck-rust-setup)
+  ;;        )
+  ;; :config
+  ;; (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+  ;; (evil-leader/set-key-for-mode 'rust-mode "TAB" 'rust-format-buffer)
+  ;; )
 
-    ;; (custom-theme-set-faces 'user
-    ;;                         `(org-level-8 ((t (,@headline ,@variable-tuple))))
-    ;;                         `(org-level-7 ((t (,@headline ,@variable-tuple))))
-    ;;                         `(org-level-6 ((t (,@headline ,@variable-tuple))))
-    ;;                         `(org-level-5 ((t (,@headline ,@variable-tuple))))
-    ;;                         `(org-level-4 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
-    ;;                         `(org-level-3 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
-    ;;                         `(org-level-2 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
-    ;;                         `(org-level-1 ((t (,@headline :foreground "#bdbdb3" ,@variable-tuple))))
-    ;;                         `(org-document-title ((t (,@headline ,@variable-tuple :color "#bdbdb3" :underline nil)))))
-    ))
-
-(add-hook 'org-mode-hook 'worace-org-mode-setup)
-
-;;Evil Bindings
-(evil-leader/set-key-for-mode 'org-mode "o" 'org-open-at-point)
-(evil-leader/set-key-for-mode 'org-mode "i s" 'org-edit-src-code)
-(evil-leader/set-key-for-mode 'org-mode "i l" 'org-insert-link)
-(evil-leader/set-key-for-mode 'org-mode "i i" 'org-insert-list-item)
-
-;; Configure additional languages for org mode
-;;(require 'ob-racket)
-;;(org-babel-do-load-languages
-;; 'org-babel-load-languages
-;; '((racket . t)))
+;; ;; (use-package racer
+;; ;;   :defer t
+;; ;;   :after rust-mode
+;; ;;   :hook
+;; ;;   (racer-mode . #'eldoc-mode)
+;; ;;   (racer-mode . #'company-mode))
 
 
-(require 'origami)
-(global-origami-mode)
+(use-package alchemist
+  :hook ((alchemist-iex-mode . show-trailing-whitespace)
+         (alchemist-test-report-mode . truncate-lines)
+         (before-save . 'elixir-format))
+  :config
+  (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
+  (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
+  (evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
+  (evil-leader/set-key-for-mode 'elixir-mode "]" 'alchemist-mix-test-at-point))
 
-(require 'yaml-mode)
+(use-package elixir-mode
+  :config
+  (sp-with-modes '(elixir-mode)
+    (sp-local-pair "fn" "end"
+                   :when '(("SPC" "RET"))
+                   :actions '(insert navigate))
+    (sp-local-pair "do" "end"
+                   :when '(("SPC" "RET"))
+                   :post-handlers '(sp-ruby-def-post-handler)
+                   :actions '(insert navigate))))
 
-(require 'org-present)
-(evil-leader/set-key-for-mode 'org-present-mode "<right>" 'org-present-next)
-(evil-leader/set-key-for-mode 'org-present-mode "<left>" 'org-present-prev)
-(setq org-image-actual-width '(400))
-(eval-after-load "org-present"
-  '(progn
-     (add-hook 'org-present-mode-hook
-               (lambda ()
-                 (local-set-key (kbd "C-<right>") 'org-present-next)
-                 (local-set-key (kbd "C-<left>") 'org-present-prev)
-                 (org-display-inline-images)
-                 (org-present-hide-cursor)
-                 (org-present-read-only)))
-     (add-hook 'org-present-mode-quit-hook
-               (lambda ()
-                 (org-remove-inline-images)
-                 (org-present-show-cursor)
-                 (org-present-read-write)))))
+(use-package web-mode
+  :mode ("\\.erb$" "\\.scss$" "\\.css$" "\\.html?$" "\\.hbs$" "\\.eex$" "\\.tsx$" "\\.jsx$")
+  :config (setq web-mode-markup-indent-offset 2
+                web-mode-enable-auto-pairing nil
+                web-mode-enable-auto-closing t
+                web-mode-css-indent-offset 2
+                web-mode-code-indent-offset 2))
 
-(add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode))
-(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+(defun tide-web-mode-setup ()
+  (message "Run tide web mode")
+  (when (string-equal "tsx" (file-name-extension buffer-file-name))
+    (setup-tide-mode)))
 
+;; ;; Support ERB/EEX tags in SmartParens
+;; ;; https://emacs.stackexchange.com/questions/15188/smartparens-and-web-mode-conflict-to-add-extra-angular-bracket
+;; ;; (sp-pair "%" "%" :wrap "C-%")
+;; ;; (sp-pair "<" ">" :wrap "C->")
 
-;; Postgres / SQL Mode
-;; sql-connection-alist defined in ~/.secrets.el
-(add-hook 'sql-interactive-mode-hook
-          (lambda ()
-            (toggle-truncate-lines t)
-            (disable-trailing-whitespace)))
+(use-package typescript-mode
+  :hook ((web-mode-hook . (lambda ()
+                            (flycheck-add-mode 'typescript-tslint 'web-mode))))
+  :mode ".ts$"
+  :config
+  (setq typescript-indent-level 2))
 
+;; (use-package tide
+;;   :mode (("\\.ts\\'" . tide-mode))
+;;   :diminish tide-mode
+;;   :after (typescript-mode company flycheck)
+;;   :hook ((typescript-mode . #'setup-tide-mode)
+;;          (before-save . #'tide-format-before-save)
+;;          (web-mode . tide-web-mode-setup)))
 
-(custom-set-variables '(coffee-tab-width 2))
-
-(require 'rust-mode)
-(evil-leader/set-key-for-mode 'rust-mode "TAB" 'rust-format-buffer)
-
-(add-hook 'rust-mode-hook #'cargo-minor-mode)
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
-(add-hook 'rust-mode-hook #'flycheck-mode)
-(with-eval-after-load 'rust-mode
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
-
-(setq tramp-default-method "ssh")
-
-(require 'circe)
-(evil-set-initial-state 'circe-mode 'emacs)
-
-(add-to-list 'circe-networks '("Mozilla"  :host "irc.mozilla.org"  :port (6667 . 6697)))
-
-(add-hook 'circe-mode-hook
-          (lambda ()
-            (setq show-trailing-whitespace nil)))
-
-;; irc-nick, irc-pass loaded from ~/.secrets.el
-(if (boundp 'irc-nick)
-    (setq circe-network-options
-          `(("Mozilla"
-             :nick ,irc-nick
-             :channels ("#rust" "#rust-beginners" "#rust-geo")
-             :nickserv-password ,irc-pass))))
-
-(setq sh-basic-offset 2
-      sh-indentation 2)
-
-;; Octave Setup
-(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
-(evil-leader/set-key-for-mode 'octave-mode "e b" 'octave-send-buffer)
-(evil-leader/set-key-for-mode 'octave-mode "e r" 'octave-send-region)
-(evil-leader/set-key-for-mode 'inferior-octave-mode "k" 'comint-clear-buffer)
-(defun inferior-octave-setup ()
-  (setq show-trailing-whitespace nil))
-(add-hook 'inferior-octave-mode-hook #'inferior-octave-setup)
-
-(custom-set-faces
- '(aw-leading-char-face
-   ((t (:inherit ace-jump-face-foreground :height 0.95)))))
-
-
-(setq racket-racket-program "/Applications/Racket v6.8/bin/racket")
-(setq racket-raco-program "/Applications/Racket v6.8/bin/raco")
-(setq org-babel-racket-command "/Applications/Racket v6.8/bin/racket")
-(evil-leader/set-key-for-mode 'racket-mode "e b" 'racket-run)
-(evil-leader/set-key-for-mode 'racket-mode "e r" 'racket-send-region)
-(evil-leader/set-key-for-mode 'racket-repl-mode "k" 'comint-clear-buffer)
-(evil-leader/set-key-for-mode 'racket-mode "ps" 'sp-forward-slurp-sexp)
-(evil-leader/set-key-for-mode 'racket-mode "pb" 'sp-forward-barf-sexp)
-(evil-leader/set-key-for-mode 'racket-mode "pp" 'sp-splice-sexp-killing-around)
-(defun racket-repl-setup ()
-  (setq show-trailing-whitespace nil)
-  (setq truncate-lines nil))
-(add-hook 'racket-repl-mode-hook #'racket-repl-setup)
-
-
-;; Elixir
-(add-hook 'alchemist-iex-mode-hook
-          (lambda ()
-            (setq show-trailing-whitespace nil)))
-(add-hook 'alchemist-test-report-mode-hook
-          (lambda ()
-            (setq truncate-lines t)))
-(add-hook 'elixir-mode-hook
-          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
-
-(evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
-(evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
-(evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
-(evil-leader/set-key-for-mode 'elixir-mode "]" 'alchemist-mix-test-at-point)
-
-(sp-with-modes '(elixir-mode)
-  (sp-local-pair "fn" "end"
-         :when '(("SPC" "RET"))
-         :actions '(insert navigate))
-  (sp-local-pair "do" "end"
-         :when '(("SPC" "RET"))
-         :post-handlers '(sp-ruby-def-post-handler)
-         :actions '(insert navigate)))
-
-(add-hook 'java-mode-hook (lambda ()
-                            (setq c-basic-offset 2)
-                            (setq truncate-lines t)))
-
-
-;; C/CPP
-;; http://syamajala.github.io/c-ide.html
-(require 'rtags)
-(require 'company-rtags)
-
-;; (setq rtags-completions-enabled t)
-;; (eval-after-load 'company
-;;   '(add-to-list
-;;     'company-backends 'company-rtags))
-;; (setq rtags-autostart-diagnostics t)
-;; (rtags-enable-standard-keybindings)
-;; (setq rtags-display-result-backend 'helm)
-;; (require 'irony)
-
-;; (defun my-c-mode-hook ()
-;;   (irony-mode)
-;;   (company-mode)
-;;   (flycheck-mode)
-;;   (setq tab-width 2)
-;;   (setq c-basic-offset 2)
-;;   (setq flycheck-clang-include-path (list "/usr/local/include"))
-;;   (company-irony-setup-begin-commands)
-;;   (define-key irony-mode-map [remap completion-at-point]
-;;     'irony-completion-at-point-async)
-;;   (define-key irony-mode-map [remap complete-symbol]
-;;     'irony-completion-at-point-async))
-
-;; (add-hook 'c++-mode-hook 'my-c-mode-hook)
-;; (add-hook 'c-mode-hook 'my-c-mode-hook)
-;; (add-hook 'objc-mode-hook 'my-c-mode-hook)
-
-(setq company-backends (delete 'company-semantic company-backends))
-(eval-after-load 'company
-  '(add-to-list
-    'company-backends 'company-irony))
-(setq company-idle-delay 0)
-(define-key c-mode-map [(tab)] 'company-complete)
-(define-key c++-mode-map [(tab)] 'company-complete)
-(define-key objc-mode-map [(tab)] 'company-complete)
-
-;; Golang
-(defun worace-go-mode-hook ()
-  (set (make-local-variable 'company-backends) '(company-go))
-  (company-mode)
-  (auto-complete-mode -1)
-  (flycheck-mode))
-(add-hook 'go-mode-hook 'worace-go-mode-hook)
-
-;; Company Mode
-(setq company-tooltip-limit 20)                      ; bigger popup window
-(setq company-idle-delay .2)                         ; decrease delay before autocompletion popup shows
-(setq company-echo-delay 0)                          ; remove annoying blinking
-(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-
-;; Swift / XCode
-(eval-after-load 'flycheck '(flycheck-swift-setup))
-(setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
-(setq flycheck-swift-target "arm64-apple-ios10")
-(require 'company-sourcekit)
-(add-to-list 'company-backends 'company-sourcekit)
-(setq sourcekit-sourcekittendaemon-executable
-      "/usr/local/bin/sourcekittendaemon")
-
-(setq org-export-allow-bind-keywords 't)
-(setq org-html-preamble 'nil)
-(setq org-html-preamble-format 'nil)
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (web-mode . tide-web-mode-setup)
+         (before-save . tide-format-before-save)))
 
 (defun setup-tide-mode ()
   (interactive)
+  (message "setting up tide mode")
   (tide-setup)
-  (flycheck-mode +1)
+  ;; (flycheck-mode 1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
+  (eldoc-mode 1)
+  (tide-hl-identifier-mode 1)
   (auto-complete-mode 0)
   (define-key tide-mode-map (kbd "TAB") #'company-complete-common-or-cycle)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
   (company-mode +1))
 
-;; aligns annotation to the right hand side
-(setq company-tooltip-align-annotations t)
-(setq typescript-indent-level 2)
+(use-package prettier-js)
 
-;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
-(add-hook 'typescript-mode-hook #'setup-tide-mode)
+(use-package cargo)
+(use-package dockerfile-mode)
+(use-package graphql-mode)
+(use-package groovy-mode)
+(use-package helm-projectile
+  :config
+  (evil-leader/set-key "f" 'helm-projectile-rg))
+(use-package helm-rg)
+(use-package json-reformat)
+(use-package markdown-toc)
+(use-package json-mode)
+(use-package protobuf-mode)
+(use-package rainbow-mode)
+(use-package restclient)
+(use-package rg)
+(use-package solarized-theme)
+(use-package spotify
+  :config
+  (evil-leader/set-key "mp" 'spotify-playpause)
+  (evil-leader/set-key "mb" 'spotify-previous)
+  (evil-leader/set-key "mf" 'spotify-next))
+(use-package toml-mode)
+(use-package thrift)
+(use-package yaml-mode)
+(use-package exec-path-from-shell
+  :config
+  (setq exec-path-from-shell-check-startup-files nil)
+  (exec-path-from-shell-initialize))
+(use-package dash)
+(use-package dash-functional)
 
-;; TSX with Web Mode + Tide
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-(add-hook 'web-mode-hook
-          (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
-;; enable typescript-tslint checker
-(flycheck-add-mode 'typescript-tslint 'web-mode)
 
-(add-hook 'mmm-mode-hook
-          (lambda ()
-            (set-face-background 'mmm-default-submode-face nil)))
-(require 'vue-mode)
-(require 'prettier-js)
-(add-to-list 'vue-mode-hook #'smartparens-mode)
-(add-to-list 'vue-mode-hook #'prettier-js-mode)
+;; Scala / Metals / LSP
 
-(setq lsp-enable-snippet nil)
-(setq lsp-ui-doc-position 'top)
-
-(use-package lsp-ui)
-(use-package company-lsp)
+(use-package lsp-ui
+  :config
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-ui-doc-position 'top))
 
 (use-package lsp-mode
-  :config (setq lsp-prefer-flymake nil))
-
-;; Scala + sbt with Metals
+  :config
+  (setq lsp-prefer-flymake nil)
+  (setq lsp-enable-snippet nil))
 
 (use-package scala-mode
-  :mode "\\.s\\(cala\\|bt\\)$")
-
-(setq lsp-ui-doc-enable nil)
+  :mode "\\.s\\(cala\\|bt\\)$"
+  :interpreter ("scala" . scala-mode))
 
 (use-package sbt-mode
   :commands sbt-start sbt-command
@@ -647,7 +476,14 @@
    ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
    (setq sbt:program-options '("-Dsbt.supershell=false")))
 
-(add-hook 'scala-mode-hook
-          (lambda () (flycheck-mode)))
-
+(use-package lsp-metals)
 (use-package company-lsp)
+(use-package company
+  :config
+  (setq company-tooltip-limit 20)                      ; bigger popup window
+  (setq company-idle-delay .2)                         ; decrease delay before autocompletion popup shows
+  (setq company-echo-delay 0)                          ; remove annoying blinking
+  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+  (setq company-tooltip-align-annotations t)
+  :hook (company-mode . (lambda () (message (auto-complete-mode 0)))))
+(use-package play-routes-mode)
