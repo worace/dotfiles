@@ -48,6 +48,10 @@
 (evil-leader/set-key "gb" 'magit-blame-addition)
 (evil-leader/set-key "gq" 'magit-blame-quit)
 (evil-leader/set-key "go" 'magit-show-commit)
+
+(defun hub-browse ()
+  (interactive)
+  (shell-command (concat "hub browse")))
 (evil-leader/set-key "hb" 'hub-browse)
 
 (defun keybind ()

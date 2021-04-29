@@ -11,10 +11,6 @@
 (setq sh-basic-offset 2
       sh-indentation 2)
 
-;;Hub Github Addon
-;;Currently just installed locally
-(require 'hub)
-
 ;; Save Recent Files
 (require 'recentf)
 (setq recentf-max-menu-items 2000)
