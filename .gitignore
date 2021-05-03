@@ -8,6 +8,7 @@ emacs/projectile-bookmarks.eld
 emacs/projectile.cache
 emacs/transient
 emacs/.dap-breakpoints
+emacs/.cache
 .lein/repl-history
 .lein/self-installs
 .lein/credentials.clj
