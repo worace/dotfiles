@@ -473,7 +473,6 @@
    (setq sbt:program-options '("-Dsbt.supershell=false")))
 
 (use-package lsp-metals)
-(use-package company-lsp)
 (use-package company
   :config
   (setq company-tooltip-limit 20)                      ; bigger popup window
