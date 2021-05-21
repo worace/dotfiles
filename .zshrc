@@ -375,5 +375,6 @@ function okiedokie {
 
 function csv2json {
   ruby -r csv -r json -e 'CSV.new(STDIN, headers: true).each { |r| puts r.to_h.to_json }'
+}
 
 export PATH="$HOME/.npm-global/bin:$PATH"
