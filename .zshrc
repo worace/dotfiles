@@ -372,3 +372,7 @@ export PATH="$HOME/.pyenv/versions/3.7.2/bin:$PATH"
 function okiedokie {
   mpg123 $HOME/data/okiedokie.mp3 2> /dev/null
 }
+
+function csv2json {
+  ruby -r csv -r json -e 'CSV.new(STDIN, headers: true).each { |r| puts r.to_h.to_json }'
+}
