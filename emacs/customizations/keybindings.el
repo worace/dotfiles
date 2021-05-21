@@ -135,3 +135,8 @@
     (while (not (eobp))
       (find-file-noselect (replace-regexp-in-string "\n$" "" (thing-at-point 'line t)))
       (forward-line))))
+
+(defun brb ()
+  "Open the BRB note file for stream viewers"
+  (interactive)
+  (find-file "~/Dropbox/scratch/brb.txt"))
