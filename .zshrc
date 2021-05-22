@@ -145,71 +145,6 @@ function pgrep {
     ps aux | grep $1 | grep -v "grep"
 }
 
-function fetch_tile {
-  TILE=$1
-  TILE_VERSION=${2:-v3.0.0}
-  if ! [[ -a /tmp/tiles/$TILE_VERSION/$TILE ]]; then
-    aws s3 --quiet cp s3://factual-us-west-1-tiles/$TILE_VERSION/$1 /tmp/tiles/$TILE_VERSION/$TILE
-  fi
-  cat /tmp/tiles/$TILE_VERSION/$TILE | \
-    java -cp ~/tile_builder.jar com.factual.tile.builder.mapreduce.outputFormat.TileReader
-}
-
-function ts_tile {
-  TILE=$1
-  curl http://marathon-services.la.prod.factual.com:31012/tiles/v3.0.1-all/$TILE | \
-    java -cp ~/tile_builder.jar com.factual.tile.builder.mapreduce.outputFormat.TileReader
-}
-
-function 312tile {
-  curl --compressed http://marathon-services.la.prod.factual.com:31015/tiles/$1 > /tmp/$1
-  cat /tmp/$1
-}
-
-function decode_tile {
-  cat $1 | java -cp ~/tile_builder.jar com.factual.tile.builder.mapreduce.outputFormat.TileReader
-}
-
-# curl -H "Content-Type: application/octet-stream" -X POST shapes-ui.prod.factual.com/api/tiles/decode --data-binary @-
-
-
-function gjtile {
-  curl -H "Content-Type: application/octet-stream" \
-       -H "Transfer-Encoding: Chunked" \
-       -H "Expect:" \
-       --no-keepalive \
-       -X POST shapes-ui.prod.factual.com/api/tiles/decode \
-       --data-binary "@$1"
-}
-
-function fetch_uuid {
-  UUID=$1
-  INDEX=${2:-Iw1HPj}
-  curl -s "http://constellation.prod.factual.com/$INDEX/live/summaries/query?q=factual_id:$UUID" \
-    | jq -cM ".response.docs[0]"
-}
-
-function emrestart {
-    if pgrep "emacs.*daemon" > /dev/null
-    then
-        echo "killing emacs daemon process"
-        $EMACS_BIN_DIR/emacsclient -e "(kill-emacs)"
-    fi
-  launchctl unload "$HOME/Library/LaunchAgents/emacsserver.plist" &&
-  launchctl load "$HOME/Library/LaunchAgents/emacsserver.plist"
-}
-
-function emstop {
-    if pgrep "emacs.*daemon" > /dev/null
-    then
-        echo "killing emacs daemon process"
-        $EMACS_BIN_DIR/emacsclient -e "(kill-emacs)"
-    fi
-}
-
-export MITSCHEME_LIBRARY_PATH="/Applications/MIT\:GNU\ Scheme.app/Contents/Resources"
-export MIT_SCHEME_EXE="/usr/local/scheme"
-
 # Chruby for ruby version management
 function loadChruby {
     if [[ -a $1/chruby.sh ]]; then
@@ -318,11 +253,6 @@ alias tl="tmux ls"
 alias ta="tmux a -t"
 
 alias i="sudo apt install"
-
-function fetchPOI {
-  ID=$1
-  curl -s "http://marathon-services.la.prod.factual.com:31950/entities/solr/places_us/places_us_main?q=factual_id:$ID"
-}
 
 function throughput {
   tail -f $1 | pv -lrtab > /dev/null
