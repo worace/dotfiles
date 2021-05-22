@@ -150,7 +150,7 @@ function loadChruby {
     if [[ -a $1/chruby.sh ]]; then
         source $1/chruby.sh
         source $1/auto.sh
-        chruby 2.6
+        # chruby 2.6
     fi
 }
 
@@ -240,12 +240,8 @@ function yarnkill {
 . $HOME/dotfiles/z.sh
 alias j=z
 
-export ONEPASSWORD_KEYCHAIN=$HOME/Dropbox/1Password/1Password.agilekeychain/
-alias 1p="1pass --fuzzy"
 PATH=$PATH:$HOME/.local/bin
-if [[ -a $HOME/.fastlane/bin ]]; then
-  # export PATH=$PATH:"$HOME/.fastlane/bin"
-fi
+
 # tmux
 alias tn="tmux new -s"
 alias tls="tmux ls"
@@ -271,10 +267,6 @@ alias countries="ruby -e 'require \"factual_countries\"; FactualCountries.all.ke
 alias count="sort | uniq -c | sort -nr"
 
 export SBT_OPTS="-Xmx32G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M -XX:ReservedCodeCacheSize=512M"
-# zprof
-
-# added by travis gem
-[ -f /home/horace/.travis/travis.sh ] && source /home/horace/.travis/travis.sh
 
 function dockerprune {
   docker image prune -f
@@ -285,9 +277,6 @@ function dockerprune {
 export PATH="$HOME/.ebcli-virtual-env/executables:$PATH"
 export PATH="$HOME/.pyenv/versions/3.7.2/bin:$PATH"
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-# export PATH="$PATH:$HOME/.rvm/bin"
-
 function okiedokie {
   mpg123 $HOME/data/okiedokie.mp3 2> /dev/null
 }
@@ -297,3 +286,5 @@ function csv2json {
 }
 
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+# zprof
