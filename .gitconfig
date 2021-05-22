@@ -53,3 +53,5 @@
 	clean = git-lfs clean -- %f
 [github]
 	user = worace
+[init]
+	defaultBranch = main

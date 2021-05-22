@@ -221,7 +221,7 @@ function loadChruby {
 
 loadChruby '/usr/local/share/chruby'
 loadChruby '/usr/share/chruby'
-loadChruby '/usr/local/opt/chruby/share/chruby/auto.sh'
+loadChruby '/opt/homebrew/opt/chruby/share/chruby'
 
 if type ruby > /dev/null; then
   # For adding system-ruby gem dir to path
@@ -284,17 +284,6 @@ export CDH_VERSION="5.13"
 PATH=/usr/local/Cellar/krb5/1.14.4/bin:$PATH
 
 case `uname` in
-  Darwin)
-    PATH=/usr/local/Cellar/krb5/1.14.4/bin:$PATH
-    export HADOOP_INSTALL=/usr/local/Cellar/hadoop/2.8.0
-    export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$HADOOP_INSTALL/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar
-    export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=$HADOOP_INSTALL/lib/lzo/Mac_OS_X-x86_64-64:$HADOOP_INSTALL/lib/native"
-    export SPARK_CONF_DIR=/etc/spark/conf
-    export LDFLAGS="-L/usr/local/opt/krb5/lib -L/usr/local/opt/openssl/lib"
-    export CPPFLAGS="-I/usr/local/opt/krb5/include"
-    export PKG_CONFIG_PATH="/usr/local/opt/krb5/lib/pkgconfig"
-    alias yrn=/usr/local/Cellar/hadoop/2.8.0/bin/yarn
-    ;;
   Linux)
     export HADOOP_HOME=/usr/lib/hadoop
     export SPARK_HOME=/opt/spark

@@ -10,7 +10,6 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-
 (use-package evil-leader
   :config
   (evil-leader/set-leader "<SPC>")
@@ -21,6 +20,7 @@
   (evil-leader/set-key "d" 'dired)
   (evil-leader/set-key "/" 'comment-or-uncomment-region))
 
+(use-package undo-tree)
 (use-package evil
   :config
   (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
@@ -36,7 +36,9 @@
   (evil-define-key 'normal dired-mode-map "gg" 'beginning-of-buffer)
   (evil-define-key 'normal global-map "G" 'end-of-buffer)
   ;; try to stop me from constantly opening the stupid evil mode keymap help window...
-  (define-key evil-normal-state-map (kbd "C-w C-h") 'evil-window-left))
+  (define-key evil-normal-state-map (kbd "C-w C-h") 'evil-window-left)
+  (global-undo-tree-mode)
+  (evil-set-undo-system 'undo-tree))
 
 (use-package evil-surround
   :config
