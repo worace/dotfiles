@@ -20,7 +20,10 @@
   (evil-leader/set-key "d" 'dired)
   (evil-leader/set-key "/" 'comment-or-uncomment-region))
 
-(use-package undo-tree)
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode))
+
 (use-package evil
   :config
   (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
@@ -30,6 +33,7 @@
   ;; Make evil treat language-dependent "symbols" as full words
   ;; e.g. move past underscores for ruby as part of same word
   (defalias #'forward-evil-word #'forward-evil-symbol)
+  (evil-set-undo-system 'undo-tree)
   (evil-mode)
   ;; Was losing evil gg in dired mode for some reason
   ;; probably using dired wrong but this fixes it...
@@ -37,7 +41,6 @@
   (evil-define-key 'normal global-map "G" 'end-of-buffer)
   ;; try to stop me from constantly opening the stupid evil mode keymap help window...
   (define-key evil-normal-state-map (kbd "C-w C-h") 'evil-window-left)
-  (global-undo-tree-mode)
   (evil-set-undo-system 'undo-tree))
 
 (use-package evil-surround
