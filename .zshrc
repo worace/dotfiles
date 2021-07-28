@@ -44,6 +44,7 @@ fi
 if [[ -a $HOME/.local/bin/virtualenvwrapper_lazy.sh ]]; then
     export WORKON_HOME=$HOME/.virtualenvs
     export VIRTUALENVWRAPPER_SCRIPT=$HOME/.local/bin/virtualenvwrapper.sh
+    export VIRTUALENVWRAPPER_PYTHON=$(which python3)
     source $HOME/.local/bin/virtualenvwrapper_lazy.sh
 fi
 
@@ -92,7 +93,7 @@ alias gst="git status"
 alias gpum="git pull upstream master"
 alias gpom="git pull origin master"
 alias gpod="git pull origin develop"
-alias hb="hub browse"
+alias hb="gh repo view --web"
 
 alias be="noglob bundle exec"
 alias bl="bundle --local"
@@ -272,10 +273,6 @@ function dockerprune {
   docker image prune -f
   docker container prune -f
 }
-
-# Elastic Beanstalk CLI
-export PATH="$HOME/.ebcli-virtual-env/executables:$PATH"
-export PATH="$HOME/.pyenv/versions/3.7.2/bin:$PATH"
 
 function okiedokie {
   mpg123 $HOME/data/okiedokie.mp3 2> /dev/null

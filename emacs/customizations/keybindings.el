@@ -51,7 +51,7 @@
 
 (defun hub-browse ()
   (interactive)
-  (shell-command (concat "hub browse")))
+  (shell-command (concat "gh repo view --web")))
 (evil-leader/set-key "hb" 'hub-browse)
 
 (defun keybind ()
