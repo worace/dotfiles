@@ -423,7 +423,9 @@
 (use-package helm-projectile
   :config
   (evil-leader/set-key "f" 'helm-projectile-rg))
-(use-package helm-rg)
+(use-package helm-rg
+  :config
+  (setq helm-rg-ripgrep-executable "/usr/bin/rg"))
 (use-package json-reformat)
 (use-package markdown-toc)
 (use-package json-mode)
