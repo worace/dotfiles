@@ -288,3 +288,12 @@ function csv2json {
 export PATH="$HOME/.npm-global/bin:$PATH"
 
 # zprof
+
+
+function jqm {
+  jq "select(.$1 == \"$2\")"
+}
+
+function kubeexec {
+  kubectl --namespace airflow-prod exec $1 -it /bin/bash
+}
