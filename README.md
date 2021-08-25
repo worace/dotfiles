@@ -61,11 +61,13 @@ cd ~/Downloads
 wget http://mirror.jax.hugeserver.com/apache/hadoop/common/hadoop-2.8.1/hadoop-2.8.1.tar.gz
 tar -xzf hadoop-2.8.1.tar.gz
 sudo mv hadoop-2.8.1 /usr/local/hadoop
+
 wget https://d3kbcqa49mib13.cloudfront.net/spark-2.2.0-bin-hadoop2.7.tgz
 tar -xzf spark-2.2.0-bin-hadoop2.7.tgz
 sudo mv spark-2.2.0-bin-hadoop2.7 /usr/local/spark
 
 sudo apt-get install -y liblzo2-dev
+
 git clone git@github.com:twitter/hadoop-lzo.git
 cd hadoop-lzo
 mvn clean package
@@ -139,4 +141,15 @@ mkdir -p build && cd build/
 ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
 make
 sudo make install
+```
+
+Spotify UI scaling: https://community.spotify.com/t5/Desktop-Linux/Linux-client-barely-usable-on-HiDPI-displays/td-p/1067272
+
+## Rust
+
+```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup toolchain nightly
+rustup default nightly
+rustup component add rls
 ```
