@@ -425,7 +425,8 @@
   (evil-leader/set-key "f" 'helm-projectile-rg))
 (use-package helm-rg
   :config
-  (setq helm-rg-ripgrep-executable "/usr/bin/rg"))
+  (setq helm-rg-ripgrep-executable "/usr/bin/rg")
+  (setq helm-rg-default-directory 'git-root))
 (use-package json-reformat)
 (use-package markdown-toc)
 (use-package json-mode)
