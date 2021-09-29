@@ -153,3 +153,27 @@ rustup toolchain nightly
 rustup default nightly
 rustup component add rls
 ```
+
+## Minikube
+
+https://minikube.sigs.k8s.io/docs/start/
+
+```
+pd ~/Downloads
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+sudo dpkg -i minikube_latest_amd64.deb
+
+$ minikube version
+minikube version: v1.22.0
+commit: a03fbcf166e6f74ef224d4a63be4277d017bb62e
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(<kubectl.sha256) kubectl" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+➸ kubectl version --client
+Client Version: version.Info{Major:"1", Minor:"22", GitVersion:"v1.22.1", GitCommit:"632ed300f2c34f6d6d15ca4cef3d3c7073412212", GitTreeState:"clean", BuildDate:"2021-08-19T15:45:37Z", GoVersion:"go1.16.7", Compiler:"gc", Platform:"linux/amd64"}
+
+rm kubectl.sha256
+```
