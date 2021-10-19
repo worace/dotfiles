@@ -1,58 +1,135 @@
 dotfiles
 ========
 
-## Setup Notes
+## Ubuntu Basic Setup
 
-### SSH Key
+### 1Password
 
-Either copy them from an existing machine
-or generate new ones with:
+[https://support.1password.com/install-linux/](https://support.1password.com/install-linux/)
 
 ```
-ssh-keygen -t rsa
+sudo apt install -y curl
+
+curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
+echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list
+sudo mkdir -p /etc/debsig/policies/AC2D62742012EA22/
+curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol | sudo tee /etc/debsig/policies/AC2D62742012EA22/1password.pol
+sudo mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
+curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+sudo apt update && sudo apt install -y 1password
 ```
 
-Then need to add these to Github by logging in
-and going to profile -> ssh keys
+### Github CLI
 
-###  Github CLI
+```
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install -y gh
+gh auth login
+```
 
-https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+Last step will allow to create SSH key and auth via browser
 
-### 4. Cloning Dotfiles
+### Dotfiles
 
 ```
 cd ~
-gh repo clone dotfiles
-```
+gh repo clone worace/dotfiles
 
-### Symlinks
-
-```
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.gitconfig ~/.gitconfig
-ln -s ~/dotfiles/.lein ~/.lein
-ln -s ~/dotfiles/.gemrc ~/.gemrc
 ln -s ~/dotfiles/emacs ~/.emacs.d
 ln -s ~/dotfiles/.system_gitignore ~/.gitignore
 ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/tmux-linux.conf ~/.tmux-system.conf
 ln -s ~/dotfiles/basic.tmuxtheme ~/.tmux.theme
-mkdir -p ~/.config/termite
-ln -s ~/dotfiles/termite-gruvbox-dark ~/.config/termite/config
 ```
 
-### Base Packages
+### Basics
 
 ```
-sudo apt install emacs zsh tmux ripgrep xclip ffmpeg pv jq
+sudo apt -y install zsh tmux ripgrep xclip ffmpeg pv jq wget htop tree libssl-dev
 ```
 
-### ZSH
+### Emacs
+
+Some packages seem to not work in emacs26 anymore so install 27 via PPA
 
 ```
-chsh -s /bin/zsh $(whoami) # takes a logout to take effect
+sudo add-apt-repository ppa:kelleyk/emacs
+sudo apt update
+sudo apt install emacs27
 ```
+
+### Shell
+
+```
+chsh -s /bin/zsh $(whoami)
+```
+
+### Rust
+
+```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup default nightly
+rustup component add rls
+```
+
+[https://robert.kra.hn/posts/2021-02-07_rust-with-emacs/](https://robert.kra.hn/posts/2021-02-07_rust-with-emacs/)
+
+```
+cd /tmp
+git clone https://github.com/rust-analyzer/rust-analyzer.git
+cd rust-analyzer
+cargo xtask install --server # will install rust-analyzer into $HOME/.cargo/binru
+```
+
+### Pop Shell
+
+[https://github.com/pop-os/shell](https://github.com/pop-os/shell)
+
+```
+cd /tmp
+gh repo clone pop-os/shell
+cd shell
+sudo apt install node-typescript gnome-tweaks
+make local-install
+```
+
+Note: may need to use gnome tweaks to swap super key: [https://www.reddit.com/r/pop_os/comments/arp7qg/is_there_a_way_to_change_super_key/](https://www.reddit.com/r/pop_os/comments/arp7qg/is_there_a_way_to_change_super_key/) - Use "Alt is Swapped with Win" option
+
+### Dropbox
+
+- [https://www.dropbox.com/install-linux](https://www.dropbox.com/install-linux)
+- Download .deb installer
+- `sudo apt install python3-gpg` - to allow dropbox installer to verify signatures
+- `sudo dpkg -i ~/Downloads/dropbox_*.deb`
+
+### Fonts
+
+```
+cd ~/Downloads
+wget https://github.com/adobe-fonts/source-code-pro/releases/download/2.038R-ro%2F1.058R-it%2F1.018R-VAR/OTF-source-code-pro-2.038R-ro-1.058R-it.zip
+unzip *.zip
+mkdir ~/.fonts
+cp *.otf ~/.fonts/
+fc-cache -f -v
+```
+
+### Key Repeat
+
+```
+gsettings set org.gnome.desktop.peripherals.keyboard delay 225
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 15
+```
+
+### Ubuntu terminal theme
+
+Preferences → Profiles → Uncheck "Use colors from system theme"...seems to pull gruvbox automatically from somewhere
+
+
+## Extras
 
 ### Spark/Hadoop
 
@@ -78,26 +155,6 @@ echo "spark.jars /usr/local/hadoop/lib/hadoop-lzo-0.4.21-SNAPSHOT.jar" >> /usr/l
 sudo apt-get install krb5-user
 ```
 
-## Misc Packages
-
-```
-sudo apt-get install -y redshift redshift-gtk silversearcher-ag htop caffeine tmux gksu \
-                        vim psensor xclip tree ttf-ancient-fonts net-tools scrot curl rofi gdal-bin whois
-```
-
-### Font
-
-https://github.com/adobe-fonts/source-code-pro/releases
-
-```
-cd ~/Downloads
-wget https://github.com/adobe-fonts/source-code-pro/releases/download/2.038R-ro%2F1.058R-it%2F1.018R-VAR/OTF-source-code-pro-2.038R-ro-1.058R-it.zip
-unzip *.zip
-mkdir ~/.fonts
-cp *.otf ~/.fonts/
-fc-cache -f -v
-```
-
 ### Slack Client
 
 [Official Linux Client](https://slack.com/downloads/linux)
@@ -113,46 +170,8 @@ sudo -u postgres psql
 sudo -u postgres createuser --superuser $(whoami)
 createdb
 ```
-### Termite Terminal
-
-Follow script [here](https://github.com/Corwind/termite-install/blob/master/termite-install.sh)
-
-Theme from [here](https://github.com/morhetz/gruvbox-contrib/blob/master/termite/gruvbox-dark)
-
-### I3 Gaps
-
-[Source](https://github.com/Airblader/i3/wiki/Compiling-&-Installing)
-
-```
-cd /tmp
-git clone https://www.github.com/Airblader/i3 i3-gaps
-cd i3-gaps
-
-# Install Deps
-sudo apt-get install -y libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev \
-                        libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev \
-                        libxkbcommon-x11-dev autoconf libxcb-xrm0 libxcb-xrm-dev automake
-
-# compile & install
-autoreconf --force --install
-rm -rf build/
-mkdir -p build && cd build/
-
-../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
-make
-sudo make install
-```
 
 Spotify UI scaling: https://community.spotify.com/t5/Desktop-Linux/Linux-client-barely-usable-on-HiDPI-displays/td-p/1067272
-
-## Rust
-
-```
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-rustup toolchain nightly
-rustup default nightly
-rustup component add rls
-```
 
 ## Minikube
 
