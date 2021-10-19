@@ -75,40 +75,6 @@
   :config
   (setq projectile-git-submodule-command nil))
 
-(use-package clojure-mode
-  :mode (("\\.clj\\'" . clojure-mode)
-         ("\\.cljc\\'" . clojure-mode)
-         ("\\.cljs\\'" . clojure-mode)
-         ("\\.edn\\'" . clojure-mode))
-  :init
-  (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
-  :config
-  (setq cljr-inject-dependencies-at-jack-in nil)
-  (setq cider-show-error-buffer nil)
-  (setq cider-use-fringe-indicators nil)
-  (setq cider-repl-history-size 1000)
-  (setq cider-repl-history-file "~/.ciderhistory")
-  (evil-leader/set-key-for-mode 'clojure-mode "eb" 'cider-eval-buffer)
-  (evil-leader/set-key-for-mode 'clojure-mode "er" 'cider-eval-region)
-  (evil-leader/set-key-for-mode 'clojure-mode "ep" 'cider-eval-sexp-at-point)
-  (evil-leader/set-key-for-mode 'clojure-mode "ee" 'cider-eval-defun-at-point)
-  (evil-leader/set-key-for-mode 'clojure-mode "et" 'cider-test-run-test)
-  (evil-leader/set-key-for-mode 'clojure-mode "ps" 'sp-forward-slurp-sexp)
-  (evil-leader/set-key-for-mode 'clojure-mode "pb" 'sp-forward-barf-sexp)
-  (evil-leader/set-key-for-mode 'clojure-mode "pp" 'sp-splice-sexp-killing-around)
-  (evil-leader/set-key-for-mode 'clojurescript-mode "ps" 'sp-forward-slurp-sexp)
-  (evil-leader/set-key-for-mode 'clojurescript-mode "pb" 'sp-forward-barf-sexp))
-
-(use-package cider
-  :hook (cider-repl-mode . (lambda ()
-                             (setq show-trailing-whitespace nil)
-                             (setq truncate-lines nil)))
-  :config
-  (evil-leader/set-key-for-mode 'cider-repl-mode "ps" 'sp-forward-slurp-sexp)
-  (evil-leader/set-key-for-mode 'cider-repl-mode "pb" 'sp-forward-barf-sexp)
-  (evil-leader/set-key-for-mode 'cider-repl-mode "pp" 'sp-splice-sexp-killing-around)
-  (evil-leader/set-key-for-mode 'cider-repl-mode "k" 'cider-repl-clear-buffer))
-
 (use-package smartparens
   :config
   (smartparens-global-mode t))
