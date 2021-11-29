@@ -300,11 +300,13 @@
 
   ;; comment to disable rustfmt on save
   (setq rustic-format-on-save t)
-  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
+  ;; (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook)
+  )
 
-(defun rk/rustic-mode-hook ()
-  ;; so that run C-c C-c C-r works without having to confirm
-  (setq-local buffer-save-without-query t))
+;; https://github.com/brotzeit/rustic/issues/253#issuecomment-860195655
+;; (defun rk/rustic-mode-hook ()
+;;   ;; so that run C-c C-c C-r works without having to confirm
+;;   (setq-local buffer-save-without-query t))
 
 (use-package alchemist
   :hook ((alchemist-iex-mode . show-trailing-whitespace)
@@ -366,7 +368,9 @@
   :hook ((typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
          (web-mode . tide-web-mode-setup)
-         (before-save . tide-format-before-save)))
+         ;; (before-save . tide-format-before-save)
+         (before-save . prettier-js)
+         ))
 
 (defun setup-tide-mode ()
   (interactive)
