@@ -193,7 +193,7 @@
         )
   (custom-set-variables
    '(python-guess-indent nil)
-   '(python-indent 2)))
+   '(python-indent 4)))
 
 (defun python-shell-clear-output ()
   (interactive)
