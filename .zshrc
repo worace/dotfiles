@@ -282,6 +282,10 @@ function csv2json {
   ruby -r csv -r json -e 'CSV.new(STDIN, headers: true).each { |r| puts r.to_h.to_json }'
 }
 
+function json2csv {
+  ruby -r set -r json -r csv -e 'rows = STDIN.readlines.map { |l| JSON.parse(l) }; keys = rows.map { |r| r.keys.to_set }.reduce(:union).to_a.sort; arrs = rows.map { |r| keys.map { |k| r[k] } }; CSV(STDOUT) { |csv| csv << keys; arrs.each { |a| csv << a } }'
+}
+
 export PATH="$HOME/.npm-global/bin:$PATH"
 
 # zprof
