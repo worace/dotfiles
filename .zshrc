@@ -298,3 +298,7 @@ function jqm {
 function kubeexec {
   kubectl --namespace airflow-prod exec $1 -it /bin/bash
 }
+
+if type "frum" > /dev/null; then
+  eval "$(frum init)"
+fi
