@@ -302,3 +302,7 @@ function kubeexec {
 if type "frum" > /dev/null; then
   eval "$(frum init)"
 fi
+
+if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
