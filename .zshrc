@@ -80,6 +80,14 @@ esac
 
 alias racket="/Applications/Racket\ v6.8/bin/racket"
 
+function gitMainBranch() {
+  git remote show origin | sed -n '/HEAD branch/s/.*: //p' | tr -d '\n'
+}
+
+function gpom() {
+  git pull origin $(gitMainBranch)
+}
+
 # Git
 alias gs='git status '
 alias ga='git add .'
@@ -91,7 +99,6 @@ alias gr='git remote -v'
 alias gco="git checkout"
 alias gst="git status"
 alias gpum="git pull upstream master"
-alias gpom="git pull origin master"
 alias gpod="git pull origin develop"
 alias hb="gh repo view --web"
 
