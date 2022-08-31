@@ -69,6 +69,12 @@
     (shell-command (concat "gh browse " (current-file-repo-relative)))))
 (evil-leader/set-key "ho" 'hub-open)
 
+(defun hub-open-line ()
+  (interactive)
+  (let ((default-directory (magit-toplevel)))
+    (shell-command (concat "gh browse " (current-file-repo-relative) ":" (format-mode-line "%l")))))
+(evil-leader/set-key "hl" 'hub-open-line)
+
 (defun keybind ()
   (interactive)
   (find-file "~/dotfiles/.emacs.d/customizations/keybindings.el"))
