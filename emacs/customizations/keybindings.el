@@ -67,7 +67,7 @@
   (interactive)
   (let ((default-directory (magit-toplevel)))
     (shell-command (concat "gh browse " (current-file-repo-relative)))))
-(evil-leader/set-key "ho" 'hub-browse)
+(evil-leader/set-key "ho" 'hub-open)
 
 (defun keybind ()
   (interactive)
