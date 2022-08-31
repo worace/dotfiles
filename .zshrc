@@ -106,10 +106,6 @@ alias be="noglob bundle exec"
 alias bl="bundle --local"
 
 alias la="ls -lah"
-alias lf="rlwrap lein figwheel dev test" #figwheel readline mode
-alias ltr="lein test-refresh"
-alias ntw="nosetests --with-watch -s"
-alias nt="nosetests"
 alias pd="pushd $*"
 alias po="popd $*"
 alias hist="cat ~/.zsh_history"
@@ -120,18 +116,12 @@ export PATH=$PATH:"$GOPATH/bin"
 export CC="gcc"
 
 alias bounce_dns="sudo killall -HUP mDNSResponder"
-alias turing="cd ~/Turing"
-alias code="cd ~/code"
-alias clj="cd ~/code/clojure"
 
 # hdfs aliases
 alias hfs='noglob hadoop fs'
 alias hls='noglob hadoop fs -ls'
 alias htx='noglob hadoop fs -text'
 alias hc='noglob hadoop fs -cat'
-
-# Run spark docker devbox
-alias sparkdev='docker run -v ~/.docker_bash_history:/root/.bash_history -v ~/code:/code -ti --rm --name dev -e "START_SCRIPT=http://resources.prod.factual.com/services/hadoop/cdh5/scripts/get_configs.sh" factual/docker-cdh5-devbox /sbin/my_init -- /sbin/setuser $(whoami) /bin/bash -l'
 
 if [[ -a ~/.secrets.sh ]]; then
   source ~/.secrets.sh
@@ -313,3 +303,7 @@ fi
 if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
+
+alias bta="./bazel test ..."
+alias brp="REPIN=1 ./bazel run @unpinned_maven//:pin"
+alias gitsha="git rev-parse --short HEAD"
