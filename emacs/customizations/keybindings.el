@@ -51,8 +51,23 @@
 
 (defun hub-browse ()
   (interactive)
-  (shell-command (concat "gh repo view --web")))
+  (shell-command "gh repo view --web"))
 (evil-leader/set-key "hb" 'hub-browse)
+
+(defun replace-in-string (what with in)
+  (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
+
+(defun current-file-repo-relative ()
+  (replace-in-string
+    (magit-toplevel)
+    ""
+    (buffer-file-name)))
+
+(defun hub-open ()
+  (interactive)
+  (let ((default-directory (magit-toplevel)))
+    (shell-command (concat "gh browse " (current-file-repo-relative)))))
+(evil-leader/set-key "ho" 'hub-browse)
 
 (defun keybind ()
   (interactive)
