@@ -212,21 +212,24 @@ alias rl="source ~/.zshrc"
 PATH="/usr/local/opt/thrift@0.90/bin:$PATH"
 
 # Hadoop + Kerberos Local Setup
-export HADOOP_CONF_DIR=/etc/hadoop/conf
-export CDH_VERSION="5.13"
-PATH=/usr/local/Cellar/krb5/1.14.4/bin:$PATH
+export HADOOP_CONF_DIR=/etc/hadoop/neutronic-aws-conf
+export HADOOP_USER_NAME=root
+export HADOOP_CLASSPATH=/etc/hadoop/lib/jars/*
 
 case `uname` in
   Linux)
     export HADOOP_HOME=/usr/lib/hadoop
     export SPARK_HOME=/opt/spark
+    export PATH=$PATH:/opt/oozie/bin
     export PATH=$SPARK_HOME/bin:$PATH
-    alias yrn=/usr/lib/hadoop-yarn/bin/yarn
+    export PATH=$HADOOP_HOME/bin:$PATH
+    export OOZIE_URL=https://oozie-api.we-usw1-infra.k8s.foursquare.com/oozie
+    alias yrn=/usr/lib/hadoop/bin/yarn
     ;;
 esac
 
 function yarnlogs {
-  /usr/lib/hadoop-yarn/bin/yarn logs -applicationId $1 > /tmp/$1.log
+  /usr/lib/hadoop/bin/yarn logs -applicationId $1 > /tmp/$1.log
 }
 
 function yarnkill {
@@ -264,7 +267,7 @@ alias rake="noglob rake"
 alias countries="ruby -e 'require \"factual_countries\"; FactualCountries.all.keys.each { |c| puts c }'"
 alias count="sort | uniq -c | sort -nr"
 
-export SBT_OPTS="-Xmx32G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M -XX:ReservedCodeCacheSize=512M"
+export SBT_OPTS="-Xmx16G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M -XX:ReservedCodeCacheSize=512M -Dcom.unboundid.scim.sdk.debug.enabled=true"
 
 function dockerprune {
   docker image prune -f
@@ -307,3 +310,17 @@ fi
 alias bta="./bazel test ..."
 alias brp="REPIN=1 ./bazel run @unpinned_maven//:pin"
 alias gitsha="git rev-parse --short HEAD"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+
+function scCase {
+  ruby -e "puts STDIN.read.gsub(\"//@ (\", \"\").gsub(\"'\", '\"').gsub(').should ==', ' -> ').gsub(/\n/, \",\n\").gsub(', meta!()', '')"
+}
+
+alias awp="aws --profile places-eng-poweruser"
+
+export PATH="$PATH:/usr/local/go/bin"
+
+eval $(cs java --jvm adopt:8 --env)
