@@ -459,3 +459,6 @@
   (setq company-tooltip-align-annotations t)
   :hook (company-mode . (lambda () (message (auto-complete-mode 0)))))
 (use-package play-routes-mode)
+
+(use-package bazel)
+(add-to-list 'auto-mode-alist '("BUILD\\'" . bazel-mode))
