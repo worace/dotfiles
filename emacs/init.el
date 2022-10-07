@@ -22,7 +22,8 @@
 
 (use-package undo-tree
   :config
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
 
 (use-package evil
   :config
@@ -75,8 +76,9 @@
  ;; If there is more than one, they won't work right.
  '(markdown-command (executable-find "markdown"))
  '(package-selected-packages
-   (quote
-    (undo-tree scala-mode yaml-mode web-mode vue-mode virtualenvwrapper use-package treemacs toml-mode tide thrift swift-mode spotify solarized-theme smartparens seeing-is-believing sbt-mode ruby-test-mode rinari rg restclient rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode racer protobuf-mode prettier-js play-routes-mode origami org-present org-bullets nose neotree mocha markdown-toc magit json-mode jade-mode helm-rg helm-projectile helm-circe helm-ag haskell-mode handlebars-mode haml-mode gruvbox-theme groovy-mode graphql-mode gist flycheck-swift flycheck-rust exec-path-from-shell evil-surround evil-leader emmet-mode dockerfile-mode dap-mode company-sourcekit company-rtags company-lsp company-irony company-go coffee-mode cmake-mode cider chruby cargo auto-complete alchemist ag ace-jump-mode))))
+   '(bazel bazel-mode undo-tree scala-mode yaml-mode web-mode vue-mode virtualenvwrapper use-package treemacs toml-mode tide thrift swift-mode spotify solarized-theme smartparens seeing-is-believing sbt-mode ruby-test-mode rinari rg restclient rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode racer protobuf-mode prettier-js play-routes-mode origami org-present org-bullets nose neotree mocha markdown-toc magit json-mode jade-mode helm-rg helm-projectile helm-circe helm-ag haskell-mode handlebars-mode haml-mode gruvbox-theme groovy-mode graphql-mode gist flycheck-swift flycheck-rust exec-path-from-shell evil-surround evil-leader emmet-mode dockerfile-mode dap-mode company-sourcekit company-rtags company-lsp company-irony company-go coffee-mode cmake-mode cider chruby cargo auto-complete alchemist ag ace-jump-mode))
+ '(python-indent-guess-indent-offset nil)
+ '(python-indent-offset 4))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
