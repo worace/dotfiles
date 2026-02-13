@@ -1,4 +1,3 @@
-# zmodload zsh/zprof
 # Check if Command is available:
 # if ! type "$foobar_command_name" > /dev/null; then
     # do stuff
@@ -28,9 +27,9 @@ if [[ -a ~/dotfiles/antigen.zsh ]]; then
     source ~/dotfiles/antigen.zsh
     autoload -U colors && colors
     setopt promptsubst
-    antigen bundle git
-    antigen bundle zsh-users/zsh-syntax-highlighting
-    antigen bundle zsh-users/zsh-completions
+    # antigen bundle git
+    # antigen bundle zsh-users/zsh-syntax-highlighting
+    # antigen bundle zsh-users/zsh-completions
     antigen theme ~/dotfiles worace
     antigen apply
 fi
@@ -39,13 +38,6 @@ if [[ -a /usr/local/bin/virtualenvwrapper_lazy.sh ]]; then
     export WORKON_HOME=$HOME/.virtualenvs
     export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
     source /usr/local/bin/virtualenvwrapper_lazy.sh
-fi
-
-if [[ -a $HOME/.local/bin/virtualenvwrapper_lazy.sh ]]; then
-    export WORKON_HOME=$HOME/.virtualenvs
-    export VIRTUALENVWRAPPER_SCRIPT=$HOME/.local/bin/virtualenvwrapper.sh
-    export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-    source $HOME/.local/bin/virtualenvwrapper_lazy.sh
 fi
 
 case `uname` in
@@ -100,6 +92,7 @@ alias gco="git checkout"
 alias gst="git status"
 alias gpum="git pull upstream master"
 alias gpod="git pull origin develop"
+alias gprev='git checkout -'
 alias hb="gh repo view --web"
 
 alias be="noglob bundle exec"
@@ -125,14 +118,6 @@ alias hc='noglob hadoop fs -cat'
 
 if [[ -a ~/.secrets.sh ]]; then
   source ~/.secrets.sh
-fi
-
-if [[ -a ~/.localrc ]]; then
-  source ~/.localrc
-fi
-
-if [[ -a ~/.factual.sh ]]; then
-  source ~/.factual.sh
 fi
 
 function killgrep {
@@ -177,8 +162,8 @@ function scrape {
 function countloc { find $1 -name "*" -type f | xargs wc -l | sort -n }
 
 # export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+# [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 # alias nvmu='source ~/.nvm/nvm.sh && nvm use'
 
 # Elixir
@@ -267,11 +252,12 @@ alias rake="noglob rake"
 alias countries="ruby -e 'require \"factual_countries\"; FactualCountries.all.keys.each { |c| puts c }'"
 alias count="sort | uniq -c | sort -nr"
 
-export SBT_OPTS="-Xmx16G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss2M -XX:ReservedCodeCacheSize=512M -Dcom.unboundid.scim.sdk.debug.enabled=true"
+export SBT_OPTS="-Xmx16G -Xss2M -XX:ReservedCodeCacheSize=512M -Dcom.unboundid.scim.sdk.debug.enabled=true"
 
 function dockerprune {
   docker image prune -f
   docker container prune -f
+  docker volume prune -f
 }
 
 function okiedokie {
@@ -285,10 +271,11 @@ function csv2json {
 function json2csv {
   ruby -r set -r json -r csv -e 'rows = STDIN.readlines.map { |l| JSON.parse(l) }; keys = rows.map { |r| r.keys.to_set }.reduce(:union).to_a.sort; arrs = rows.map { |r| keys.map { |k| r[k] } }; CSV(STDOUT) { |csv| csv << keys; arrs.each { |a| csv << a } }'
 }
+function jsonobj2csv {
+  ruby -r json -e "puts 'key,value';JSON.parse(STDIN.read).each { |k, v| puts k.to_s + ',' + v.to_s}"
+}
 
 export PATH="$HOME/.npm-global/bin:$PATH"
-
-# zprof
 
 
 function jqm {
@@ -305,6 +292,10 @@ fi
 
 if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+if [ -f "/opt/homebrew/bin/brew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 alias bta="./bazel test ..."
