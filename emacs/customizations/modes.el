@@ -5,7 +5,6 @@
 ;; (setq max-specpdl-size 32000)
 (setq-default truncate-lines 1)
 (setq-default indent-tabs-mode nil)
-(global-linum-mode 1)
 (ido-mode 1)
 (setq company-tooltip-align-annotations t)
 (setq sh-basic-offset 2
@@ -308,26 +307,26 @@
 ;;   ;; so that run C-c C-c C-r works without having to confirm
 ;;   (setq-local buffer-save-without-query t))
 
-(use-package alchemist
-  :hook ((alchemist-iex-mode . show-trailing-whitespace)
-         (alchemist-test-report-mode . truncate-lines)
-         (before-save . 'elixir-format))
-  :config
-  (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
-  (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
-  (evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
-  (evil-leader/set-key-for-mode 'elixir-mode "]" 'alchemist-mix-test-at-point))
+;; (use-package alchemist
+;;   :hook ((alchemist-iex-mode . show-trailing-whitespace)
+;;          (alchemist-test-report-mode . truncate-lines)
+;;          (before-save . 'elixir-format))
+;;   :config
+;;   (evil-leader/set-key-for-mode 'elixir-mode "eb" 'alchemist-execute-this-buffer)
+;;   (evil-leader/set-key-for-mode 'elixir-mode "er" 'alchemist-send-region)
+;;   (evil-leader/set-key-for-mode 'elixir-mode "\\" 'alchemist-mix-test-this-buffer)
+;;   (evil-leader/set-key-for-mode 'elixir-mode "]" 'alchemist-mix-test-at-point))
 
-(use-package elixir-mode
-  :config
-  (sp-with-modes '(elixir-mode)
-    (sp-local-pair "fn" "end"
-                   :when '(("SPC" "RET"))
-                   :actions '(insert navigate))
-    (sp-local-pair "do" "end"
-                   :when '(("SPC" "RET"))
-                   :post-handlers '(sp-ruby-def-post-handler)
-                   :actions '(insert navigate))))
+;; (use-package elixir-mode
+;;   :config
+;;   (sp-with-modes '(elixir-mode)
+;;     (sp-local-pair "fn" "end"
+;;                    :when '(("SPC" "RET"))
+;;                    :actions '(insert navigate))
+;;     (sp-local-pair "do" "end"
+;;                    :when '(("SPC" "RET"))
+;;                    :post-handlers '(sp-ruby-def-post-handler)
+;;                    :actions '(insert navigate))))
 
 (use-package web-mode
   :mode ("\\.erb$" "\\.scss$" "\\.css$" "\\.html?$" "\\.hbs$" "\\.eex$" "\\.tsx$" "\\.jsx$")
@@ -369,7 +368,7 @@
          (typescript-mode . tide-hl-identifier-mode)
          (web-mode . tide-web-mode-setup)
          ;; (before-save . tide-format-before-save)
-         (before-save . prettier-js)
+         ;; (before-save . prettier-js)
          ))
 
 (defun setup-tide-mode ()
@@ -384,7 +383,7 @@
   (define-key tide-mode-map (kbd "TAB") #'company-complete-common-or-cycle)
   (company-mode +1))
 
-(use-package prettier-js)
+;; (use-package prettier-js)
 
 (use-package cargo)
 (use-package dockerfile-mode)
@@ -395,7 +394,7 @@
   (evil-leader/set-key "f" 'helm-projectile-rg))
 (use-package helm-rg
   :config
-  (setq helm-rg-ripgrep-executable "/usr/bin/rg")
+  (setq helm-rg-ripgrep-executable "/opt/homebrew/bin/rg")
   (setq helm-rg-default-directory 'git-root))
 (use-package json-reformat)
 (use-package markdown-toc)
@@ -462,3 +461,8 @@
 
 (use-package bazel)
 (add-to-list 'auto-mode-alist '("BUILD\\'" . bazel-mode))
+
+(setenv "JAVA_HOME" "/Users/horace/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.19%252B7/OpenJDK11U-jdk_aarch64_mac_hotspot_11.0.19_7.tar.gz/jdk-11.0.19+7/Contents/Home")
+(use-package kotlin-mode
+  :hook
+  (kotlin-mode . lsp))

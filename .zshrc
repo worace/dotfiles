@@ -314,7 +314,6 @@ alias awp="aws --profile places-eng-poweruser"
 
 export PATH="$PATH:/usr/local/go/bin"
 
-eval $(cs java --jvm adopt:8 --env)
 
 alias gcp="git cherry-pick"
 alias gad="git add ."
