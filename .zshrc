@@ -327,3 +327,4 @@ alias tf="terraform"
 if [[ -a ~/.localrc ]]; then
   source ~/.localrc
 fi
+alias rguuid="rg -o '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'"
