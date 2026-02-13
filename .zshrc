@@ -324,3 +324,6 @@ alias gpofl='git push origin $(git branch --show-current) --force-with-lease'
 alias dcm="docker compose"
 alias cs="coursier"
 alias tf="terraform"
+if [[ -a ~/.localrc ]]; then
+  source ~/.localrc
+fi
