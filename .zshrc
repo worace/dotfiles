@@ -317,3 +317,10 @@ export PATH="$PATH:/usr/local/go/bin"
 eval $(cs java --jvm adopt:8 --env)
 
 alias gcp="git cherry-pick"
+alias gad="git add ."
+alias gpsh='git push origin $(git branch --show-current)'
+alias gpu='git pull origin $(git branch --show-current)'
+alias gpofl='git push origin $(git branch --show-current) --force-with-lease'
+alias dcm="docker compose"
+alias cs="coursier"
+alias tf="terraform"
