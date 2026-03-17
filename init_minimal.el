@@ -250,11 +250,12 @@
 (use-package helm
   :bind (("M-x" . helm-M-x)
          ("C-x b" . helm-buffers-list))
-  :config
-  (helm-mode 1)
+  :init
   (evil-leader/set-key "b" 'helm-buffers-list)
   (evil-leader/set-key "r" 'helm-recentf)
-  (evil-leader/set-key "x" 'helm-M-x))
+  (evil-leader/set-key "x" 'helm-M-x)
+  :config
+  (helm-mode 1))
 
 (use-package projectile
   :config
