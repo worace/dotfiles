@@ -147,9 +147,12 @@ set -g status-justify centre
 set -g pane-border-style bg=default
 set -g pane-border-style fg=default
 
-# Active pane border
-set -g pane-active-border-style bg=default
-set -g pane-active-border-style fg=green
+# Active pane border — gruvbox orange for visibility
+set -g pane-active-border-style "fg=#fe8019"
+
+# Pane border status bar — shows an orange marker on the active pane
+set -g pane-border-status bottom
+set -g pane-border-format "#{?pane_active,#[fg=#1d2021]#[bg=#fe8019] ● #T #[default],#[fg=#928374]#[bg=default] #T }"
 
 # Pane number indicator
 set -g display-panes-colour default
