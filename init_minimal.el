@@ -4,6 +4,9 @@
 ;; 1. Bootstrap
 ;; ============================================================
 
+;; Suppress "Package cl is deprecated" warning from older dependencies
+(setq byte-compile-warnings '(cl-functions))
+
 ;; Raise GC threshold for snappier startup / LSP
 (setq gc-cons-threshold 100000000
       read-process-output-max (* 1024 1024)) ;; 1MB for LSP
@@ -143,7 +146,7 @@
 
 ;; Font
 (set-face-attribute 'default nil
-                    :family "Source Code Pro"
+                    :family "Menlo"
                     :height 120
                     :weight 'normal
                     :width 'normal)
