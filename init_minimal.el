@@ -215,7 +215,7 @@
 
 ;; General
 (evil-leader/set-key "q" 'evil-quit)
-(evil-leader/set-key "k" 'kill-this-buffer)
+(evil-leader/set-key "k" 'kill-current-buffer)
 (evil-leader/set-key "s" 'save-buffer)
 (evil-leader/set-key "d" 'dired)
 (evil-leader/set-key "/" 'comment-or-uncomment-region)
