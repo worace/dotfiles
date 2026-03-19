@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DRAFT=""
+TARGET_BRANCH="main"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --draft) DRAFT="--draft"; shift ;;
+    *) TARGET_BRANCH="$1"; shift ;;
+  esac
+done
+
+CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+if [ "$CURRENT_BRANCH" = "$TARGET_BRANCH" ]; then
+  echo "error: already on target branch '$TARGET_BRANCH'" >&2
+  exit 1
+fi
+
+echo "Pushing '$CURRENT_BRANCH' to origin..."
+git push -u origin "$CURRENT_BRANCH"
+
+echo "Creating PR against '$TARGET_BRANCH'..."
+gh pr create --base "$TARGET_BRANCH" --fill $DRAFT
