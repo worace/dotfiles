@@ -341,7 +341,11 @@
   :config
   (setq lsp-prefer-flymake nil
         lsp-enable-snippet nil
-        lsp-headerline-breadcrumb-enable nil))
+        lsp-headerline-breadcrumb-enable nil)
+  ;; Navigation: super-b to go to implementation, leader [ / ] for back/forward
+  (define-key lsp-mode-map (kbd "s-b") 'lsp-find-definition)
+  (evil-leader/set-key "[" 'xref-go-back)
+  (evil-leader/set-key "]" 'xref-go-forward))
 
 (use-package lsp-ui
   :after lsp-mode
