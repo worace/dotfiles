@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git config --get *)",
+      "Bash(git fetch *)",
+      "Bash(git worktree *)",
+      "Bash(basename *)",
+      "Bash(tmux rename-window *)",
+      "Bash(ls -d *)"
+    ],
+    "additionalDirectories": [
+      "~/worktrees"
+    ]
+  }
+}

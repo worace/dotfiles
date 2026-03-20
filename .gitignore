@@ -13,3 +13,4 @@ emacs/.cache
 .lein/self-installs
 .lein/credentials.clj
 emacs/.lsp*
+.claude/settings.local.json
