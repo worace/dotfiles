@@ -20,10 +20,10 @@ $ARGUMENTS - A Linear ticket ID (e.g. `ENG-123`) or full URL (e.g. `https://line
    Extract the title, description, labels, priority, and current state.
 
 3. **Generate a branch name** from the ticket. Use this format:
-   - `<ticket-id>/<short-slug>`
-   - Example: `eng-123/add-user-avatar-upload`
+   - `<ticket-id>-<short-slug>` (hyphen-separated, no nested directories)
+   - Example: `eng-123-add-user-avatar-upload`
    - Lowercase the ticket ID, take the title, lowercase it, replace spaces/special chars with hyphens, and truncate to ~50 chars.
-   - The branch name must be valid for git (no spaces, no special chars besides `-` and `/`).
+   - The branch name must be valid for git (no spaces, no special chars besides `-`).
 
 4. **Set up the worktree.** The shared worktree directory is `~/worktrees/<repo-name>/`.
 
@@ -56,13 +56,21 @@ $ARGUMENTS - A Linear ticket ID (e.g. `ENG-123`) or full URL (e.g. `https://line
    ```
    Let the user know the path so they can also open it in their editor.
 
-6. **Set the tmux window name** so it's identifiable in `prefix + w`. If running inside tmux (`$TMUX` is set), rename the current window:
+6. **Install dependencies** in the new worktree:
+   ```bash
+   pnpm install
+   ```
+   ```bash
+   pnpm sync:libs
+   ```
+
+7. **Set the tmux window name** so it's identifiable in `prefix + w`. If running inside tmux (`$TMUX` is set), rename the current window:
    ```bash
    tmux rename-window "$TICKET_ID - $SHORT_TITLE"
    ```
    Where `$SHORT_TITLE` is the ticket title truncated to keep the total name reasonable (~60 chars). Replace `.` and `:` with `-` in the name.
 
-7. **Propose a plan.** Based on the ticket title, description, and labels:
+8. **Propose a plan.** Based on the ticket title, description, and labels:
    - Summarize what the ticket is asking for.
    - Identify the likely files/areas of the codebase involved (look at the repo structure).
    - Propose a step-by-step implementation plan.
