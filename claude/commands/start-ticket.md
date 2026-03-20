@@ -25,17 +25,29 @@ $ARGUMENTS - A Linear ticket ID (e.g. `ENG-123`) or full URL (e.g. `https://line
    - Lowercase the ticket ID, take the title, lowercase it, replace spaces/special chars with hyphens, and truncate to ~50 chars.
    - The branch name must be valid for git (no spaces, no special chars besides `-` and `/`).
 
-4. **Set up the worktree.** The shared worktree directory is `~/worktrees/<repo-name>/`. Run:
+4. **Set up the worktree.** The shared worktree directory is `~/worktrees/<repo-name>/`.
+
+   **Important:** Run each command as a separate bash call (not chained with `&&` or `$()` substitution) so that pre-approved permission rules match cleanly.
+
    ```bash
-   # Get the repo name from the current git remote
-   REPO_NAME=$(basename -s .git $(git config --get remote.origin.url))
-   WORKTREE_DIR="$HOME/worktrees/$REPO_NAME/$BRANCH_NAME"
-
-   # Make sure we have latest main
+   # Step 4a: Get the remote URL
+   git config --get remote.origin.url
+   ```
+   ```bash
+   # Step 4b: Extract repo name from the URL
+   basename -s .git "<REMOTE_URL>"
+   ```
+   ```bash
+   # Step 4c: Check if worktree already exists
+   ls -d "$HOME/worktrees/<REPO_NAME>/<BRANCH_NAME>" 2>/dev/null
+   ```
+   ```bash
+   # Step 4d: Fetch latest main
    git fetch origin main
-
-   # Create worktree with a new branch based on origin/main
-   git worktree add -b "$BRANCH_NAME" "$WORKTREE_DIR" origin/main
+   ```
+   ```bash
+   # Step 4e: Create worktree with a new branch based on origin/main
+   git worktree add -b "<BRANCH_NAME>" "$HOME/worktrees/<REPO_NAME>/<BRANCH_NAME>" origin/main
    ```
 
 5. **Open the new worktree** by changing the working directory:
@@ -44,11 +56,11 @@ $ARGUMENTS - A Linear ticket ID (e.g. `ENG-123`) or full URL (e.g. `https://line
    ```
    Let the user know the path so they can also open it in their editor.
 
-6. **Set the tmux session name** so it's identifiable in `prefix + w`. If running inside tmux (`$TMUX` is set), rename the current session:
+6. **Set the tmux window name** so it's identifiable in `prefix + w`. If running inside tmux (`$TMUX` is set), rename the current window:
    ```bash
-   tmux rename-session "$TICKET_ID: $SHORT_TITLE"
+   tmux rename-window "$TICKET_ID - $SHORT_TITLE"
    ```
-   Where `$SHORT_TITLE` is the ticket title truncated to keep the total session name reasonable (~60 chars). Tmux session names cannot contain `.` or `:` — replace those with `-`.
+   Where `$SHORT_TITLE` is the ticket title truncated to keep the total name reasonable (~60 chars). Replace `.` and `:` with `-` in the name.
 
 7. **Propose a plan.** Based on the ticket title, description, and labels:
    - Summarize what the ticket is asking for.
