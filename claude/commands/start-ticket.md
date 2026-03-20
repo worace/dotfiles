@@ -44,7 +44,13 @@ $ARGUMENTS - A Linear ticket ID (e.g. `ENG-123`) or full URL (e.g. `https://line
    ```
    Let the user know the path so they can also open it in their editor.
 
-6. **Propose a plan.** Based on the ticket title, description, and labels:
+6. **Set the tmux session name** so it's identifiable in `prefix + w`. If running inside tmux (`$TMUX` is set), rename the current session:
+   ```bash
+   tmux rename-session "$TICKET_ID: $SHORT_TITLE"
+   ```
+   Where `$SHORT_TITLE` is the ticket title truncated to keep the total session name reasonable (~60 chars). Tmux session names cannot contain `.` or `:` — replace those with `-`.
+
+7. **Propose a plan.** Based on the ticket title, description, and labels:
    - Summarize what the ticket is asking for.
    - Identify the likely files/areas of the codebase involved (look at the repo structure).
    - Propose a step-by-step implementation plan.
