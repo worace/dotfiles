@@ -266,13 +266,21 @@
   :after (helm projectile)
   :config
   (helm-projectile-on)
-  (evil-leader/set-key "t" 'helm-projectile-find-file-dwim))
+  (evil-leader/set-key "t" 'helm-projectile-find-file-dwim)
+  ;; Workaround: helm-ff--in-backup-directory passes nil to file-equal-p
+  ;; when called via helm-projectile's action transformer (which doesn't
+  ;; set helm-ff-default-directory). This check is cosmetic — it only
+  ;; tweaks which actions appear in the menu.
+  (advice-add 'helm-ff--in-backup-directory :around
+              (lambda (orig-fn &rest args)
+                (ignore-errors (apply orig-fn args)))))
 
 (use-package helm-rg
   :after helm
   :config
   (setq helm-rg-default-directory 'git-root)
-  (evil-leader/set-key "f" 'helm-projectile-rg))
+  (evil-leader/set-key "f" 'helm-projectile-rg)
+  (evil-leader/set-key "F" 'helm-resume))
 
 (use-package ace-jump-mode
   :config
@@ -457,7 +465,43 @@
 (evil-leader/set-key-for-mode 'emacs-lisp-mode "eb" 'eval-buffer)
 (evil-leader/set-key-for-mode 'emacs-lisp-mode "er" 'eval-region)
 
+;; Copy file reference (repo-relative path + line numbers) to clipboard
+(defun worace/file-ref ()
+  "Copy repo-relative file path with line number(s) to clipboard.
+In normal state: path:LINE. In visual state: path:START-END."
+  (interactive)
+  (let* ((path (worace/current-file-repo-relative))
+         (ref (if (evil-visual-state-p)
+                  (let ((start (line-number-at-pos (region-beginning)))
+                        (end (line-number-at-pos (region-end))))
+                    (when (and (= (region-end) (line-beginning-position))
+                               (> end start))
+                      (setq end (1- end)))
+                    (format "%s:%d-%d" path start end))
+                (format "%s:%d" path (line-number-at-pos)))))
+    (kill-new ref)
+    (message "%s" ref)))
+(evil-leader/set-key "l" 'worace/file-ref)
+
 ;; Markdown follow-link
 (evil-leader/set-key-for-mode 'markdown-mode "o" 'markdown-follow-link-at-point)
 
 ;;; init_minimal.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(ace-jump-mode ace-window company dockerfile-mode evil-leader
+                   evil-surround exec-path-from-shell flycheck
+                   gruvbox-theme helm-projectile helm-rg json-mode
+                   lsp-pyright lsp-ui magit rainbow-delimiters
+                   smartparens solarized-theme typescript-mode
+                   undo-tree web-mode yaml-mode)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
