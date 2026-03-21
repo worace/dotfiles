@@ -94,6 +94,7 @@ alias gpum="git pull upstream master"
 alias gpod="git pull origin develop"
 alias gprev='git checkout -'
 alias hb="gh repo view --web"
+alias hpr="gh pr view --web"
 
 alias be="noglob bundle exec"
 alias bl="bundle --local"
