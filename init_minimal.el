@@ -229,6 +229,8 @@
       (load-theme 'gruvbox-dark-medium t)
     (load-theme 'solarized-light t)))
 (evil-leader/set-key "ct" 'worace/toggle-theme)
+(evil-leader/set-key "cr" 'lsp-rename)
+(evil-leader/set-key "cp" 'projectile-replace)
 
 ;; ============================================================
 ;; 7. Completion — company
@@ -275,12 +277,61 @@
               (lambda (orig-fn &rest args)
                 (ignore-errors (apply orig-fn args)))))
 
+(use-package wgrep
+  :config
+  (setq wgrep-auto-save-buffer t))
+
+(use-package wgrep-helm
+  :after (wgrep helm))
+
 (use-package helm-rg
   :after helm
   :config
   (setq helm-rg-default-directory 'git-root)
   (evil-leader/set-key "f" 'helm-projectile-rg)
-  (evil-leader/set-key "F" 'helm-resume))
+  (evil-leader/set-key "F" 'helm-resume)
+
+  (defun worace/helm-rg-to-wgrep (_candidate)
+    "Export helm-rg results to a grep buffer for wgrep editing.
+Use C-x C-s to apply changes after editing."
+    (let ((lines '())
+          (dir helm-rg--current-dir))
+      (with-current-buffer helm-buffer
+        (goto-char (point-min))
+        (while (not (eobp))
+          (let ((loc (get-text-property (point) 'helm-rg-jump-to)))
+            (when (and loc (plist-get loc :line-num))
+              (let* ((file (plist-get loc :file))
+                     (rel-file (file-relative-name file dir))
+                     (lnum (plist-get loc :line-num))
+                     (content (with-temp-buffer
+                                (insert-file-contents file)
+                                (goto-char (point-min))
+                                (forward-line (1- lnum))
+                                (buffer-substring-no-properties
+                                 (line-beginning-position) (line-end-position)))))
+                (push (format "%s:%d:%s" rel-file lnum content) lines))))
+          (forward-line 1)))
+      (let ((buf (get-buffer-create "*helm-rg-wgrep*")))
+        (with-current-buffer buf
+          (let ((inhibit-read-only t))
+            (erase-buffer)
+            (insert (string-join (nreverse lines) "\n") "\n"))
+          (setq default-directory dir)
+          (grep-mode))
+        (switch-to-buffer buf)
+        (run-with-timer 0 nil
+                        (lambda ()
+                          (with-current-buffer "*helm-rg-wgrep*"
+                            (wgrep-change-to-wgrep-mode)))))))
+
+  (with-eval-after-load 'helm-rg
+    (let ((src (symbol-value 'helm-rg-process-source)))
+      (helm-attrset 'action
+                    (helm-make-actions
+                     "Visit" #'helm-rg--async-action
+                     "Export to wgrep" #'worace/helm-rg-to-wgrep)
+                    src))))
 
 (use-package ace-jump-mode
   :config
@@ -498,7 +549,7 @@ In normal state: path:LINE. In visual state: path:START-END."
                    gruvbox-theme helm-projectile helm-rg json-mode
                    lsp-pyright lsp-ui magit rainbow-delimiters
                    smartparens solarized-theme typescript-mode
-                   undo-tree web-mode yaml-mode)))
+                   undo-tree web-mode wgrep wgrep-helm yaml-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
