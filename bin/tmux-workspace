@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Session: dev - active coding
+tmux new-session -d -s dev -n code1 -c "$HOME/code/agent_services"
+tmux new-window -t dev -n code2 -c "$HOME/code/agent_services_2"
+tmux new-window -t dev -n code3 -c "$HOME/code/agent_services_3"
+
+# Session: docker - background processes
+tmux new-session -d -s docker -n procs -c "$HOME/code/agent_services"
+
+tmux send-keys -t docker:procs 'pnpm run dev' C-m
+
+tmux split-window -v -t docker:procs -c "$HOME/code/agent_services"
+tmux send-keys -t docker:procs 'docker compose up' C-m
+
+tmux split-window -v -t docker:procs -c "$HOME/code/agent_services"
+tmux send-keys -t docker:procs 'ngrok http 8000' C-m
+
+# Even out the vertical splits
+tmux select-layout -t docker:procs even-vertical
+
+# Session: dots - dotfiles
+tmux new-session -d -s dots -n dots -c "$HOME/dotfiles"
+
+# Attach to dev session
+tmux attach -t dev

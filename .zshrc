@@ -328,3 +328,11 @@ if [[ -a ~/.localrc ]]; then
   source ~/.localrc
 fi
 alias rguuid="rg -o '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'"
+
+function tw() {
+  local dir=$(basename "$PWD")
+  local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+  local title="${dir}"
+  [[ -n "$branch" ]] && title="${dir}:${branch}"
+  tmux rename-window "$title"
+}
