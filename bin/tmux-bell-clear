@@ -1,0 +1,11 @@
+#!/bin/bash
+# Remove 🔔 from current tmux window name on select
+# Called by tmux window-linked or pane-focus-in hook
+# Usage: tmux-bell-clear <window-name>
+
+window_name="$1"
+clean="${window_name% 🔔}"
+
+if [ "$window_name" != "$clean" ]; then
+  tmux rename-window "$clean"
+fi

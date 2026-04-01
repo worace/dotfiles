@@ -1,0 +1,12 @@
+#!/bin/bash
+# Append 🔔 to a tmux window name if not already present
+# Usage: tmux-bell-mark <session-id> <window-id> <window-name>
+
+session_id="$1"
+window_id="$2"
+window_name="$3"
+
+case "$window_name" in
+  *🔔) ;;
+  *) tmux rename-window -t "${session_id}:${window_id}" "$window_name 🔔" ;;
+esac

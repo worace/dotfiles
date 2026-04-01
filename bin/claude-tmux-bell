@@ -1,0 +1,12 @@
+#!/bin/bash
+# Sends a bell character to the current tmux pane and marks the window.
+# Used as a Claude Code Notification hook so that tmux's monitor-bell
+# flag (!) appears on windows where Claude is waiting for input.
+
+if [ -n "$TMUX" ]; then
+    printf '\a'
+    session_id="$(tmux display-message -p '#{session_id}')"
+    window_id="$(tmux display-message -p '#{window_id}')"
+    window_name="$(tmux display-message -p '#{window_name}')"
+    ~/dotfiles/bin/tmux-bell-mark "$session_id" "$window_id" "$window_name"
+fi

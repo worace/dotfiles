@@ -137,6 +137,9 @@ set -g window-status-current-style fg=black
 set -g window-status-activity-style bg=yellow # fg and bg are flipped here due to a
 set -g window-status-activity-style fg=black  # bug in tmux
 
+# Window with bell (Claude waiting for input)
+set -g window-status-bell-style "fg=black,bg=#fe8019,bold"
+
 # Window separator
 set -g window-status-separator ""
 
