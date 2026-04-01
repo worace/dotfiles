@@ -1,0 +1,22 @@
+#!/bin/bash
+set -euo pipefail
+
+# Restart the dev server in tmux session "server:dev" using the current directory.
+# Run this from any tmux window — it sends commands to the server session remotely.
+
+TARGET="server:dev"
+DIR="${1:-$(pwd)}"
+
+# Verify the target session/window exists
+if ! tmux has-session -t server 2>/dev/null; then
+    echo "Error: tmux session 'server' not found. Run tmux-workspace first."
+    exit 1
+fi
+
+# Send Ctrl-C to stop any running process, then restart from the new directory
+tmux send-keys -t "$TARGET" C-c
+# Small delay so the process has time to exit
+sleep 0.3
+tmux send-keys -t "$TARGET" "cd $DIR && pnpm dev" C-m
+
+echo "Dev server restarted in $DIR"

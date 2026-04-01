@@ -1,0 +1,71 @@
+#!/bin/bash
+set -euo pipefail
+
+MAIN_REPO="$HOME/code/agent_services"
+WORKTREE_BASE="$HOME/worktrees/agent_services"
+
+usage() {
+    echo "Usage: remove-worktree <name>"
+    echo ""
+    echo "Removes a git worktree and cleans up."
+    echo ""
+    echo "Options:"
+    echo "  --list    List all active worktrees"
+    exit 1
+}
+
+if [[ $# -lt 1 ]]; then
+    usage
+fi
+
+if [[ "$1" == "--list" ]]; then
+    echo "Active worktrees in $WORKTREE_BASE:"
+    for dir in "$WORKTREE_BASE"/*/; do
+        [[ -d "$dir" ]] || continue
+        name=$(basename "$dir")
+        branch=$(cd "$dir" && git branch --show-current 2>/dev/null || echo "detached")
+        echo "  $name ($branch)"
+    done
+    exit 0
+fi
+
+name="$1"
+worktree_path="$WORKTREE_BASE/$name"
+
+if [[ ! -d "$worktree_path" ]]; then
+    echo "Error: no worktree at $worktree_path"
+    echo ""
+    echo "Available worktrees:"
+    ls "$WORKTREE_BASE" 2>/dev/null || echo "  (none)"
+    exit 1
+fi
+
+# Show status before removing
+echo "Worktree: $worktree_path"
+cd "$worktree_path"
+branch=$(git branch --show-current 2>/dev/null || echo "detached")
+echo "Branch: $branch"
+
+# Warn about uncommitted changes
+if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
+    echo ""
+    echo "WARNING: This worktree has uncommitted changes:"
+    git status --short
+    echo ""
+fi
+
+read -p "Remove this worktree? [y/N] " confirm
+if [[ "$confirm" != [yY] ]]; then
+    echo "Cancelled."
+    exit 0
+fi
+
+cd "$MAIN_REPO"
+git worktree remove "$worktree_path" --force
+echo "Removed worktree '$name'"
+
+# Ask about the branch
+read -p "Also delete branch '$branch'? [y/N] " delete_branch
+if [[ "$delete_branch" == [yY] ]]; then
+    git branch -D "$branch" 2>/dev/null && echo "Deleted branch '$branch'" || echo "Branch not found locally"
+fi

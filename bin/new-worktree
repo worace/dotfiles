@@ -1,0 +1,123 @@
+#!/bin/bash
+set -euo pipefail
+
+MAIN_REPO="$HOME/code/agent_services"
+WORKTREE_BASE="$HOME/worktrees/agent_services"
+
+usage() {
+    echo "Usage: new-worktree <name> [base-ref]"
+    echo ""
+    echo "Creates a new git worktree and bootstraps dependencies."
+    echo ""
+    echo "Arguments:"
+    echo "  name       Worktree name (used as directory name and branch name)"
+    echo "  base-ref   Git ref to branch from (default: origin/main)"
+    echo ""
+    echo "Examples:"
+    echo "  new-worktree gro-1050"
+    echo "  new-worktree gro-1050 origin/main"
+    echo "  new-worktree gro-1050 existing-branch-name"
+    exit 1
+}
+
+if [[ $# -lt 1 ]]; then
+    usage
+fi
+
+name="$1"
+base_ref="${2:-origin/main}"
+worktree_path="$WORKTREE_BASE/$name"
+
+if [[ -d "$worktree_path" ]]; then
+    echo "Error: worktree already exists at $worktree_path"
+    exit 1
+fi
+
+echo "==> Creating worktree '$name' from $base_ref"
+cd "$MAIN_REPO"
+git fetch origin --quiet
+
+# If the base_ref looks like a branch name (not a path like origin/foo),
+# check if it already exists as a local or remote branch
+if git show-ref --verify --quiet "refs/heads/$name" 2>/dev/null; then
+    echo "    Checking out existing branch '$name'"
+    git worktree add "$worktree_path" "$name"
+elif git show-ref --verify --quiet "refs/remotes/origin/$name" 2>/dev/null; then
+    echo "    Checking out existing remote branch '$name'"
+    git worktree add "$worktree_path" "$name"
+else
+    echo "    Creating new branch '$name' from $base_ref"
+    git worktree add "$worktree_path" -b "$name" "$base_ref"
+    # Don't track origin/main — first `git push -u` will set the correct upstream
+    git -C "$worktree_path" branch --unset-upstream "$name" 2>/dev/null || true
+fi
+
+cd "$worktree_path"
+
+echo "==> Installing node dependencies"
+pnpm install --reporter=silent
+
+echo "==> Symlinking config files"
+ln -sf "$MAIN_REPO/apps/python_api/.env.secrets" apps/python_api/.env.secrets
+ln -sf "$MAIN_REPO/.claude/settings.local.json" .claude/settings.local.json
+
+echo "==> Syncing shared libraries and Python dependencies"
+pnpm sync:libs
+
+echo "==> Validating setup"
+errors=0
+
+# Check node_modules exists
+if [[ ! -d "node_modules" ]]; then
+    echo "    FAIL: node_modules not found"
+    errors=$((errors + 1))
+else
+    echo "    OK: node_modules"
+fi
+
+# Check python venv (uv creates it at the workspace root)
+if [[ ! -d ".venv" ]]; then
+    echo "    FAIL: Python venv not found"
+    errors=$((errors + 1))
+else
+    echo "    OK: Python venv"
+fi
+
+# Check .env.secrets is linked
+if [[ ! -f "apps/python_api/.env.secrets" ]]; then
+    echo "    FAIL: .env.secrets not found"
+    errors=$((errors + 1))
+else
+    echo "    OK: .env.secrets"
+fi
+
+# Quick Python import check
+if cd apps/python_api && uv run python -c "import app" 2>/dev/null; then
+    echo "    OK: Python app imports"
+else
+    echo "    WARN: Python app import failed (may need running services)"
+fi
+cd "$worktree_path"
+
+# Quick TypeScript config check
+if pnpm exec tsc --project apps/web/tsconfig.json --noEmit --pretty false 2>/dev/null | head -1 | grep -q "error"; then
+    echo "    WARN: TypeScript errors detected (may be pre-existing)"
+else
+    echo "    OK: TypeScript config"
+fi
+
+if [[ $errors -gt 0 ]]; then
+    echo ""
+    echo "FAILED: $errors validation checks failed"
+    exit 1
+fi
+
+echo ""
+echo "Worktree ready at $worktree_path"
+echo "Branch: $name"
+
+# Add a tmux window in the dev session if tmux is running
+if tmux has-session -t dev 2>/dev/null; then
+    tmux new-window -t dev -n "$name" -c "$worktree_path"
+    echo "Tmux window 'dev:$name' created"
+fi

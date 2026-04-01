@@ -1,25 +1,33 @@
 #!/bin/bash
 
-# Session: dev - active coding
-tmux new-session -d -s dev -n code1 -c "$HOME/code/agent_services"
-tmux new-window -t dev -n code2 -c "$HOME/code/agent_services_2"
-tmux new-window -t dev -n code3 -c "$HOME/code/agent_services_3"
+MAIN_REPO="$HOME/code/agent_services"
+WORKTREE_BASE="$HOME/worktrees/agent_services"
 
-# Session: docker - background processes
-tmux new-session -d -s docker -n procs -c "$HOME/code/agent_services"
+# --- Session: dev - coding windows ---
+tmux new-session -d -s dev -n main -c "$MAIN_REPO"
 
-tmux send-keys -t docker:procs 'pnpm run dev' C-m
+# Add a window for each worktree (sorted alphabetically for stable order)
+if [[ -d "$WORKTREE_BASE" ]]; then
+    for dir in $(ls -d "$WORKTREE_BASE"/*/ 2>/dev/null | sort); do
+        name=$(basename "$dir")
+        tmux new-window -t dev -n "$name" -c "$dir"
+    done
+fi
 
-tmux split-window -v -t docker:procs -c "$HOME/code/agent_services"
-tmux send-keys -t docker:procs 'docker compose up' C-m
+# --- Session: server - dev server (start manually with pnpm dev) ---
+tmux new-session -d -s server -n dev -c "$MAIN_REPO"
 
-tmux split-window -v -t docker:procs -c "$HOME/code/agent_services"
-tmux send-keys -t docker:procs 'ngrok http 8000' C-m
+# --- Session: infra - docker + ngrok ---
+tmux new-session -d -s infra -n procs -c "$MAIN_REPO"
 
-# Even out the vertical splits
-tmux select-layout -t docker:procs even-vertical
+tmux send-keys -t infra:procs 'docker compose up' C-m
 
-# Session: dots - dotfiles
+tmux split-window -v -t infra:procs -c "$MAIN_REPO"
+tmux send-keys -t infra:procs 'ngrok http 8000' C-m
+
+tmux select-layout -t infra:procs even-vertical
+
+# --- Session: dots - dotfiles ---
 tmux new-session -d -s dots -n dots -c "$HOME/dotfiles"
 
 # Attach to dev session
