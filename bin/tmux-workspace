@@ -6,12 +6,21 @@ WORKTREE_BASE="$HOME/worktrees/agent_services"
 # --- Session: dev - coding windows ---
 tmux new-session -d -s dev -n main -c "$MAIN_REPO"
 
-# Add a window for each worktree (sorted alphabetically for stable order)
+# Add a window for each worktree, ordered by most recent git commit (descending).
+# Timestamps are read once at launch so window order stays fixed for the session.
 if [[ -d "$WORKTREE_BASE" ]]; then
-    for dir in $(ls -d "$WORKTREE_BASE"/*/ 2>/dev/null | sort); do
+    win_idx=1
+    while IFS=$'\t' read -r _ts dir; do
         name=$(basename "$dir")
-        tmux new-window -t dev -n "$name" -c "$dir"
-    done
+        tmux new-window -t "dev:$win_idx" -n "$name" -c "$dir"
+        ((win_idx++))
+    done < <(
+        for dir in "$WORKTREE_BASE"/*/; do
+            [[ -d "$dir" ]] || continue
+            ts=$(git -C "$dir" log -1 --format=%ct 2>/dev/null || echo 0)
+            printf '%s\t%s\n' "$ts" "$dir"
+        done | sort -rn
+    )
 fi
 
 # --- Session: server - dev server (start manually with pnpm dev) ---
@@ -30,5 +39,6 @@ tmux select-layout -t infra:procs even-vertical
 # --- Session: dots - dotfiles ---
 tmux new-session -d -s dots -n dots -c "$HOME/dotfiles"
 
-# Attach to dev session
+# Attach to dev session, starting on the main window
+tmux select-window -t dev:0
 tmux attach -t dev
