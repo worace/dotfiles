@@ -103,6 +103,7 @@ alias la="ls -lah"
 alias pd="pushd $*"
 alias po="popd $*"
 alias hist="cat ~/.zsh_history"
+alias e='emacsclient -n'
 
 # GOLANG
 export GOPATH=$HOME/go
@@ -162,20 +163,8 @@ function scrape {
 
 function countloc { find $1 -name "*" -type f | xargs wc -l | sort -n }
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-# [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-# alias nvmu='source ~/.nvm/nvm.sh && nvm use'
-
-# Elixir
-export ERL_AFLAGS="-kernel shell_history enabled"
-export PATH="$PATH:$HOME/.mix/escripts"
-alias mc="iex -S mix"
-alias mps="mix phx.server"
-alias mpr="mix phx.routes"
-alias mdg="mix deps.get"
-alias mt="mix test"
-alias mpr="mix phx.routes"
+export N_PREFIX="$HOME/.n"
+export PATH="$N_PREFIX/bin:$PATH"
 
 HISTSIZE=100000
 SAVEHIST=100000
@@ -234,6 +223,23 @@ alias tn="tmux new -s"
 alias tls="tmux ls"
 alias tl="tmux ls"
 alias ta="tmux a -t"
+twb() {
+  local name
+  name="$(git branch --show-current 2>/dev/null)"
+  if [[ -z "$name" ]]; then
+    for f in rebase-merge/head-name rebase-apply/head-name; do
+      local p
+      p="$(git rev-parse --git-path "$f" 2>/dev/null)"
+      if [[ -f "$p" ]]; then
+        name="$(<"$p")"
+        name="${name#refs/heads/}"
+        break
+      fi
+    done
+  fi
+  [[ -z "$name" ]] && name="$(basename "$PWD")"
+  tmux rename-window "$name"
+}
 
 alias i="sudo apt install"
 

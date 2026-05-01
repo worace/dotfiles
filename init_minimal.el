@@ -497,7 +497,14 @@ Use C-x C-s to apply changes after editing."
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
 
 ;; ============================================================
-;; 17. Utility commands
+;; 17. Server (for emacsclient)
+;; ============================================================
+
+(require 'server)
+(unless (server-running-p) (server-start))
+
+;; ============================================================
+;; 18. Utility commands
 ;; ============================================================
 
 (defun worace/scratch ()
