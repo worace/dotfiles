@@ -54,6 +54,11 @@ fi
 
 cd "$worktree_path"
 
+if [[ -f "mise.toml" ]] && command -v mise >/dev/null 2>&1; then
+    echo "==> Trusting mise config"
+    mise trust
+fi
+
 echo "==> Installing node dependencies"
 pnpm install --reporter=silent
 
