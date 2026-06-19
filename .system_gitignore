@@ -63,3 +63,5 @@ metastore_db/
 ensime.sbt
 .ensime-server.conf
 rename.sh
+
+**/.claude/settings.local.json
