@@ -266,9 +266,11 @@
 
 (use-package helm-projectile
   :after (helm projectile)
+  :commands (helm-projectile-find-file-dwim helm-projectile-rg)
+  :init
+  (evil-leader/set-key "t" 'helm-projectile-find-file-dwim)
   :config
   (helm-projectile-on)
-  (evil-leader/set-key "t" 'helm-projectile-find-file-dwim)
   ;; Workaround: helm-ff--in-backup-directory passes nil to file-equal-p
   ;; when called via helm-projectile's action transformer (which doesn't
   ;; set helm-ff-default-directory). This check is cosmetic — it only
@@ -286,10 +288,12 @@
 
 (use-package helm-rg
   :after helm
-  :config
-  (setq helm-rg-default-directory 'git-root)
+  :commands (helm-rg)
+  :init
   (evil-leader/set-key "f" 'helm-projectile-rg)
   (evil-leader/set-key "F" 'helm-resume)
+  :config
+  (setq helm-rg-default-directory 'git-root)
 
   (defun worace/helm-rg-to-wgrep (_candidate)
     "Export helm-rg results to a grep buffer for wgrep editing.
