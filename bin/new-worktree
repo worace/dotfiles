@@ -123,6 +123,6 @@ echo "Branch: $name"
 
 # Add a tmux window in the dev session if tmux is running
 if tmux has-session -t dev 2>/dev/null; then
-    tmux new-window -t dev -n "$name" -c "$worktree_path"
+    tmux new-window -d -t dev -n "$name" -c "$worktree_path"
     echo "Tmux window 'dev:$name' created"
 fi
