@@ -1,6 +1,7 @@
 [user]
 	name = Horace Williams
-	email = horace@groundedagents.ai
+	# email lives in ~/.gitconfig.local (see the include at the bottom) so the
+	# address isn't committed. Without that file git will ask for one.
 
 [core]
   autocrlf = input
@@ -61,3 +62,7 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
+
+# Machine-local identity and overrides; absent on a fresh checkout.
+[include]
+	path = ~/.gitconfig.local
