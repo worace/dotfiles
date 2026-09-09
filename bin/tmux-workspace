@@ -1,44 +1,151 @@
 #!/bin/bash
+# tmux-workspace — bring up the working set of tmux sessions.
+#
+# If a snapshot from tmux-snapshot exists, restores exactly the sessions and
+# windows that were open when it was taken. With no snapshot (or --fresh) it
+# falls back to building the full layout from scratch: a dev window for every
+# worktree on disk, plus the server, infra, and dots sessions.
+#
+# Usage:
+#   tmux-workspace                  # restore the "latest" snapshot if there is one
+#   tmux-workspace --fresh          # ignore snapshots, rebuild from worktrees
+#   tmux-workspace --snapshot work  # restore a named snapshot
+#   tmux-workspace --no-procs       # don't launch docker compose / ngrok
+#
+# The dev, server, and infra sessions need a primary repo: set
+# WORKTREE_MAIN_REPO in ~/.config/worktrees/config. Without one, only the
+# dotfiles session is built.
 
-MAIN_REPO="$HOME/code/agent_services"
-WORKTREE_BASE="$HOME/worktrees/agent_services"
+set -uo pipefail
+
+script_path="$(readlink -f "$0" 2>/dev/null || printf '%s\n' "$0")"
+# shellcheck source=lib/worktree-lib.sh
+source "$(dirname "$script_path")/lib/worktree-lib.sh"
+
+# Login-time layout building, so the cwd carries no intent about which repo is
+# meant — take the configured one only. Set WORKTREE_MAIN_REPO in
+# ~/.config/worktrees/config to get the dev/server/infra sessions.
+MAIN_REPO="$(worktree_configured_main_repo)"
+WORKTREE_BASE=""
+[[ -n "$MAIN_REPO" ]] && WORKTREE_BASE="$(worktree_base "$MAIN_REPO")"
+
+SNAP_DIR="${TMUX_SNAPSHOT_DIR:-$HOME/.local/share/tmux-snapshots}"
+TMUX_RESTORE="$(command -v tmux-restore || echo "$(dirname "$0")/tmux-restore")"
+
+snapshot="latest"
+fresh=0
+start_procs=1
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --fresh)    fresh=1 ;;
+        --snapshot) shift; snapshot="${1:?--snapshot needs a name}" ;;
+        --no-procs) start_procs=0 ;;
+        -h|--help)  sed -n '2,/^$/s/^# \{0,1\}//p' "$0"; exit 0 ;;
+        *)          printf 'unknown flag: %s\n' "$1" >&2; exit 1 ;;
+    esac
+    shift
+done
+
+# A snapshot records directories, not running commands, so infra:procs comes
+# back as two idle shells. Relaunch the daemons the fresh path would have run.
+start_infra_procs() {
+    [[ $start_procs -eq 1 ]] || return 0
+    [[ "$(tmux list-panes -t infra:procs 2>/dev/null | wc -l | tr -d ' ')" == "2" ]] || return 0
+    tmux send-keys -t infra:procs.0 'docker compose up' C-m
+    tmux send-keys -t infra:procs.1 'ngrok http 8000' C-m
+}
+
+# Never rebuild a session that is already up — a second pass would otherwise
+# fire docker compose / ngrok into the panes already running them.
+ensure_session() {
+    local name="$1" win="$2" cwd="$3"
+    if tmux has-session -t "=$name" 2>/dev/null; then
+        printf 'session "%s" already running — leaving it alone\n' "$name"
+        return 1
+    fi
+    tmux new-session -d -s "$name" -n "$win" -c "$cwd"
+}
+
+attach_to() {
+    local target="$1"
+    tmux has-session -t "=$target" 2>/dev/null || target="$(tmux list-sessions -F '#{session_name}' | head -1)"
+    [[ -n $target ]] || return 0
+    if [[ -n ${TMUX:-} ]]; then
+        tmux switch-client -t "$target"
+    else
+        tmux attach -t "$target"
+    fi
+}
+
+# --- Restore path: rebuild exactly what was open when the snapshot was taken ---
+
+snapshot_file="$SNAP_DIR/$snapshot.tmux"
+
+if [[ $fresh -eq 0 && -f $snapshot_file ]]; then
+    printf 'restoring snapshot "%s" (saved %s)\n' \
+        "$snapshot" "$(sed -n '1s/^# //p' "$snapshot_file")"
+
+    infra_was_running=0
+    tmux has-session -t '=infra' 2>/dev/null && infra_was_running=1
+
+    "$TMUX_RESTORE" "$snapshot" --no-attach || exit 1
+
+    if [[ $infra_was_running -eq 0 ]] && tmux has-session -t '=infra' 2>/dev/null; then
+        start_infra_procs
+    fi
+
+    # The snapshot's A record names the session that was attached when it was taken.
+    attach_to "$(awk -F'\t' '$1=="A" {print $2}' "$snapshot_file" | tail -1)"
+    exit 0
+fi
+
+# --- Fresh path: build the full layout from the worktrees on disk ---
+
+if [[ $fresh -eq 0 ]]; then
+    printf 'no snapshot named "%s" in %s — building from worktrees\n' "$snapshot" "$SNAP_DIR"
+fi
+
+if [[ -z "$MAIN_REPO" ]]; then
+    printf 'no WORKTREE_MAIN_REPO configured in %s — only building the dots session\n' \
+        "$(worktree_config_file)" >&2
+    ensure_session dots dots "$HOME/dotfiles"
+    attach_to dots
+    exit 0
+fi
 
 # --- Session: dev - coding windows ---
-tmux new-session -d -s dev -n main -c "$MAIN_REPO"
-
-# Add a window for each worktree, ordered by most recent git commit (descending).
-# Timestamps are read once at launch so window order stays fixed for the session.
-if [[ -d "$WORKTREE_BASE" ]]; then
-    win_idx=1
-    while IFS=$'\t' read -r _ts dir; do
-        name=$(basename "$dir")
-        tmux new-window -t "dev:$win_idx" -n "$name" -c "$dir"
-        ((win_idx++))
-    done < <(
-        for dir in "$WORKTREE_BASE"/*/; do
-            [[ -d "$dir" ]] || continue
-            ts=$(git -C "$dir" log -1 --format=%ct 2>/dev/null || echo 0)
-            printf '%s\t%s\n' "$ts" "$dir"
-        done | sort -rn
-    )
+if ensure_session dev main "$MAIN_REPO"; then
+    # Add a window for each worktree, ordered by most recent git commit (descending).
+    # Timestamps are read once at launch so window order stays fixed for the session.
+    if [[ -d "$WORKTREE_BASE" ]]; then
+        win_idx=1
+        while IFS=$'\t' read -r _ts dir; do
+            name=$(basename "$dir")
+            tmux new-window -t "dev:$win_idx" -n "$name" -c "$dir"
+            ((win_idx++))
+        done < <(
+            for dir in "$WORKTREE_BASE"/*/; do
+                [[ -d "$dir" ]] || continue
+                ts=$(git -C "$dir" log -1 --format=%ct 2>/dev/null || echo 0)
+                printf '%s\t%s\n' "$ts" "$dir"
+            done | sort -rn
+        )
+    fi
+    tmux select-window -t dev:0
 fi
 
 # --- Session: server - dev server (start manually with pnpm dev) ---
-tmux new-session -d -s server -n dev -c "$MAIN_REPO"
+ensure_session server dev "$MAIN_REPO"
 
 # --- Session: infra - docker + ngrok ---
-tmux new-session -d -s infra -n procs -c "$MAIN_REPO"
-
-tmux send-keys -t infra:procs 'docker compose up' C-m
-
-tmux split-window -v -t infra:procs -c "$MAIN_REPO"
-tmux send-keys -t infra:procs 'ngrok http 8000' C-m
-
-tmux select-layout -t infra:procs even-vertical
+if ensure_session infra procs "$MAIN_REPO"; then
+    tmux split-window -v -t infra:procs -c "$MAIN_REPO"
+    tmux select-layout -t infra:procs even-vertical
+    start_infra_procs
+fi
 
 # --- Session: dots - dotfiles ---
-tmux new-session -d -s dots -n dots -c "$HOME/dotfiles"
+ensure_session dots dots "$HOME/dotfiles"
 
-# Attach to dev session, starting on the main window
-tmux select-window -t dev:0
-tmux attach -t dev
+attach_to dev

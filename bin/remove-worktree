@@ -1,13 +1,17 @@
 #!/bin/bash
 set -euo pipefail
 
-MAIN_REPO="$HOME/code/agent_services"
-WORKTREE_BASE="$HOME/worktrees/agent_services"
+script_path="$(readlink -f "$0" 2>/dev/null || printf '%s\n' "$0")"
+# shellcheck source=lib/worktree-lib.sh
+source "$(dirname "$script_path")/lib/worktree-lib.sh"
 
 usage() {
     echo "Usage: remove-worktree <name>"
     echo ""
-    echo "Removes a git worktree and cleans up."
+    echo "Removes a git worktree of the current repo and cleans up."
+    echo ""
+    echo "Outside a repo, WORKTREE_MAIN_REPO from the environment or from"
+    echo "~/.config/worktrees/config decides which repo is meant."
     echo ""
     echo "Options:"
     echo "  --list    List all active worktrees"
@@ -18,39 +22,46 @@ if [[ $# -lt 1 ]]; then
     usage
 fi
 
+main_repo="$(worktree_main_repo)"
+if [[ -z "$main_repo" ]]; then
+    echo "Error: no repo to work in — run from inside one, or set WORKTREE_MAIN_REPO" >&2
+    echo "       in the environment or in $(worktree_config_file)" >&2
+    exit 1
+fi
+worktree_base="$(worktree_base "$main_repo")"
+
 if [[ "$1" == "--list" ]]; then
-    echo "Active worktrees in $WORKTREE_BASE:"
-    for dir in "$WORKTREE_BASE"/*/; do
+    echo "Active worktrees in $worktree_base:"
+    for dir in "$worktree_base"/*/; do
         [[ -d "$dir" ]] || continue
         name=$(basename "$dir")
-        branch=$(cd "$dir" && git branch --show-current 2>/dev/null || echo "detached")
+        branch=$(git -C "$dir" branch --show-current 2>/dev/null || echo "detached")
         echo "  $name ($branch)"
     done
     exit 0
 fi
 
 name="$1"
-worktree_path="$WORKTREE_BASE/$name"
+worktree_path="$worktree_base/$name"
 
 if [[ ! -d "$worktree_path" ]]; then
     echo "Error: no worktree at $worktree_path"
     echo ""
     echo "Available worktrees:"
-    ls "$WORKTREE_BASE" 2>/dev/null || echo "  (none)"
+    ls "$worktree_base" 2>/dev/null || echo "  (none)"
     exit 1
 fi
 
 # Show status before removing
 echo "Worktree: $worktree_path"
-cd "$worktree_path"
-branch=$(git branch --show-current 2>/dev/null || echo "detached")
+branch=$(git -C "$worktree_path" branch --show-current 2>/dev/null || echo "detached")
 echo "Branch: $branch"
 
 # Warn about uncommitted changes
-if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
+if [[ -n $(git -C "$worktree_path" status --porcelain 2>/dev/null) ]]; then
     echo ""
     echo "WARNING: This worktree has uncommitted changes:"
-    git status --short
+    git -C "$worktree_path" status --short
     echo ""
 fi
 
@@ -60,12 +71,11 @@ if [[ "$confirm" != [yY] ]]; then
     exit 0
 fi
 
-cd "$MAIN_REPO"
-git worktree remove "$worktree_path" --force
+git -C "$main_repo" worktree remove "$worktree_path" --force
 echo "Removed worktree '$name'"
 
 # Ask about the branch
 read -p "Also delete branch '$branch'? [y/N] " delete_branch
 if [[ "$delete_branch" == [yY] ]]; then
-    git branch -D "$branch" 2>/dev/null && echo "Deleted branch '$branch'" || echo "Branch not found locally"
+    git -C "$main_repo" branch -D "$branch" 2>/dev/null && echo "Deleted branch '$branch'" || echo "Branch not found locally"
 fi
