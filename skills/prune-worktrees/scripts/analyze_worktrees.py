@@ -1,22 +1,27 @@
 #!/usr/bin/env python3
-"""Analyze worktrees under ~/worktrees/agent_services/ for cleanup candidates.
+"""Analyze a repo's git worktrees for cleanup candidates.
 
-Emits JSON to stdout describing each worktree's status. The skill (SKILL.md)
-consumes this output, presents it to the user, confirms, and performs removals.
-This script is read-only.
+Emits JSON to stdout describing the resolved paths and each worktree's status.
+The skill (SKILL.md) consumes this output, presents it to the user, confirms,
+and performs removals. This script is read-only.
+
+The repo is resolved the same way the ~/dotfiles/bin worktree scripts resolve
+it: --repo, then WORKTREE_MAIN_REPO in the environment, then the repo
+containing the current directory, then WORKTREE_MAIN_REPO in
+~/.config/worktrees/config. Worktrees are expected at
+<WORKTREE_ROOT>/<repo-name>/, defaulting to ~/worktrees/<repo-name>/.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
+import os
 import subprocess
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Literal
-
-MAIN_REPO = Path.home() / "code" / "agent_services"
-WORKTREE_BASE = Path.home() / "worktrees" / "agent_services"
 
 Status = Literal[
     "safe",              # PR merged, clean tree, HEAD at merged tip
@@ -27,6 +32,14 @@ Status = Literal[
     "no-pr",             # no PR — likely local-only work
     "prunable",          # worktree dir missing; git worktree prune will clean it up
 ]
+
+
+@dataclass(frozen=True)
+class Config:
+    """The resolved paths every other step works from."""
+
+    main_repo: Path
+    worktree_base: Path
 
 
 @dataclass(frozen=True)
@@ -65,8 +78,78 @@ def run(cmd: list[str], cwd: Path | None = None) -> tuple[int, str, str]:
     return res.returncode, res.stdout, res.stderr
 
 
-def list_worktrees() -> list[Worktree]:
-    code, out, err = run(["git", "worktree", "list", "--porcelain"], cwd=MAIN_REPO)
+# ----------------------------------------------------------------- config
+
+
+def config_file() -> Path:
+    if override := os.environ.get("WORKTREE_CONFIG"):
+        return Path(override)
+    base = os.environ.get("XDG_CONFIG_HOME") or str(Path.home() / ".config")
+    return Path(base) / "worktrees" / "config"
+
+
+def expand_home(value: str) -> str:
+    """Expand a leading ~/ or $HOME/ — the only expansion the config format has."""
+    for prefix in ("~/", "$HOME/"):
+        if value.startswith(prefix):
+            return str(Path.home() / value[len(prefix):])
+    return value
+
+
+def config_values(path: Path) -> dict[str, str]:
+    """Parse the KEY=value config file. A missing file is an empty mapping."""
+    if not path.is_file():
+        return {}
+    values: dict[str, str] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.split("#", 1)[0]
+        if "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        value = value.strip().strip("\"'")
+        if value:
+            values[key.strip()] = expand_home(value)
+    return values
+
+
+def repo_from_cwd() -> Path | None:
+    """The main checkout of the repo containing the cwd, or None."""
+    code, out, _ = run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"])
+    if code != 0 or not out.strip():
+        return None
+    common = Path(out.strip())
+    if common.name == ".git":
+        return common.parent
+    code, out, _ = run(["git", "rev-parse", "--show-toplevel"])
+    return Path(out.strip()) if code == 0 and out.strip() else None
+
+
+def resolve_config(repo_arg: str | None) -> Config | None:
+    """Resolve the repo and its worktree directory, or None when no repo is found."""
+    values = config_values(config_file())
+
+    candidates = [
+        repo_arg,
+        os.environ.get("WORKTREE_MAIN_REPO"),
+    ]
+    repo = next((Path(expand_home(c)) for c in candidates if c), None)
+    if repo is None:
+        repo = repo_from_cwd() or (
+            Path(values["WORKTREE_MAIN_REPO"]) if "WORKTREE_MAIN_REPO" in values else None
+        )
+    if repo is None:
+        return None
+
+    root = os.environ.get("WORKTREE_ROOT") or values.get("WORKTREE_ROOT")
+    worktree_root = Path(expand_home(root)) if root else Path.home() / "worktrees"
+    return Config(main_repo=repo, worktree_base=worktree_root / repo.name)
+
+
+# ---------------------------------------------------------------- analysis
+
+
+def list_worktrees(config: Config) -> list[Worktree]:
+    code, out, err = run(["git", "worktree", "list", "--porcelain"], cwd=config.main_repo)
     if code != 0:
         print(f"git worktree list failed: {err}", file=sys.stderr)
         return []
@@ -76,7 +159,7 @@ def list_worktrees() -> list[Worktree]:
     lines = out.splitlines() + [""]  # trailing blank to flush last record
     for line in lines:
         if not line.strip():
-            if cur.get("worktree") and str(WORKTREE_BASE) in cur["worktree"]:
+            if cur.get("worktree") and str(config.worktree_base) in cur["worktree"]:
                 worktrees.append(Worktree(
                     path=cur["worktree"],
                     branch=cur.get("branch", "").removeprefix("refs/heads/"),
@@ -97,7 +180,7 @@ def list_worktrees() -> list[Worktree]:
     return worktrees
 
 
-def find_pr(branch: str) -> PullRequest | None:
+def find_pr(branch: str, main_repo: Path) -> PullRequest | None:
     if not branch:
         return None
     code, out, _ = run([
@@ -106,7 +189,7 @@ def find_pr(branch: str) -> PullRequest | None:
         "--state", "all",
         "--json", "number,title,url,state,mergedAt,headRefOid",
         "--limit", "10",
-    ], cwd=MAIN_REPO)
+    ], cwd=main_repo)
     if code != 0:
         return None
     try:
@@ -154,7 +237,7 @@ def count_commits_past(path: Path, base_sha: str) -> int:
         return -1
 
 
-def analyze(wt: Worktree) -> Analysis:
+def analyze(wt: Worktree, main_repo: Path) -> Analysis:
     name = Path(wt.path).name
     if wt.is_prunable or not Path(wt.path).exists():
         return Analysis(
@@ -165,7 +248,7 @@ def analyze(wt: Worktree) -> Analysis:
         )
 
     path = Path(wt.path)
-    pr = find_pr(wt.branch)
+    pr = find_pr(wt.branch, main_repo)
     has_mod, has_untr = working_tree_status(path)
 
     if pr is None:
@@ -225,9 +308,28 @@ def analyze(wt: Worktree) -> Analysis:
 
 
 def main() -> None:
-    worktrees = list_worktrees()
-    analyses = [analyze(wt) for wt in worktrees]
-    print(json.dumps([asdict(a) for a in analyses], indent=2))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--repo",
+        help="Path to the repo's main checkout (default: resolved from the environment, cwd, or config)",
+    )
+    args = parser.parse_args()
+
+    config = resolve_config(args.repo)
+    if config is None:
+        print(
+            "No repo to analyze. Pass --repo, run from inside a checkout, or set "
+            f"WORKTREE_MAIN_REPO in the environment or {config_file()}.",
+            file=sys.stderr,
+        )
+        raise SystemExit(2)
+
+    worktrees = list_worktrees(config)
+    print(json.dumps({
+        "main_repo": str(config.main_repo),
+        "worktree_base": str(config.worktree_base),
+        "worktrees": [asdict(analyze(wt, config.main_repo)) for wt in worktrees],
+    }, indent=2))
 
 
 if __name__ == "__main__":
