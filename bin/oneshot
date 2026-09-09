@@ -1,0 +1,251 @@
+#!/bin/bash
+set -euo pipefail
+
+script_path="$(readlink -f "$0" 2>/dev/null || printf '%s\n' "$0")"
+# shellcheck source=lib/worktree-lib.sh
+source "$(dirname "$script_path")/lib/worktree-lib.sh"
+
+# Fire-and-forget ticket implementation: provision a worktree, then launch an
+# interactive Claude session in its own tmux window that implements the ticket
+# and ships it with /send-it.
+
+SESSION="dev"
+MAX_NAME_LEN=60
+PROMPT_DIR="$HOME/.cache/oneshot"
+
+usage() {
+    cat <<'EOF'
+Usage: oneshot <linear-url-or-ticket-id> [options]
+
+Provisions a worktree named <TICKET-ID>-<slug> via new-worktree, then launches a
+Claude session in a tmux window that implements the ticket and runs /send-it.
+
+Arguments:
+  linear-url-or-ticket-id   Linear issue URL (slug is taken from the URL) or a
+                            bare ticket id like ENG-1234 (use --slug to name it)
+
+Options:
+  -s, --slug SLUG      Override the slug portion of the worktree name
+  -b, --base REF       Git ref to branch from (default: origin/main)
+  -m, --model MODEL    Model for the Claude session (default: whatever claude picks)
+  -e, --extra TEXT     Extra instructions appended to the prompt
+      --session NAME   tmux session to launch into (default: dev)
+      --permission-mode MODE
+                       Claude permission mode (default: auto)
+  -a, --attach         Switch to the new tmux window after launching
+  -n, --dry-run        Print the plan and the prompt, change nothing
+  -h, --help           Show this help
+
+Examples:
+  oneshot https://linear.app/acme/issue/ENG-1234/add-widget-export
+  oneshot ENG-1234 --slug add-widget-export
+  oneshot ENG-1234 -e 'Skip the UI; backend only.' --attach
+EOF
+}
+
+die() {
+    echo "Error: $*" >&2
+    exit 1
+}
+
+# ---------------------------------------------------------------- arguments
+
+target=""
+slug_override=""
+base_ref=""
+model=""
+extra=""
+permission_mode="auto"
+attach=0
+dry_run=0
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -s|--slug) slug_override="${2:-}"; shift 2 ;;
+        -b|--base) base_ref="${2:-}"; shift 2 ;;
+        -m|--model) model="${2:-}"; shift 2 ;;
+        -e|--extra) extra="${2:-}"; shift 2 ;;
+        --session) SESSION="${2:-}"; shift 2 ;;
+        --permission-mode) permission_mode="${2:-}"; shift 2 ;;
+        -a|--attach) attach=1; shift ;;
+        -n|--dry-run) dry_run=1; shift ;;
+        -h|--help) usage; exit 0 ;;
+        -*) die "unknown option: $1" ;;
+        *)
+            [[ -z "$target" ]] || die "unexpected extra argument: $1"
+            target="$1"; shift ;;
+    esac
+done
+
+[[ -n "$target" ]] || { usage >&2; exit 1; }
+
+# --------------------------------------------------------- ticket + naming
+
+kebab() {
+    # lowercase, non-alphanumerics to hyphens, collapse and trim hyphens
+    printf '%s' "$1" \
+        | tr '[:upper:]' '[:lower:]' \
+        | sed -e 's/[^a-z0-9]\{1,\}/-/g' -e 's/^-\{1,\}//' -e 's/-\{1,\}$//'
+}
+
+ticket_id=""
+slug=""
+ticket_ref=""
+
+if [[ "$target" =~ linear\.app/[^/]+/issue/([A-Za-z]+-[0-9]+)(/([^/?#]*))? ]]; then
+    ticket_id="${BASH_REMATCH[1]}"
+    slug="${BASH_REMATCH[3]:-}"
+    ticket_ref="$target"
+elif [[ "$target" =~ ^([A-Za-z]+-[0-9]+)$ ]]; then
+    ticket_id="${BASH_REMATCH[1]}"
+else
+    die "could not parse a ticket id from '$target' (expected a linear.app issue URL or an id like ENG-1234)"
+fi
+
+ticket_id="$(printf '%s' "$ticket_id" | tr '[:lower:]' '[:upper:]')"
+# a bare id is its own reference, but only after normalizing the case
+[[ -n "$ticket_ref" ]] || ticket_ref="$ticket_id"
+[[ -n "$slug_override" ]] && slug="$slug_override"
+slug="$(kebab "${slug:-}")"
+
+name="$ticket_id"
+[[ -n "$slug" ]] && name="$ticket_id-$slug"
+
+if [[ ${#name} -gt $MAX_NAME_LEN ]]; then
+    name="${name:0:$MAX_NAME_LEN}"
+    # drop the trailing segment, which the cut above probably chopped mid-word
+    name="${name%-*}"
+fi
+
+# ------------------------------------------------------------------ prompt
+
+# Also the signal that the session accepted the prompt, so keep it on line one
+PROMPT_MARKER="Implement this Linear ticket"
+
+prompt="$PROMPT_MARKER: $ticket_ref
+
+You are already in a dedicated worktree on branch \`$name\` — implement directly here, do not create another branch or worktree.
+
+If the ticket is ambiguous, pick the most reasonable interpretation, record the assumption in the PR description, and keep going rather than stopping to ask.
+
+When the implementation is done, run /send-it."
+
+if [[ -n "$extra" ]]; then
+    prompt="$prompt
+
+$extra"
+fi
+
+prompt_file="$PROMPT_DIR/$name.md"
+
+claude_cmd="claude"
+[[ -n "$model" ]] && claude_cmd="$claude_cmd --model $(printf '%q' "$model")"
+claude_cmd="$claude_cmd --permission-mode $(printf '%q' "$permission_mode")"
+claude_cmd="$claude_cmd \"\$(cat $(printf '%q' "$prompt_file"))\""
+
+# ------------------------------------------------------------------- tmux
+
+window_exists() {
+    tmux list-windows -t "=$SESSION" -F '#{window_name}' 2>/dev/null | grep -Fxq "$1"
+}
+
+command -v tmux >/dev/null || die "tmux is not installed"
+command -v new-worktree >/dev/null || die "new-worktree is not on PATH"
+
+main_repo="$(worktree_main_repo)"
+[[ -n "$main_repo" ]] || die "no repo to work in — run from inside one, or set WORKTREE_MAIN_REPO in $(worktree_config_file)"
+
+if tmux has-session -t "=$SESSION" 2>/dev/null && window_exists "$name"; then
+    die "tmux window '$SESSION:$name' already exists — pick a different slug or close that window"
+fi
+
+if [[ $dry_run -eq 1 ]]; then
+    echo "ticket:   $ticket_id"
+    echo "ref:      $ticket_ref"
+    echo "repo:     $main_repo"
+    echo "worktree: $(worktree_base "$main_repo")/$name"
+    echo "base:     ${base_ref:-origin/main}"
+    echo "window:   $SESSION:$name"
+    echo "command:  $claude_cmd"
+    echo ""
+    echo "--- prompt ---"
+    echo "$prompt"
+    exit 0
+fi
+
+# ----------------------------------------------------------------- provision
+
+mkdir -p "$PROMPT_DIR"
+printf '%s\n' "$prompt" > "$prompt_file"
+
+if [[ -n "$base_ref" ]]; then
+    new-worktree "$name" "$base_ref"
+else
+    new-worktree "$name"
+fi
+
+# new-worktree resolves the repo the same way from the same cwd, so this
+# lands on the directory it just created.
+worktree_path="$(worktree_base "$main_repo")/$name"
+[[ -d "$worktree_path" ]] || die "expected worktree at $worktree_path but it is not there"
+
+# ------------------------------------------------------------------- launch
+
+if ! tmux has-session -t "=$SESSION" 2>/dev/null; then
+    tmux new-session -d -s "$SESSION" -c "$HOME"
+fi
+
+# new-worktree creates the window itself when the dev session is already up
+if ! window_exists "$name"; then
+    tmux new-window -d -t "=$SESSION" -n "$name" -c "$worktree_path"
+fi
+
+target_window="$SESSION:$name"
+
+# Wait for the window's shell to finish starting, otherwise send-keys is swallowed
+for _ in $(seq 1 30); do
+    pane_cmd="$(tmux display-message -p -t "$target_window" '#{pane_current_command}' 2>/dev/null || true)"
+    case "$pane_cmd" in
+        zsh|bash|sh|fish) break ;;
+    esac
+    sleep 0.5
+done
+
+tmux send-keys -t "$target_window" "$claude_cmd" Enter
+
+# A worktree path Claude has never seen is untrusted, so it opens on the workspace
+# trust dialog and never reads the prompt. Accept it only when the pane actually
+# shows it; the dialog's default choice is already "yes", so Enter is enough.
+launched=0
+for _ in $(seq 1 40); do
+    pane="$(tmux capture-pane -p -t "$target_window" 2>/dev/null || true)"
+    if printf '%s' "$pane" | grep -qF "$PROMPT_MARKER"; then
+        launched=1
+        break
+    fi
+    if printf '%s' "$pane" | grep -qE 'trust this folder|Yes, I trust'; then
+        tmux send-keys -t "$target_window" Enter
+    fi
+    sleep 0.5
+done
+
+echo ""
+if [[ $launched -eq 1 ]]; then
+    echo "Launched $target_window"
+else
+    echo "Launched $target_window (could not confirm the prompt was accepted — check the window)"
+fi
+echo "  ticket:   $ticket_ref"
+echo "  worktree: $worktree_path"
+echo "  prompt:   $prompt_file"
+
+if [[ $attach -eq 1 ]]; then
+    if [[ -n "${TMUX:-}" ]]; then
+        tmux switch-client -t "$target_window"
+    else
+        tmux attach-session -t "=$SESSION" \; select-window -t "$target_window"
+    fi
+else
+    echo ""
+    echo "  tmux select-window -t $target_window"
+fi
