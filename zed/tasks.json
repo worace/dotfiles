@@ -1,0 +1,27 @@
+// Zed global tasks
+//
+// For information on how to configure tasks, see the Zed
+// documentation: https://zed.dev/docs/tasks
+[
+  {
+    "label": "Open scratch",
+    "command": "zed",
+    "args": ["~/scratch.md"],
+    "reveal": "never",
+    "hide": "always"
+  },
+  {
+    "label": "Copy linked code label",
+    "command": "python3",
+    "args": [
+      "/Users/horace/dotfiles/zed/code-link-clipboard.py",
+      "$ZED_FILE",
+      "$ZED_ROW",
+      "$ZED_WORKTREE_ROOT"
+    ],
+    "ignore_previously_resolved": true,
+    "reveal": "never",
+    "hide": "on_success",
+    "save": "current"
+  }
+]

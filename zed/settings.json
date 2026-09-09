@@ -7,10 +7,34 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "show_whitespaces": "trailing",
   "collaboration_panel": {
     "button": true
   },
   "agent": {
+    "tool_permissions": {
+      "tools": {
+        "terminal": {
+          "always_allow": [
+            {
+              "pattern": "^pnpm\\s+llm:check(\\s|$)"
+            },
+            {
+              "pattern": "^git\\b"
+            }
+          ]
+        },
+        "skill": {
+          "default": "allow"
+        }
+      }
+    },
+    "default_model": {
+      "provider": "openai-subscribed",
+      "model": "gpt-5.6-terra",
+      "enable_thinking": true,
+      "effort": "medium"
+    },
     "button": true,
     "dock": "right",
     "favorite_models": [],
@@ -28,6 +52,7 @@
   "session": {
     "trust_all_worktrees": true
   },
+  "restore_on_startup": "last_session",
   "vim_mode": true,
   "base_keymap": "VSCode",
   "minimap": {

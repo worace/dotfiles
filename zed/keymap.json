@@ -13,9 +13,41 @@
     }
   },
   {
+    // In markdown, navigate by visual (wrapped) line instead of logical line.
+    // `g j` / `g k` are swapped back to logical-line motions.
+    "context": "VimControl && !menu && (extension == md || extension == markdown || extension == mdx)",
+    "bindings": {
+      "j": ["vim::Down", { "display_lines": true }],
+      "k": ["vim::Up", { "display_lines": true }],
+      "down": ["vim::Down", { "display_lines": true }],
+      "up": ["vim::Up", { "display_lines": true }],
+      "0": ["vim::StartOfLine", { "display_lines": true }],
+      "$": ["vim::EndOfLine", { "display_lines": true }],
+      "^": ["vim::FirstNonWhitespace", { "display_lines": true }],
+      "g j": ["vim::Down", { "display_lines": false }],
+      "g k": ["vim::Up", { "display_lines": false }],
+      "g 0": ["vim::StartOfLine", { "display_lines": false }],
+      "g $": ["vim::EndOfLine", { "display_lines": false }]
+    }
+  },
+  {
+    // Leader-style navigation through the jump history (e.g. after go-to-definition).
+    "context": "VimControl && !menu",
+    "bindings": {
+      "space [": "pane::GoBack",
+      "space ]": "pane::GoForward",
+      // GitHub permalink for the cursor or visual selection.
+      "space l": "editor::CopyPermalinkToLine",
+      "space h c": ["task::Spawn", { "task_name": "Copy linked code label" }],
+      "space f": "pane::DeploySearch",
+      "space f u": "editor::FindAllReferences"
+    }
+  },
+  {
     "context": "Workspace",
     "bindings": {
-      "cmd-shift-b": "workspace::ToggleLeftDock"
+      "cmd-shift-b": "workspace::ToggleLeftDock",
+      "cmd-shift-.": ["task::Spawn", { "task_name": "Open scratch" }]
     }
   }
 ]
