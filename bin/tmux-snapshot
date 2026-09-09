@@ -1,0 +1,127 @@
+#!/bin/bash
+# tmux-snapshot — record the tmux sessions that are open right now so
+# tmux-restore can rebuild exactly them after a reboot.
+#
+# Unlike tmux-workspace (which opens a window for every worktree on disk),
+# this captures only what is actually open: session names, window indices and
+# names, each pane's working directory, the window layout, and which
+# window/pane was active.
+#
+# Running processes are NOT captured — panes come back as fresh shells.
+#
+# Usage:
+#   tmux-snapshot                 # save every session as "latest"
+#   tmux-snapshot work            # save every session as "work"
+#   tmux-snapshot work -s dev -s dots   # save only those sessions
+#   tmux-snapshot --list          # show saved snapshots
+#   tmux-snapshot --show [name]   # print a snapshot
+#
+# Snapshots live in $TMUX_SNAPSHOT_DIR (default ~/.local/share/tmux-snapshots).
+
+set -euo pipefail
+
+SNAP_DIR="${TMUX_SNAPSHOT_DIR:-$HOME/.local/share/tmux-snapshots}"
+TAB=$'\t'
+
+die() { printf '%s\n' "$*" >&2; exit 1; }
+
+name=""
+only_sessions=()
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --list)
+            [[ -d $SNAP_DIR ]] || die "no snapshots yet ($SNAP_DIR)"
+            ls -1t "$SNAP_DIR"/*.tmux 2>/dev/null | while read -r f; do
+                printf '%-24s %s\n' "$(basename "$f" .tmux)" "$(sed -n '1s/^# //p' "$f")"
+            done
+            exit 0
+            ;;
+        --show)
+            shift
+            cat "$SNAP_DIR/${1:-latest}.tmux"
+            exit 0
+            ;;
+        -s|--session)
+            shift; only_sessions+=("${1:?-s needs a session name}")
+            ;;
+        -h|--help)
+            sed -n '2,/^$/s/^# \{0,1\}//p' "$0"; exit 0
+            ;;
+        -*)
+            die "unknown flag: $1"
+            ;;
+        *)
+            [[ -z $name ]] || die "snapshot name given twice: $name, $1"
+            name="$1"
+            ;;
+    esac
+    shift
+done
+
+name="${name:-latest}"
+
+tmux has-session 2>/dev/null || die "no tmux server running — nothing to snapshot"
+
+# Strip the 🔔 bell marker tmux-bell-mark appends, so a snapshot taken while a
+# window is ringing restores under its real name.
+clean_name() {
+    local n="$1"
+    printf '%s' "${n% 🔔}"
+}
+
+wanted() {
+    local sess="$1" s
+    [[ ${#only_sessions[@]} -eq 0 ]] && return 0
+    for s in "${only_sessions[@]}"; do
+        [[ "$s" == "$sess" ]] && return 0
+    done
+    return 1
+}
+
+mkdir -p "$SNAP_DIR"
+file="$SNAP_DIR/$name.tmux"
+tmp="$(mktemp "${TMPDIR:-/tmp}/tmux-snapshot.XXXXXX")"
+trap 'rm -f "$tmp"' EXIT
+
+sessions=0
+windows=0
+
+{
+    printf '# %s\n' "$(date '+%Y-%m-%d %H:%M:%S')"
+
+    while IFS= read -r sess; do
+        wanted "$sess" || continue
+        sessions=$((sessions + 1))
+        printf 'S%s%s\n' "$TAB" "$sess"
+
+        while IFS="$TAB" read -r widx wname wlayout wactivepane; do
+            windows=$((windows + 1))
+            printf 'W%s%s%s%s%s%s%s%s\n' \
+                "$TAB" "$widx" "$TAB" "$(clean_name "$wname")" \
+                "$TAB" "$wlayout" "$TAB" "$wactivepane"
+
+            tmux list-panes -t "$sess:$widx" -F "#{pane_current_path}" |
+                while IFS= read -r ppath; do
+                    printf 'P%s%s\n' "$TAB" "$ppath"
+                done
+        done < <(tmux list-windows -t "$sess" \
+            -F "#{window_index}${TAB}#{window_name}${TAB}#{window_layout}${TAB}#{pane_index}")
+
+        printf 'E%s%s\n' "$TAB" "$(tmux display-message -p -t "$sess" '#{window_index}')"
+    done < <(tmux list-sessions -F '#{session_name}')
+
+    attached="$(tmux display-message -p '#{session_name}' 2>/dev/null || true)"
+    if [[ -n $attached ]] && wanted "$attached"; then
+        printf 'A%s%s\n' "$TAB" "$attached"
+    fi
+} > "$tmp"
+
+# Subshell counters above don't survive the pipe; recount from the file.
+sessions=$(grep -c '^S' "$tmp" || true)
+windows=$(grep -c '^W' "$tmp" || true)
+
+mv "$tmp" "$file"
+trap - EXIT
+
+printf 'saved %s session(s), %s window(s) -> %s\n' "$sessions" "$windows" "$file"

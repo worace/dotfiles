@@ -1,0 +1,138 @@
+#!/bin/bash
+# tmux-restore — rebuild the sessions saved by tmux-snapshot.
+#
+# Recreates each saved session with its exact window indices, window names,
+# per-pane working directories, layout, and active window/pane. Panes come
+# back as fresh shells; no processes are re-run.
+#
+# Sessions that already exist are left untouched and reported.
+#
+# Usage:
+#   tmux-restore                  # restore the "latest" snapshot and attach
+#   tmux-restore work             # restore a named snapshot
+#   tmux-restore work --no-attach # build the sessions, stay where you are
+#
+# Snapshots live in $TMUX_SNAPSHOT_DIR (default ~/.local/share/tmux-snapshots).
+
+set -euo pipefail
+
+SNAP_DIR="${TMUX_SNAPSHOT_DIR:-$HOME/.local/share/tmux-snapshots}"
+TAB=$'\t'
+# Parking index for the throwaway window `new-session` always creates, so real
+# windows can be built at their recorded indices.
+PARK=99999
+
+die() { printf '%s\n' "$*" >&2; exit 1; }
+
+name=""
+attach=1
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --no-attach) attach=0 ;;
+        -h|--help) sed -n '2,/^$/s/^# \{0,1\}//p' "$0"; exit 0 ;;
+        -*) die "unknown flag: $1" ;;
+        *)
+            [[ -z $name ]] || die "snapshot name given twice: $name, $1"
+            name="$1"
+            ;;
+    esac
+    shift
+done
+
+name="${name:-latest}"
+file="$SNAP_DIR/$name.tmux"
+[[ -f $file ]] || die "no snapshot named '$name' in $SNAP_DIR (try: tmux-snapshot --list)"
+
+# Panes are recorded in list order, so splits must target the last pane built —
+# splitting the active pane instead inserts each new pane ahead of the previous.
+pane_base="$(tmux show-options -gv pane-base-index 2>/dev/null || echo 0)"
+pane_base="${pane_base:-0}"
+
+sess=""          # session currently being built ("" = none / skipping)
+skip=0
+widx=""          # window currently being built ("" = none pending)
+wname=""
+wlayout=""
+wpane=""
+panes=0
+attach_to=""
+created=0
+skipped=""
+
+flush_window() {
+    [[ -n $widx ]] || return 0
+    [[ $panes -gt 0 ]] || return 0
+    tmux select-layout -t "$sess:$widx" "$wlayout" >/dev/null 2>&1 || true
+    tmux select-pane -t "$sess:$widx.$wpane" >/dev/null 2>&1 || true
+    widx=""
+    panes=0
+}
+
+while IFS="$TAB" read -r kind a b c d; do
+    case "$kind" in
+        ''|'#'*) continue ;;
+
+        S)
+            flush_window
+            sess="$a"
+            if tmux has-session -t "=$sess" 2>/dev/null; then
+                skip=1
+                skipped="$skipped $sess"
+                continue
+            fi
+            skip=0
+            park_from="$(tmux new-session -d -P -F '#{window_index}' -s "$sess" -c "$HOME")"
+            park_from="${park_from##*:}"
+            tmux move-window -s "$sess:$park_from" -t "$sess:$PARK"
+            created=$((created + 1))
+            ;;
+
+        W)
+            [[ $skip -eq 1 ]] && continue
+            flush_window
+            widx="$a"; wname="$b"; wlayout="$c"; wpane="$d"
+            panes=0
+            ;;
+
+        P)
+            [[ $skip -eq 1 ]] && continue
+            [[ -n $widx ]] || continue
+            ppath="$a"
+            [[ -d $ppath ]] || ppath="$HOME"   # worktree pruned since the snapshot
+            if [[ $panes -eq 0 ]]; then
+                tmux new-window -d -t "$sess:$widx" -n "$wname" -c "$ppath"
+            else
+                tmux split-window -d -t "$sess:$widx.$((pane_base + panes - 1))" -c "$ppath"
+            fi
+            panes=$((panes + 1))
+            ;;
+
+        E)
+            [[ $skip -eq 1 ]] && { sess=""; continue; }
+            flush_window
+            tmux kill-window -t "$sess:$PARK" 2>/dev/null || true
+            tmux select-window -t "$sess:$a" 2>/dev/null || true
+            sess=""
+            ;;
+
+        A)
+            attach_to="$a"
+            ;;
+    esac
+done < "$file"
+
+flush_window
+
+printf 'restored %s session(s) from %s\n' "$created" "$file"
+[[ -n $skipped ]] && printf 'already running, left alone:%s\n' "$skipped"
+
+[[ $attach -eq 1 ]] || exit 0
+[[ -n $attach_to ]] || exit 0
+tmux has-session -t "=$attach_to" 2>/dev/null || exit 0
+
+if [[ -n ${TMUX:-} ]]; then
+    tmux switch-client -t "$attach_to"
+else
+    tmux attach -t "$attach_to"
+fi

@@ -1,0 +1,81 @@
+#!/bin/bash
+set -euo pipefail
+
+# Rename the current tmux window to the name of the current git worktree
+# (the basename of the worktree root). Usable as a shell command or from a
+# tmux key binding — see `bind r` in tmux.conf.
+#
+# Usage: trwt [-h|--help]
+
+usage() {
+    cat <<'USAGE'
+Usage: trwt [-h | --help]
+
+Renames the current tmux window to the current git worktree's name,
+i.e. the basename of the worktree root directory.
+
+Options:
+  -h, --help   Show this help and exit
+USAGE
+}
+
+case "${1-}" in
+    -h|--help)
+        usage
+        exit 0
+        ;;
+    "")
+        ;;
+    *)
+        echo "Error: unexpected argument '$1'" >&2
+        echo "" >&2
+        usage >&2
+        exit 1
+        ;;
+esac
+
+# Always address the invoking pane explicitly: with no -t, tmux resolves the
+# target from the attached client, which is a different window whenever this
+# runs from a detached or background context. tmux sets TMUX_PANE for
+# interactive shells; the key binding passes it in (run-shell does not).
+pane="${TMUX_PANE-}"
+
+# When there's no tty (i.e. run from the key binding), report on the status
+# line instead of stdout.
+report() {
+    if [[ -t 1 ]]; then
+        echo "$1"
+    elif [[ -n "$pane" ]]; then
+        tmux display-message -t "$pane" "$1"
+    fi
+}
+
+die() {
+    echo "trwt: $1" >&2
+    if [[ ! -t 2 && -n "$pane" ]]; then
+        tmux display-message -t "$pane" "trwt: $1"
+    fi
+    exit 1
+}
+
+if [[ -z "${TMUX-}" && -z "$pane" ]]; then
+    die "not inside tmux"
+fi
+
+if ! worktree_root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+    die "not inside a git worktree ($PWD)"
+fi
+
+name="$(basename "$worktree_root")"
+
+if [[ -z "$name" ]]; then
+    die "could not determine a worktree name from '$worktree_root'"
+fi
+
+if [[ -n "$pane" ]]; then
+    tmux rename-window -t "$pane" "$name"
+else
+    tmux rename-window "$name"
+fi
+
+report "Window renamed to '$name'"
