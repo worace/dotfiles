@@ -19,25 +19,30 @@
 
 ## Notes for Working on Agent Prompts
 
-* Write for failures you've actually seen; run with no instruction first, add guidance only for recurring ones
-* Don't instruct what the model already does well
-* Shorter and focused beats long and comprehensive
-* Prefer deleting weak instructions to adding new ones
-* Procedural, not declarative — tell it how, not what something is; cut background
-* Measure each addition against the no-prompt baseline (quality + cost)
-* Review anything model-written; models draft prompts worse than they consume them
-* Triggering language ("use this when…") goes in the description/opening, not the body
-* One section = one repeatable task class; no broad "best practices" grabbags
-* Teach decisions, not examples: "if X, inspect Y, choose A/B on signal Z"
-* Name the observable signal at every branch
-* Abstract guidance over filled-in templates; no hardcoded type/field/file/port names
-* Name negative cases and their condition, not just the positive
-* End with concrete verification: run this, confirm this file, validate this schema
-* Main file is a control plane; push detail to separate files loaded on demand
-* When editing: re-pull main, read the whole file, dedupe before adding
-* Generalize to one rule; use enumerations only as non-exhaustive examples
-* Fix the mechanism, not the symptom — anchor on how it went wrong, not one phrase/pattern
-* On "minimal/prompt-only" scope: drop out-of-scope layers, don't defer them
-* Checklists only when failures are omissions; ~5 verifiable items the model would skip
-* Eval gotcha: worked examples anchor on their literal names — run a different-names control
+When writing or editing agent prompts, use the `agent-prompt-authoring` skill (~/.claude/skills/agent-prompt-authoring/SKILL.md).
 
+## Bash Commands and `Read` Deny Rules
+
+Never chain `cd` before a command that reads files. In any repo whose
+`.claude/settings.json` carries a `Read(...)` deny rule, a `cd` in a compound
+command followed by a *relative* path to `grep`, `rg`, `diff`, `git`, `cp`, or `mv`
+cannot be resolved statically, so it always asks for approval and auto mode
+cannot clear it. Which path the deny rule names is never checked — any one of
+them arms this.
+
+* Write `grep -rn foo /abs/path/app`, not `cd /abs/path && grep -rn foo app`.
+* A relative path with no `cd` is fine. So is a `cd` in front of an absolute path.
+* `cat`/`head`/`sed` on a relative path after a `cd` trips a softer version of the
+  same check, which the classifier can sometimes clear. Don't rely on it.
+
+Written repo-agnostically on purpose, since it's the deny rule that arms it, not this
+codebase. If you want a lighter touch for a first pass, the load-bearing sentence alone works
+as a single bullet under your existing "Notes for Working on Code":
+
+* Never chain `cd` before a file-reading command; pass absolute paths. A
+  `cd X && grep rel/path` compound can't be auto-approved wherever a `Read()`
+  deny rule exists.
+
+## Linear Ticket and Github PR Conventions
+
+ALWAYS Include a Link when referencing Linear Tickets or Github PRs

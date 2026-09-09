@@ -56,13 +56,11 @@ $ARGUMENTS - A Linear ticket ID (e.g. `ENG-123`) or full URL (e.g. `https://line
    ```
    Let the user know the path so they can also open it in their editor.
 
-6. **Install dependencies** in the new worktree:
-   ```bash
-   pnpm install
-   ```
-   ```bash
-   pnpm sync:libs
-   ```
+6. **Bootstrap the new worktree.** `new-worktree` already does all of this
+   (including the repo's own setup hook), so prefer it over the manual steps
+   above when it's on PATH. Bootstrapping by hand means installing from
+   whichever lockfiles the repo has (`pnpm install`, `npm ci`, `uv sync`, ...)
+   and then running whatever bootstrap script the repo documents.
 
 7. **Set the tmux window name** so it's identifiable in `prefix + w`. If running inside tmux (`$TMUX` is set), rename the current window:
    ```bash
