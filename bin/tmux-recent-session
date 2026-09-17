@@ -1,0 +1,23 @@
+#!/bin/bash
+# Pick a tmux window (across all sessions) ordered by recency, like an emacs
+# buffer stack. Sessions are ordered by when you last attached to them, and
+# windows within a session by tmux's own most-recently-used window stack.
+# The current window is excluded, so a bare Enter jumps to the previous
+# window and one arrow down goes two back.
+# Bound to prefix b in tmux.conf; runs inside display-popup.
+set -euo pipefail
+
+current="$(tmux display-message -p '#{session_name}:#{window_index}')"
+
+# Fields: <session_last_attached> <window_stack_index> <session:index> <window name...>
+# session_last_attached is empty for never-attached sessions; treat as 0 so sort is stable.
+target="$(
+  tmux list-windows -a -F '#{?session_last_attached,#{session_last_attached},0} #{window_stack_index} #{session_name}:#{window_index} #{window_name}' \
+    | sort -k1,1nr -k2,2n \
+    | cut -d' ' -f3- \
+    | grep -v -- "^${current} " \
+    | fzf --reverse --no-sort --prompt='window> ' --with-nth=1.. \
+    | cut -d' ' -f1 || true
+)"
+
+[ -n "$target" ] && tmux switch-client -t "$target"
